@@ -1,10 +1,10 @@
-import { BASE_API } from 'constants/constants';
-import { BodyForSignUp, SignUpResult, SignUpError } from 'types/types';
+import { URL_SINGUP } from 'constants/constants';
+import { BodyForSignUp, SignUpResult } from 'types/types';
 
 //! Create new User
 export async function signUp(obj: BodyForSignUp): Promise<SignUpResult> {
   try {
-    const response = await fetch(`${BASE_API}/auth/signup`, {
+    const response = await fetch(URL_SINGUP, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -14,21 +14,11 @@ export async function signUp(obj: BodyForSignUp): Promise<SignUpResult> {
     });
 
     if (!response.ok) {
-      if (response.status === 400 || response.status === 409) {
-        const myError = (await response.json()) as SignUpError;
-        throw new Error(
-          JSON.stringify({
-            statusCode: myError.statusCode,
-            message: myError.message,
-          })
-        );
-      }
-
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
     const newUser = (await response.json()) as SignUpResult;
-    console.log('created user =', newUser);
+    console.log('Created user =', newUser);
     return {
       _id: newUser._id,
       name: newUser.name,
