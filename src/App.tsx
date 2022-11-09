@@ -1,8 +1,14 @@
+import { TestApiFunctions } from 'api/TestApiFunctions';
 import './App.scss';
 import Router from './router/Router';
 
 const App = () => {
-  return <Router />;
+  return (
+    <div>
+      <Router />
+      <TestApiFunctions />
+    </div>
+  );
 };
 
 export default App;
