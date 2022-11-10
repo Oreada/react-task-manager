@@ -1,7 +1,11 @@
-import { PageText } from './Pages.constants';
+import Auth from 'components/Auth/Auth';
 
-const AuthPage = (): JSX.Element => {
-  return <div>{PageText.authentification}</div>;
+const AuthPage = () => {
+  return (
+    <>
+      <Auth></Auth>
+    </>
+  );
 };
 
 export default AuthPage;
