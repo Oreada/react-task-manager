@@ -1,7 +1,7 @@
 import { PageText } from '../../pages/Pages.constants';
 import cls from './BoardList.module.scss';
 
-const BoardList = (): JSX.Element => {
+const BoardList = () => {
   return <div className={cls.list}>{PageText.aboutPage}</div>;
 };
 

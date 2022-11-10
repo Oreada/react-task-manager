@@ -1,6 +1,6 @@
 import { PageText } from './Pages.constants';
 
-const WelcomePage = (): JSX.Element => {
+const WelcomePage = () => {
   return <div>{PageText.welcomePage}</div>;
 };
 

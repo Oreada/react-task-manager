@@ -1,4 +1,4 @@
-const Footer = (): JSX.Element => {
+const Footer = () => {
   return <footer></footer>;
 };
 

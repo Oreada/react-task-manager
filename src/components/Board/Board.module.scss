@@ -1,10 +1,9 @@
 @import '../../styles/variables.scss';
 
-.list {
+.board {
+  overflow-x: scroll;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   padding: 2rem;
 }

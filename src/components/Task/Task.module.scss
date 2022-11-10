@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.task {
+  width: 90%;
+  min-height: 4rem;
+
+  background-color: $color-task-bg;
+}
+
+.pseudoTask {
+  width: 90%;
+  min-height: 4rem;
+
+  background-color: transparent;
+}
