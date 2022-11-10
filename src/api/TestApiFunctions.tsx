@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { UserInfo } from 'types/types';
-import { getUser } from './users/getUser';
-import { updateUser } from './users/updateUser';
+import { getAllUsers } from './users/getAllUsers';
+import { deleteUser } from './users/deleteUser';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -31,18 +31,12 @@ export function TestApiFunctions() {
     event.preventDefault();
 
     try {
-      // const result = await getUser(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-      //   '636b5a6b83f1e2fe95e7a283'
+      // const result = await getAllUsers(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
-      const result = await updateUser(
+      const result = await deleteUser(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636b5a6b83f1e2fe95e7a283',
-        {
-          name: 'FirstUser - Updated',
-          login: 'FirstUser',
-          password: 'FirstUser',
-        }
+        '636b7dd719d35b6ca446c3cd'
       );
       console.log('my result is', result);
       setResult(result);
