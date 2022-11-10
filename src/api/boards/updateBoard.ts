@@ -1,24 +1,29 @@
 import { URL_ALL_BOARDS } from 'constants/constants';
-import { Board } from 'types/types';
+import { Board, BodyForBoard } from 'types/types';
 
-//! Find Board
-export async function getBoard(token: string, idBoard: string): Promise<Board> {
+//! Update Board
+export async function updateBoard(
+  token: string,
+  idBoard: string,
+  obj: BodyForBoard
+): Promise<Board> {
   try {
     const response = await fetch(`${URL_ALL_BOARDS}/${idBoard}`, {
-      method: 'GET',
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(obj),
     });
 
     if (!response.ok) {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const board = await response.json();
-    return board;
+    const boardUpdated = await response.json();
+    return boardUpdated;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);

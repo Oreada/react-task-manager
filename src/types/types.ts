@@ -21,7 +21,7 @@ export type BodyForSignIn = {
 };
 
 export type SignInResult = {
-  token: 'string';
+  token: string;
 };
 
 export type Board = {

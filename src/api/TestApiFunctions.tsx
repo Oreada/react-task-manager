@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Board, UserInfo } from 'types/types';
 import { getAllUsers } from './users/getAllUsers';
 import { getAllBoards } from './boards/getAllBoards';
-import { getBoard } from './boards/getBoard';
+import { updateBoard } from './boards/updateBoard';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -41,9 +41,14 @@ export function TestApiFunctions() {
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
 
-      const result = await getBoard(
+      const result = await updateBoard(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636cef214f5723389cfea002'
+        '636cef214f5723389cfea002',
+        {
+          title: 'Implement api-functions',
+          owner: '636b5a6b83f1e2fe95e7a283',
+          users: ['636ba2d019d35b6ca446c404'],
+        }
       );
 
       console.log('my result is', result);
