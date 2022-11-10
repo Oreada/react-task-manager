@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Board, UserInfo } from 'types/types';
-import { getAllUsers } from './users/getAllUsers';
+import { Board } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
-import { updateBoard } from './boards/updateBoard';
+import { deleteBoard } from './boards/deleteBoard';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -25,6 +24,7 @@ export const thirdUser = {
 };
 
 // boards ids: 636cee7f4f5723389cfea000, 636cef214f5723389cfea002, 636cef524f5723389cfea004
+// 636d0494057cb37a3cbe038e
 
 export function TestApiFunctions() {
   const [result, setResult] = useState<Board | unknown>({});
@@ -37,18 +37,14 @@ export function TestApiFunctions() {
       // const result = await getAllUsers(
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
+
       // const result = await getAllBoards(
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
 
-      const result = await updateBoard(
+      const result = await deleteBoard(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636cef214f5723389cfea002',
-        {
-          title: 'Implement api-functions',
-          owner: '636b5a6b83f1e2fe95e7a283',
-          users: ['636ba2d019d35b6ca446c404'],
-        }
+        '636d0494057cb37a3cbe038e'
       );
 
       console.log('my result is', result);
