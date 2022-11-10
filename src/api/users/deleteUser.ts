@@ -1,10 +1,10 @@
-import { URL_GET_ALL_USERS } from 'constants/constants';
+import { URL_ALL_USERS } from 'constants/constants';
 import { UserInfo } from 'types/types';
 
 //! Delete User
 export async function deleteUser(token: string, idUser: string): Promise<UserInfo> {
   try {
-    const response = await fetch(`${URL_GET_ALL_USERS}/${idUser}`, {
+    const response = await fetch(`${URL_ALL_USERS}/${idUser}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
