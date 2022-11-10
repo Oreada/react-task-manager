@@ -7,7 +7,7 @@ import {
   DROPPABLE_ID_BOARD,
   DROPPABLE_TYPE_BOARD,
 } from './constants';
-import { DRAGGABLE_ID_COLUMN, DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
+import { DRAGGABLE_ID_COLUMN, DROPPABLE_TYPE_COLUMN, TASKLIST } from 'components/Column/constants';
 import { DropResult } from 'react-beautiful-dnd';
 import { useState } from 'react';
 
@@ -22,17 +22,36 @@ const Board = () => {
   };
 
   const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) {
+    const { destination, source, type } = result;
+
+    if (!destination) {
       return;
     }
 
-    if (result.type === DROPPABLE_TYPE_BOARD) {
-      setColumns(reorderItems(columns, result.source.index, result.destination.index));
+    if (type === DROPPABLE_TYPE_BOARD) {
+      setColumns(reorderItems(columns, result.source.index, destination.index));
       return;
     }
 
-    if (result.type === DROPPABLE_TYPE_COLUMN) {
-      // setColumns(reorderItems(columns, result.source.index, result.destination.index));
+    const sourceColumnId = parseInt(source.droppableId);
+    const destColemnId = parseInt(destination.droppableId);
+
+    if (type === DROPPABLE_TYPE_COLUMN) {
+      if (sourceColumnId === destColemnId) {
+        //id columns
+
+        // console.log(draggableId); //id Task
+        // console.log(source.index, destination.index);
+        const newTasks = reorderItems(TASKLIST, source.index, destination.index);
+        const newColumns = columns.map((column) => {
+          if (column === sourceColumnId) {
+          }
+          return column;
+        });
+        setColumns(newColumns);
+        return;
+      }
+
       return;
     }
   };
