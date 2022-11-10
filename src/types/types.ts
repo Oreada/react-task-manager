@@ -14,3 +14,12 @@ export type SignUpError = {
   statusCode: number | null;
   message: string;
 };
+
+export type BodyForSignIn = {
+  login: string;
+  password: string;
+};
+
+export type SignInResult = {
+  token: 'string';
+};
