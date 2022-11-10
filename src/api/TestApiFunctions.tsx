@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Board, Column } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
-import { createColumnsSet } from './columns/createColumnsSet';
+import { updateColumnsSet } from './columns/updateColumnsSet';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -47,23 +47,20 @@ export function TestApiFunctions() {
       //   '636cee7f4f5723389cfea000'
       // );
 
-      const result = await createColumnsSet(
+      const result = await updateColumnsSet(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
         [
           {
-            title: 'urgent',
+            _id: '636d55bcdcbc2ec1bc6f22a2',
             order: 1,
-            boardId: '636cef524f5723389cfea004',
           },
           {
-            title: 'non-urgent',
+            _id: '636d55bcdcbc2ec1bc6f22a4',
             order: 2,
-            boardId: '636cef524f5723389cfea004',
           },
           {
-            title: 'delegate',
+            _id: '636d55bcdcbc2ec1bc6f22a6',
             order: 3,
-            boardId: '636cef524f5723389cfea004',
           },
         ]
       );

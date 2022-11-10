@@ -54,3 +54,8 @@ export type BodyForColumnsSet = {
   order: number;
   boardId: string;
 };
+
+export type BodyForColumnsSetOrder = {
+  _id: string; // Column id
+  order: number;
+};
