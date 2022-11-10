@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Board, Column } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
-import { getColumnsByIdsColumns } from './columns/getColumnsByIdsColumns';
+import { getColumnsByIdUser } from './columns/getColumnsByIdUser';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -47,14 +47,9 @@ export function TestApiFunctions() {
       //   '636cee7f4f5723389cfea000'
       // );
 
-      const result = await getColumnsByIdsColumns(
+      const result = await getColumnsByIdUser(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        [
-          '636d55bcdcbc2ec1bc6f22a2',
-          '636d55bcdcbc2ec1bc6f22a4',
-          '12345',
-          '636d55bcdcbc2ec1bc6f22a6',
-        ]
+        '636ba2d019d35b6ca446c404'
       );
 
       console.log('my result is', result);
