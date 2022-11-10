@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Board, UserInfo } from 'types/types';
 import { getAllUsers } from './users/getAllUsers';
 import { getAllBoards } from './boards/getAllBoards';
+import { createBoard } from './boards/createBoard';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -24,7 +25,7 @@ export const thirdUser = {
 };
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<Array<Board>>([]);
+  const [result, setResult] = useState<Board | unknown>({});
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -34,9 +35,19 @@ export function TestApiFunctions() {
       // const result = await getAllUsers(
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
-      const result = await getAllBoards(
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      // const result = await getAllBoards(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      // );
+
+      const result = await createBoard(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
+        {
+          title: 'Some todos',
+          owner: '636ba2d019d35b6ca446c404',
+          users: ['636b7dd719d35b6ca446c3cd'],
+        }
       );
+
       console.log('my result is', result);
       setResult(result);
     } catch (e: unknown) {
@@ -48,7 +59,7 @@ export function TestApiFunctions() {
 
   return (
     <div>
-      {/* <p>Result: {result}</p> */}
+      <p>Result: {(result as Board).title}</p>
       <button onClick={clickHandler}>Click here</button>
       {error && <p>{error}</p>}
     </div>

@@ -25,8 +25,14 @@ export type SignInResult = {
 };
 
 export type Board = {
-  _id: 'Board id';
-  title: 'Board title';
-  owner: 'userId of owner';
+  _id: string; // ID of board
+  title: string;
+  owner: string; // userId of owner
+  users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
+};
+
+export type BodyForBoard = {
+  title: string;
+  owner: string; // userId of owner
   users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
