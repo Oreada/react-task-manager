@@ -1,49 +1,57 @@
 import { useState } from 'react';
-import { SignUpResult } from 'types/types';
-import { signUp } from './signUp';
+import { UserInfo } from 'types/types';
+import { getAllUsers } from './users/getAllUsers';
+import { deleteUser } from './users/deleteUser';
 
+// 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
   name: 'FirstUser',
   login: 'FirstUser',
   password: 'FirstUser',
 };
 
+// 636b7dd719d35b6ca446c3cd
 export const secondUser = {
   name: 'SecondUser',
   login: 'SecondUser',
   password: 'SecondUser',
 };
 
+// 636ba2d019d35b6ca446c404
 export const thirdUser = {
-  name: 'ThirdUser',
   login: 'ThirdUser',
   password: 'ThirdUser',
 };
 
 export function TestApiFunctions() {
-  const [resultSignUp, setResultSignUp] = useState<SignUpResult>({ _id: '', name: '', login: '' });
-  const [errorSignUp, setErrorSignUp] = useState<string>('');
+  const [result, setResult] = useState<UserInfo | unknown>({});
+  const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
     try {
-      const result = await signUp(thirdUser);
+      // const result = await getAllUsers(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      // );
+      const result = await deleteUser(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
+        '636b7dd719d35b6ca446c3cd'
+      );
       console.log('my result is', result);
-      setResultSignUp(result);
+      setResult(result);
     } catch (e: unknown) {
       const err = e as Error;
       console.log('my error is', err.message);
-      setErrorSignUp(err.message);
+      setError(err.message);
     }
   };
 
   return (
     <div>
-      <p>Name: {resultSignUp.name}</p>
-      <p>ID: {resultSignUp._id}</p>
+      {/* <p>Result: {result}</p> */}
       <button onClick={clickHandler}>Click here</button>
-      {errorSignUp && <p>{errorSignUp}</p>}
+      {error && <p>{error}</p>}
     </div>
   );
 }
