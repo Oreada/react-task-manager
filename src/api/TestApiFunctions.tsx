@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { UserInfo } from 'types/types';
+import { Board, UserInfo } from 'types/types';
 import { getAllUsers } from './users/getAllUsers';
-import { deleteUser } from './users/deleteUser';
+import { getAllBoards } from './boards/getAllBoards';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -24,7 +24,7 @@ export const thirdUser = {
 };
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<UserInfo | unknown>({});
+  const [result, setResult] = useState<Array<Board>>([]);
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -34,9 +34,8 @@ export function TestApiFunctions() {
       // const result = await getAllUsers(
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
-      const result = await deleteUser(
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636b7dd719d35b6ca446c3cd'
+      const result = await getAllBoards(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       );
       console.log('my result is', result);
       setResult(result);
