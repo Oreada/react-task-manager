@@ -36,3 +36,26 @@ export type BodyForBoard = {
   owner: string; // userId of owner
   users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
+
+export type Column = {
+  _id: string; // Column id
+  title: string; // Column title
+  order: number;
+  boardId: string;
+};
+
+export type BodyForColumn = {
+  title: string;
+  order: number;
+};
+
+export type BodyForColumnsSet = {
+  title: string;
+  order: number;
+  boardId: string;
+};
+
+export type BodyForColumnsSetOrder = {
+  _id: string; // Column id
+  order: number;
+};
