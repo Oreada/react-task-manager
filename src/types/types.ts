@@ -43,3 +43,8 @@ export type Column = {
   order: number;
   boardId: string;
 };
+
+export type BodyForColumn = {
+  title: string;
+  order: number;
+};
