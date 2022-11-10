@@ -17,7 +17,7 @@ export async function signIn(obj: BodyForSignIn): Promise<string> {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const result = (await response.json()) as SignInResult;
+    const result: SignInResult = await response.json();
     const token = result.token;
     return token;
   } catch (e: unknown) {

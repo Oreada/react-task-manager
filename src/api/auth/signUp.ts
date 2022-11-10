@@ -17,7 +17,7 @@ export async function signUp(obj: BodyForSignUp): Promise<UserInfo> {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const newUser = (await response.json()) as UserInfo;
+    const newUser: UserInfo = await response.json();
     console.log('Created user =', newUser);
     return newUser;
   } catch (e: unknown) {
