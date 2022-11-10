@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // import { SignUpResult } from 'types/types';
-import { signIn } from './signIn';
+import { signIn } from './auth/signIn';
 
 export const firstUser = {
   name: 'FirstUser',
