@@ -48,3 +48,9 @@ export type BodyForColumn = {
   title: string;
   order: number;
 };
+
+export type BodyForColumnsSet = {
+  title: string;
+  order: number;
+  boardId: string;
+};

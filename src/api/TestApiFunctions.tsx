@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Board, Column } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
-import { deleteColumn } from './columns/deleteColumn';
+import { createColumnsSet } from './columns/createColumnsSet';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -27,7 +27,7 @@ export const thirdUser = {
 // boards ids: 636cee7f4f5723389cfea000, 636cef214f5723389cfea002, 636cef524f5723389cfea004
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<Column | unknown>({});
+  const [result, setResult] = useState<Array<Column>>([]);
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -47,10 +47,25 @@ export function TestApiFunctions() {
       //   '636cee7f4f5723389cfea000'
       // );
 
-      const result = await deleteColumn(
+      const result = await createColumnsSet(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636cee7f4f5723389cfea000',
-        '636d2fda5cdf026236460004'
+        [
+          {
+            title: 'urgent',
+            order: 1,
+            boardId: '636cef524f5723389cfea004',
+          },
+          {
+            title: 'non-urgent',
+            order: 2,
+            boardId: '636cef524f5723389cfea004',
+          },
+          {
+            title: 'delegate',
+            order: 3,
+            boardId: '636cef524f5723389cfea004',
+          },
+        ]
       );
 
       console.log('my result is', result);
@@ -64,7 +79,7 @@ export function TestApiFunctions() {
 
   return (
     <div>
-      <p>Result: {(result as Column).title}</p>
+      {/* <p>Result: {(result as Column).title}</p> */}
       <button onClick={clickHandler}>Click here</button>
       {error && <p>{error}</p>}
     </div>
