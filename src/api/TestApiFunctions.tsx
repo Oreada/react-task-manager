@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { UserInfo } from 'types/types';
 import { getUser } from './users/getUser';
+import { updateUser } from './users/updateUser';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -30,9 +31,18 @@ export function TestApiFunctions() {
     event.preventDefault();
 
     try {
-      const result = await getUser(
+      // const result = await getUser(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
+      //   '636b5a6b83f1e2fe95e7a283'
+      // );
+      const result = await updateUser(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636b5a6b83f1e2fe95e7a283'
+        '636b5a6b83f1e2fe95e7a283',
+        {
+          name: 'FirstUser - Updated',
+          login: 'FirstUser',
+          password: 'FirstUser',
+        }
       );
       console.log('my result is', result);
       setResult(result);
