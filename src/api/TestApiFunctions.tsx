@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Board } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
-import { getBoardsByIdsBoards } from './boards/getBoardsByIdsBoards';
+import { getBoardsByIdUser } from './boards/getBoardsByIdUser';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -42,14 +42,9 @@ export function TestApiFunctions() {
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
       // );
 
-      const result = await getBoardsByIdsBoards(
+      const result = await getBoardsByIdUser(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        [
-          '636cee7f4f5723389cfea000',
-          '636cef214f5723389cfea002',
-          '636cef524f5723389cfea004',
-          '636d0494057cb37a3cbe038e',
-        ]
+        '636ba2d019d35b6ca446c404'
       );
 
       console.log('my result is', result);
