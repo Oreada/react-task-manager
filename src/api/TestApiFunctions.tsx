@@ -1,6 +1,6 @@
 import { useState } from 'react';
-// import { SignUpResult } from 'types/types';
-import { signIn } from './auth/signIn';
+import { UserInfo } from 'types/types';
+import { getAllUsers } from './users/getAllUsers';
 
 export const firstUser = {
   name: 'FirstUser',
@@ -20,14 +20,16 @@ export const thirdUser = {
 };
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<string>('');
+  const [result, setResult] = useState<Array<UserInfo>>([]);
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
     try {
-      const result = await signIn(thirdUser);
+      const result = await getAllUsers(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      );
       console.log('my result is', result);
       setResult(result);
     } catch (e: unknown) {
@@ -39,7 +41,7 @@ export function TestApiFunctions() {
 
   return (
     <div>
-      <p>Result: {result}</p>
+      {/* <p>Result: {result}</p> */}
       <button onClick={clickHandler}>Click here</button>
       {error && <p>{error}</p>}
     </div>
