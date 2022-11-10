@@ -1,8 +1,8 @@
 import { URL_SINGUP } from 'constants/constants';
-import { BodyForSignUp, SignUpResult } from 'types/types';
+import { BodyForSignUp, UserInfo } from 'types/types';
 
 //! Create new User
-export async function signUp(obj: BodyForSignUp): Promise<SignUpResult> {
+export async function signUp(obj: BodyForSignUp): Promise<UserInfo> {
   try {
     const response = await fetch(URL_SINGUP, {
       method: 'POST',
@@ -17,7 +17,7 @@ export async function signUp(obj: BodyForSignUp): Promise<SignUpResult> {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const newUser = (await response.json()) as SignUpResult;
+    const newUser = (await response.json()) as UserInfo;
     console.log('Created user =', newUser);
     return {
       _id: newUser._id,

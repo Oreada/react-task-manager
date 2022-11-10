@@ -4,7 +4,7 @@ export type BodyForSignUp = {
   password: string;
 };
 
-export type SignUpResult = {
+export type UserInfo = {
   _id: string;
   name: string;
   login: string;
