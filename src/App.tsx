@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router />
-      <TestApiFunctions />
+      {/* <TestApiFunctions /> */}
     </Provider>
   );
 };

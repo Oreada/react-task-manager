@@ -1,8 +1,12 @@
+import { sortByOrder } from 'api/helpers/sortByOrder';
 import { URL_ALL_BOARDS } from 'constants/constants';
-import { Column } from 'types/types';
+import { ColumnType } from 'types/types';
 
 //! Get Columns in board
-export async function getAllColumnsOfBoard(token: string, idBoard: string): Promise<Array<Column>> {
+export async function getAllColumnsOfBoard(
+  token: string,
+  idBoard: string
+): Promise<Array<ColumnType>> {
   try {
     const response = await fetch(`${URL_ALL_BOARDS}/${idBoard}/columns`, {
       method: 'GET',
@@ -18,7 +22,8 @@ export async function getAllColumnsOfBoard(token: string, idBoard: string): Prom
     }
 
     const columnsList = await response.json();
-    return columnsList;
+    console.log(columnsList);
+    return sortByOrder(columnsList);
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);

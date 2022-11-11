@@ -1,5 +1,5 @@
 import Board from 'components/Board/Board';
-import BoardList from 'components/BoardList/BoardList';
+import BoardList from 'pages/MainPage/MainPage';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Authentification from '../pages/AuthPage';
@@ -12,7 +12,7 @@ const Router = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<WelcomePage />} />
         <Route path="boards" element={<BoardList />} />
-        <Route path="boards/board" element={<Board />} />
+        <Route path="boards/:id" element={<Board />} />
         <Route path="form" element={<Authentification />} />
         <Route path="*" element={<NoFoundPage />} />
       </Route>

@@ -1,20 +1,56 @@
 import Column from 'components/Column/Column';
 import cls from './Board.module.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import {
-  COLUMNLIST,
-  DROPPABLE_DIRECTION_BOARD,
-  DROPPABLE_ID_BOARD,
-  DROPPABLE_TYPE_BOARD,
-} from './constants';
-import { DRAGGABLE_ID_COLUMN, DROPPABLE_TYPE_COLUMN, TASKLIST } from 'components/Column/constants';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
+import { DROPPABLE_TYPE_COLUMN, TASKLIST } from 'components/Column/constants';
 import { DropResult } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, IRootState } from 'store/model';
+import { getColumnsThunk, setColumns } from 'store/boardSlice';
+import { CURRENT_TOKEN } from 'constants/constants';
+import { ColumnType } from 'types/types';
+import { updateColumnsSet } from 'api/columns/updateColumnsSet';
 
 const Board = () => {
-  const [columns, setColumns] = useState(COLUMNLIST);
+  const { id } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const { columns, isLoading } = useSelector((state: IRootState) => state.board);
 
-  const reorderItems = (array: number[], currentIndex: number, destinationIndex: number) => {
+  const columnsMemo = useMemo(() => {
+    return columns;
+  }, [columns]);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getColumnsThunk({ token: CURRENT_TOKEN, idBoard: id }));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    const reoderColumns = async () => {
+      return await updateColumnsSet(
+        CURRENT_TOKEN,
+        columnsMemo.map((column, index) => {
+          return {
+            _id: column._id,
+            order: index,
+          };
+        })
+      );
+    };
+
+    if (columnsMemo.length) {
+      reoderColumns();
+    }
+  }, [columnsMemo, dispatch]);
+
+  const reorderItems = <Type extends ColumnType | number>(
+    array: Type[],
+    currentIndex: number,
+    destinationIndex: number
+  ) => {
     const result = [...array];
     const [removed] = result.splice(currentIndex, 1);
     result.splice(destinationIndex, 0, removed);
@@ -22,19 +58,23 @@ const Board = () => {
   };
 
   const handleDragEnd = (result: DropResult) => {
-    const { destination, source, type } = result;
+    const {
+      destination,
+      source: { index, droppableId: sourceColumnId },
+      type,
+    } = result;
 
     if (!destination) {
       return;
     }
 
+    const { droppableId: destColemnId } = destination;
+
     if (type === DROPPABLE_TYPE_BOARD) {
-      setColumns(reorderItems(columns, result.source.index, destination.index));
+      const result = reorderItems<ColumnType>(columns, index, destination.index);
+      dispatch(setColumns({ columns: result }));
       return;
     }
-
-    const sourceColumnId = parseInt(source.droppableId);
-    const destColemnId = parseInt(destination.droppableId);
 
     if (type === DROPPABLE_TYPE_COLUMN) {
       if (sourceColumnId === destColemnId) {
@@ -42,13 +82,13 @@ const Board = () => {
 
         // console.log(draggableId); //id Task
         // console.log(source.index, destination.index);
-        const newTasks = reorderItems(TASKLIST, source.index, destination.index);
+        const newTasks = reorderItems<number>(TASKLIST, index, destination.index);
         const newColumns = columns.map((column) => {
-          if (column === sourceColumnId) {
+          if (column._id === sourceColumnId) {
           }
           return column;
         });
-        setColumns(newColumns);
+        // dispatch(reoderColumnsThunk({ columns: newColumns }));
         return;
       }
 
@@ -65,15 +105,15 @@ const Board = () => {
       >
         {(provider) => (
           <div className={cls.board} ref={provider.innerRef} {...provider.droppableProps}>
-            {columns.map((item, index) => (
-              <Draggable key={item} draggableId={DRAGGABLE_ID_COLUMN + item} index={index}>
+            {columns.map(({ _id, title }, index) => (
+              <Draggable key={_id} draggableId={_id} index={index}>
                 {(provider) => (
                   <div
                     {...provider.draggableProps}
                     {...provider.dragHandleProps}
                     ref={provider.innerRef}
                   >
-                    <Column id={item.toString()} />
+                    <Column id={_id} title={title} />
                   </div>
                 )}
               </Draggable>

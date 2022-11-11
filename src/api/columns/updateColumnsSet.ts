@@ -1,11 +1,12 @@
+import { sortByOrder } from 'api/helpers/sortByOrder';
 import { URL_COLUMNS_SET } from 'constants/constants';
-import { Column, BodyForColumnsSetOrder } from 'types/types';
+import { ColumnType, BodyForColumnsSetOrder } from 'types/types';
 
 //! Change order of list of columns
 export async function updateColumnsSet(
   token: string,
   body: Array<BodyForColumnsSetOrder>
-): Promise<Array<Column>> {
+): Promise<Array<ColumnType>> {
   try {
     const response = await fetch(URL_COLUMNS_SET, {
       method: 'PATCH',
@@ -20,7 +21,6 @@ export async function updateColumnsSet(
     if (!response.ok) {
       throw new Error(`Request failed with status code ${response.status}`);
     }
-
     const columnsUpdatedList = await response.json();
     return columnsUpdatedList;
   } catch (e: unknown) {

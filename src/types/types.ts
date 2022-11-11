@@ -37,7 +37,7 @@ export type BodyForBoard = {
   users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
 
-export type Column = {
+export type ColumnType = {
   _id: string; // Column id
   title: string; // Column title
   order: number;
