@@ -80,3 +80,12 @@ export type BodyForTask = {
   userId: string; // userId of task owner
   users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
+
+export type BodyForTaskUpdating = {
+  title: string; // Task title
+  order: number;
+  description: string; // Task decription
+  columnId: string; //! дублирование columnId в функции updateTask: параметр и боди
+  userId: string; // userId of task owner
+  users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
+};
