@@ -4,7 +4,7 @@ import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
 import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
 import { updateTask } from './tasks/updateTask';
-import { getTasksBySearching } from './tasks/getTasksBySearching';
+import { updateTasksSet } from './tasks/updateTasksSet';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -70,9 +70,20 @@ export function TestApiFunctions() {
       //   }
       // );
 
-      const result = await getTasksBySearching(
+      const result = await updateTasksSet(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
-        'REPORT'
+        [
+          {
+            _id: '636e13a7231d5cb1866ab797',
+            order: 1,
+            columnId: '636d55bcdcbc2ec1bc6f22a2',
+          },
+          {
+            _id: '636e1323231d5cb1866ab794',
+            order: 2,
+            columnId: '636d55bcdcbc2ec1bc6f22a2',
+          },
+        ]
       );
 
       console.log('my result is', result);

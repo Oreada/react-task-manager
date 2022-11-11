@@ -89,3 +89,9 @@ export type BodyForTaskUpdating = {
   userId: string; // userId of task owner
   users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
+
+export type BodyForTasksSetOrder = {
+  _id: string; // Task id
+  order: number;
+  columnId: string;
+};
