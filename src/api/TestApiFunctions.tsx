@@ -4,7 +4,7 @@ import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
 import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
 import { updateTask } from './tasks/updateTask';
-import { getTasksByIdsTasks } from './tasks/getTasksByIdsTasks';
+import { getTasksByIdUser } from './tasks/getTasksByIdUser';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -70,9 +70,9 @@ export function TestApiFunctions() {
       //   }
       // );
 
-      const result = await getTasksByIdsTasks(
+      const result = await getTasksByIdUser(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
-        ['636e1323231d5cb1866ab794', '111', '636e13a7231d5cb1866ab797']
+        '636ba2d019d35b6ca446c404'
       );
 
       console.log('my result is', result);
