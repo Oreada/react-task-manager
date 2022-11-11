@@ -1,4 +1,4 @@
-import { URL_ALL_USERS } from 'constants/constants';
+import { URL_USERS } from 'constants/constants';
 import { BodyForSignUp, UserInfo } from 'types/types';
 
 //! Update User
@@ -8,7 +8,7 @@ export async function updateUser(
   obj: BodyForSignUp
 ): Promise<UserInfo> {
   try {
-    const response = await fetch(`${URL_ALL_USERS}/${idUser}`, {
+    const response = await fetch(`${URL_USERS}/${idUser}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

@@ -1,4 +1,4 @@
-import { URL_ALL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from 'constants/constants';
 import { Task, BodyForTask } from 'types/types';
 
 //! Create Task in column
@@ -9,7 +9,7 @@ export async function createTask(
   obj: BodyForTask
 ): Promise<Task> {
   try {
-    const response = await fetch(`${URL_ALL_BOARDS}/${idBoard}/columns/${idColumn}/tasks`, {
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -1,4 +1,4 @@
-import { URL_ALL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from 'constants/constants';
 import { Task } from 'types/types';
 
 //! Find Task
@@ -9,17 +9,14 @@ export async function getTask(
   idTask: string
 ): Promise<Task> {
   try {
-    const response = await fetch(
-      `${URL_ALL_BOARDS}/${idBoard}/columns/${idColumn}/tasks/${idTask}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks/${idTask}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Request failed with status code ${response.status}`);

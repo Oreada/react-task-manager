@@ -1,10 +1,10 @@
-import { URL_ALL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from 'constants/constants';
 import { Board, BodyForBoard } from 'types/types';
 
 //! Create Board
 export async function createBoard(token: string, obj: BodyForBoard): Promise<Board> {
   try {
-    const response = await fetch(URL_ALL_BOARDS, {
+    const response = await fetch(URL_BOARDS, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

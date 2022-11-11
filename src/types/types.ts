@@ -95,3 +95,11 @@ export type BodyForTasksSetOrder = {
   order: number;
   columnId: string;
 };
+
+export type File = {
+  _id: string; // File id
+  name: string; // "example.img"
+  taskId: string; // id of task
+  boardId: string; // id of board
+  path: string; // "files/taskId-name"
+};
