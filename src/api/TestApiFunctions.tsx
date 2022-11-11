@@ -4,7 +4,7 @@ import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
 import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
 import { updateTask } from './tasks/updateTask';
-import { getTasksByIdUser } from './tasks/getTasksByIdUser';
+import { getTasksBySearching } from './tasks/getTasksBySearching';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -70,9 +70,9 @@ export function TestApiFunctions() {
       //   }
       // );
 
-      const result = await getTasksByIdUser(
+      const result = await getTasksBySearching(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
-        '636ba2d019d35b6ca446c404'
+        'REPORT'
       );
 
       console.log('my result is', result);
