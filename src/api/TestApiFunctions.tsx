@@ -4,7 +4,7 @@ import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
 import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
 import { updateTask } from './tasks/updateTask';
-import { deleteTask } from './tasks/deleteTask';
+import { getTasksByIdsTasks } from './tasks/getTasksByIdsTasks';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -29,7 +29,7 @@ export const thirdUser = {
 // boards ids: 636cee7f4f5723389cfea000, 636cef214f5723389cfea002, 636cef524f5723389cfea004
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<Task | unknown>({});
+  const [result, setResult] = useState<Array<Task>>([]);
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -70,11 +70,9 @@ export function TestApiFunctions() {
       //   }
       // );
 
-      const result = await deleteTask(
+      const result = await getTasksByIdsTasks(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
-        '636cef524f5723389cfea004',
-        '636d55bcdcbc2ec1bc6f22a2',
-        '636e1a1b231d5cb1866ab79f'
+        ['636e1323231d5cb1866ab794', '111', '636e13a7231d5cb1866ab797']
       );
 
       console.log('my result is', result);
