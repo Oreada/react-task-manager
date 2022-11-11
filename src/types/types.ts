@@ -1,3 +1,5 @@
+import { type } from 'os';
+
 export type BodyForSignUp = {
   name: string;
   login: string;
@@ -58,4 +60,15 @@ export type BodyForColumnsSet = {
 export type BodyForColumnsSetOrder = {
   _id: string; // Column id
   order: number;
+};
+
+export type Task = {
+  _id: string; // Task id
+  title: string; // Task title
+  order: number;
+  boardId: string; // id of board
+  columnId: string; // id of column
+  description: string; // Task decription
+  userId: string; // userId of task owner
+  users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
