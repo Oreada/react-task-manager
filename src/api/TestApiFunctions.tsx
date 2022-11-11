@@ -3,6 +3,7 @@ import { Board, Column, Task } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
 import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
+import { createTask } from './tasks/createTask';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -27,7 +28,7 @@ export const thirdUser = {
 // boards ids: 636cee7f4f5723389cfea000, 636cef214f5723389cfea002, 636cef524f5723389cfea004
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<Array<Task>>([]);
+  const [result, setResult] = useState<Task | unknown>({});
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -35,22 +36,35 @@ export function TestApiFunctions() {
 
     try {
       // const result = await getAllUsers(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg'
       // );
 
       // const result = await getAllBoards(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg'
       // );
 
       // const result = await getAllColumnsOfBoard(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-      //   '636cee7f4f5723389cfea000'
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+      //   '636cef524f5723389cfea004'
       // );
 
-      const result = await getAllTasksOfColumn(
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636cee7f4f5723389cfea000',
-        '636d2fc35cdf026236460001'
+      // const result = await getAllTasksOfColumn(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+      //   '636cef524f5723389cfea004',
+      //   '636d55bcdcbc2ec1bc6f22a2'
+      // );
+
+      const result = await createTask(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+        '636cef524f5723389cfea004',
+        '636d55bcdcbc2ec1bc6f22a2',
+        {
+          title: 'finish the report',
+          order: 2,
+          description: 'deadline 11.11.22',
+          userId: '636ba2d019d35b6ca446c404',
+          users: ['636b5a6b83f1e2fe95e7a283'],
+        }
       );
 
       console.log('my result is', result);
