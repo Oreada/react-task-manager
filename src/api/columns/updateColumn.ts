@@ -1,4 +1,4 @@
-import { URL_ALL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from 'constants/constants';
 import { BodyForColumn, Column } from 'types/types';
 
 //! Update Column
@@ -9,7 +9,7 @@ export async function updateColumn(
   obj: BodyForColumn
 ): Promise<Column> {
   try {
-    const response = await fetch(`${URL_ALL_BOARDS}/${idBoard}/columns/${idColumn}`, {
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

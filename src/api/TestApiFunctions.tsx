@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Board, Column } from 'types/types';
+import { Board, Column, Task } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
-import { getColumnsByIdUser } from './columns/getColumnsByIdUser';
+import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
+import { updateTask } from './tasks/updateTask';
+import { getTasksByIdBoard } from './tasks/getTasksByIdBoard';
 
 // 636b5a6b83f1e2fe95e7a283
 export const firstUser = {
@@ -27,7 +29,7 @@ export const thirdUser = {
 // boards ids: 636cee7f4f5723389cfea000, 636cef214f5723389cfea002, 636cef524f5723389cfea004
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<Array<Column>>([]);
+  const [result, setResult] = useState<Array<Task>>([]);
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -35,21 +37,42 @@ export function TestApiFunctions() {
 
     try {
       // const result = await getAllUsers(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg'
       // );
 
       // const result = await getAllBoards(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8'
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg'
       // );
 
       // const result = await getAllColumnsOfBoard(
-      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-      //   '636cee7f4f5723389cfea000'
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+      //   '636cef524f5723389cfea004'
       // );
 
-      const result = await getColumnsByIdUser(
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmJhMmQwMTlkMzViNmNhNDQ2YzQwNCIsImxvZ2luIjoiVGhpcmRVc2VyIiwiaWF0IjoxNjY4MDY5NTk1LCJleHAiOjE2NjgxMTI3OTV9.rChnyK0_5zvXhQZyRBQGrjNAVHQiTjZJ3x4WtTwczX8',
-        '636ba2d019d35b6ca446c404'
+      // const result = await getAllTasksOfColumn(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+      //   '636cef524f5723389cfea004',
+      //   '636d55bcdcbc2ec1bc6f22a2'
+      // );
+
+      // const result = await updateTask(
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+      //   '636cef524f5723389cfea004',
+      //   '636d55bcdcbc2ec1bc6f22a2',
+      //   '636e13a7231d5cb1866ab797',
+      //   {
+      //     title: 'Finish the report',
+      //     order: 2,
+      //     description: 'Deadline is 11.11.22',
+      //     columnId: '636d55bcdcbc2ec1bc6f22a2',
+      //     userId: '636ba2d019d35b6ca446c404',
+      //     users: ['636b5a6b83f1e2fe95e7a283'],
+      //   }
+      // );
+
+      const result = await getTasksByIdBoard(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI1YTZiODNmMWUyZmU5NWU3YTI4MyIsImxvZ2luIjoiRmlyc3RVc2VyIiwiaWF0IjoxNjY4MTU3OTM0LCJleHAiOjE2NjgyMDExMzR9.mUOcMs0honwvkLem6NVPY9n3hera1wSuBqAyKoNefQg',
+        '636cef524f5723389cfea004'
       );
 
       console.log('my result is', result);

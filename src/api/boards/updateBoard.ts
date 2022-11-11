@@ -1,4 +1,4 @@
-import { URL_ALL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from 'constants/constants';
 import { Board, BodyForBoard } from 'types/types';
 
 //! Update Board
@@ -8,7 +8,7 @@ export async function updateBoard(
   obj: BodyForBoard
 ): Promise<Board> {
   try {
-    const response = await fetch(`${URL_ALL_BOARDS}/${idBoard}`, {
+    const response = await fetch(`${URL_BOARDS}/${idBoard}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

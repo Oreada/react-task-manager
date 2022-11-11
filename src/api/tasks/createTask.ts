@@ -1,14 +1,15 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Column, BodyForColumn } from 'types/types';
+import { Task, BodyForTask } from 'types/types';
 
-//! Create Column in board
-export async function createColumn(
+//! Create Task in column
+export async function createTask(
   token: string,
   idBoard: string,
-  obj: BodyForColumn
-): Promise<Column> {
+  idColumn: string,
+  obj: BodyForTask
+): Promise<Task> {
   try {
-    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns`, {
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -22,8 +23,8 @@ export async function createColumn(
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const column = await response.json();
-    return column;
+    const task = await response.json();
+    return task;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);
