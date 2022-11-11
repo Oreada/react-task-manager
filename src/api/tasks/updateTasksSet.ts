@@ -1,29 +1,28 @@
-import { URL_BOARDS } from 'constants/constants';
-import { Board, BodyForBoard } from 'types/types';
+import { URL_TASKS_SET } from 'constants/constants';
+import { Task, BodyForTasksSetOrder } from 'types/types';
 
-//! Update Board
-export async function updateBoard(
+//! Change order of list of tasks
+export async function updateTasksSet(
   token: string,
-  idBoard: string,
-  obj: BodyForBoard
-): Promise<Board> {
+  body: Array<BodyForTasksSetOrder>
+): Promise<Array<Task>> {
   try {
-    const response = await fetch(`${URL_BOARDS}/${idBoard}`, {
-      method: 'PUT',
+    const response = await fetch(URL_TASKS_SET, {
+      method: 'PATCH',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(obj),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const boardUpdated = await response.json();
-    return boardUpdated;
+    const tasksUpdatedList = await response.json();
+    return tasksUpdatedList;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);

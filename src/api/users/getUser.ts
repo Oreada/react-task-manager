@@ -1,10 +1,10 @@
-import { URL_ALL_USERS } from 'constants/constants';
+import { URL_USERS } from 'constants/constants';
 import { UserInfo } from 'types/types';
 
 //! Find User
 export async function getUser(token: string, idUser: string): Promise<UserInfo> {
   try {
-    const response = await fetch(`${URL_ALL_USERS}/${idUser}`, {
+    const response = await fetch(`${URL_USERS}/${idUser}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

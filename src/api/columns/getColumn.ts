@@ -1,4 +1,4 @@
-import { URL_ALL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from 'constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Find Column
@@ -8,7 +8,7 @@ export async function getColumn(
   idColumn: string
 ): Promise<ColumnType> {
   try {
-    const response = await fetch(`${URL_ALL_BOARDS}/${idBoard}/columns/${idColumn}`, {
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

@@ -1,10 +1,15 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Board } from 'types/types';
+import { Task } from 'types/types';
 
-//! Find Board
-export async function getBoard(token: string, idBoard: string): Promise<Board> {
+//! Find Task
+export async function getTask(
+  token: string,
+  idBoard: string,
+  idColumn: string,
+  idTask: string
+): Promise<Task> {
   try {
-    const response = await fetch(`${URL_BOARDS}/${idBoard}`, {
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks/${idTask}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -17,8 +22,8 @@ export async function getBoard(token: string, idBoard: string): Promise<Board> {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const board = await response.json();
-    return board;
+    const task = await response.json();
+    return task;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);

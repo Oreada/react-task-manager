@@ -1,14 +1,14 @@
-import { URL_BOARDS } from 'constants/constants';
-import { ColumnType } from 'types/types';
-import { sortByOrder } from 'api/helpers/sortByOrder';
+import { URL_TASKS_SET } from 'constants/constants';
+import { Task } from 'types/types';
 
-//! Get Columns in board
-export async function getAllColumnsOfBoard(
+//! Get Tasks by search request (In title, description)
+//! Поиск регистронезависимый
+export async function getTasksBySearching(
   token: string,
-  idBoard: string
-): Promise<Array<ColumnType>> {
+  searchValue: string
+): Promise<Array<Task>> {
   try {
-    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns`, {
+    const response = await fetch(`${URL_TASKS_SET}?search=${searchValue}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -21,9 +21,8 @@ export async function getAllColumnsOfBoard(
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const columnsList = await response.json();
-    console.log(columnsList);
-    return sortByOrder(columnsList);
+    const tasksList = await response.json();
+    return tasksList;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);

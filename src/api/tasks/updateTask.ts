@@ -1,24 +1,31 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Board } from 'types/types';
+import { Task, BodyForTaskUpdating } from 'types/types';
 
-//! Find Board
-export async function getBoard(token: string, idBoard: string): Promise<Board> {
+//! Update Task
+export async function updateTask(
+  token: string,
+  idBoard: string,
+  idColumn: string,
+  idTask: string,
+  obj: BodyForTaskUpdating
+): Promise<Task> {
   try {
-    const response = await fetch(`${URL_BOARDS}/${idBoard}`, {
-      method: 'GET',
+    const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks/${idTask}`, {
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(obj),
     });
 
     if (!response.ok) {
       throw new Error(`Request failed with status code ${response.status}`);
     }
 
-    const board = await response.json();
-    return board;
+    const taskUpdated = await response.json();
+    return taskUpdated;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);
