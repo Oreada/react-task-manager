@@ -1,12 +1,12 @@
 import { URL_TASKS_SET } from 'constants/constants';
-import { Task } from 'types/types';
+import { TaskType } from 'types/types';
 
 //! Get Tasks by list of taskId
 //! Если передать неверный ID в списке, ошибки не будет, получим Tasks только по верным ID
 export async function getTasksByIdsTasks(
   token: string,
   idsTasks: Array<string>
-): Promise<Array<Task>> {
+): Promise<Array<TaskType>> {
   try {
     const queryFormatted = JSON.stringify(idsTasks);
 

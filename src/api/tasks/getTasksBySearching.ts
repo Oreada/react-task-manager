@@ -1,12 +1,12 @@
 import { URL_TASKS_SET } from 'constants/constants';
-import { Task } from 'types/types';
+import { TaskType } from 'types/types';
 
 //! Get Tasks by search request (In title, description)
 //! Поиск регистронезависимый
 export async function getTasksBySearching(
   token: string,
   searchValue: string
-): Promise<Array<Task>> {
+): Promise<Array<TaskType>> {
   try {
     const response = await fetch(`${URL_TASKS_SET}?search=${searchValue}`, {
       method: 'GET',

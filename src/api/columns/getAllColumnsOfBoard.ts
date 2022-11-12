@@ -22,7 +22,6 @@ export async function getAllColumnsOfBoard(
     }
 
     const columnsList = await response.json();
-    console.log(columnsList);
     return sortByOrder(columnsList);
   } catch (e: unknown) {
     const err = e as Error;

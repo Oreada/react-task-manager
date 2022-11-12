@@ -3,9 +3,9 @@ import { TaskPropsType } from './model';
 import { Draggable } from 'react-beautiful-dnd';
 import { DRAGGABLE_ID_TASK } from './constants';
 
-const Task = ({ idColumn, idTask }: TaskPropsType) => {
+const Task = ({ idColumn, idTask, index }: TaskPropsType) => {
   return (
-    <Draggable draggableId={idColumn + DRAGGABLE_ID_TASK + idTask} index={Number(idTask)}>
+    <Draggable draggableId={idTask} index={index}>
       {(provider) => (
         <div
           className={cls.task}
@@ -13,7 +13,7 @@ const Task = ({ idColumn, idTask }: TaskPropsType) => {
           {...provider.dragHandleProps}
           ref={provider.innerRef}
         >
-          {idTask + idColumn}
+          {idTask}
         </div>
       )}
     </Draggable>

@@ -20,7 +20,7 @@ export const createBoardThunk = createAsyncThunk<Board, CreateBoardArgsType>(
   }
 );
 
-const boardSlice = createSlice({
+const mainSlice = createSlice({
   name: SLICE_NAMES.main,
   initialState: INITIAL_MAIN_STATE,
   reducers: {},
@@ -43,4 +43,4 @@ const boardSlice = createSlice({
   },
 });
 
-export default boardSlice.reducer;
+export default mainSlice.reducer;

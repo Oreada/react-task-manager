@@ -39,12 +39,16 @@ export type BodyForBoard = {
   users: Array<string>; // ["userId of invited user #1", "userId of invited user #2"]
 };
 
-export type ColumnType = {
+export interface ColumnType {
   _id: string; // Column id
   title: string; // Column title
   order: number;
   boardId: string;
-};
+}
+
+export interface AddColumnType extends ColumnType {
+  tasks: TaskType[];
+}
 
 export type BodyForColumn = {
   title: string;
@@ -62,7 +66,7 @@ export type BodyForColumnsSetOrder = {
   order: number;
 };
 
-export type Task = {
+export type TaskType = {
   _id: string; // Task id
   title: string; // Task title
   order: number;

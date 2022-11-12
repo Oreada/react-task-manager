@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import cls from './MainPage.module.scss';
-import { BODY, BUTTON_INNER } from './constants';
+import { BODY, BUTTON_INNER, USER } from './constants';
 import { CURRENT_TOKEN } from 'constants/constants';
 import { createBoardThunk, getBoardsThunk } from 'store/mainSlice';
 
@@ -15,15 +15,14 @@ const MainPage = () => {
   useEffect(() => {
     const getBoardsWithSighUp = async () => {
       // const token = await signIn(USER);
+      // console.log(token);
       dispatch(getBoardsThunk({ token: CURRENT_TOKEN }));
     };
 
     getBoardsWithSighUp();
   }, [dispatch]);
 
-  const handleClickCreateButton = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleClickCreateButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     dispatch(createBoardThunk({ token: CURRENT_TOKEN, body: BODY }));
   };

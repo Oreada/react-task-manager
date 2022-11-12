@@ -7,18 +7,18 @@ export const INITIAL_MAIN_STATE: MainStateType = {
 
 export const INITIAL_BOARD_STATE: BoardStateType = {
   columns: [],
-  tasks: null,
+  idBoard: '',
   isLoading: false,
 };
 
 export const INITIAL_COLUMN_STATE: ColumnStateType = {
-  tasks: [],
+  tasks: {},
   isLoading: false,
 };
 
 export enum BoardStateKeys {
   columns = 'columns',
-  tasks = 'tasks',
+  idBoard = 'idBoard',
   isLoading = 'isLoading',
 }
 
@@ -43,4 +43,5 @@ export enum ASYNC_ACTION_NAMES {
   getColumns = 'getColumns',
   createBoard = 'createBoard',
   reoderColumns = 'reoderColumns',
+  getTasks = 'getTasks',
 }

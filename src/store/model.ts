@@ -1,9 +1,17 @@
-import { Board, BodyForBoard, BodyForColumnsSetOrder, ColumnType } from 'types/types';
+import {
+  AddColumnType,
+  Board,
+  BodyForBoard,
+  BodyForColumnsSetOrder,
+  BodyForTask,
+  ColumnType,
+  TaskType,
+} from 'types/types';
 import { store } from './appStore';
 
 export type BoardStateType = {
   columns: ColumnType[];
-  tasks: number[] | null;
+  idBoard: string;
   isLoading: boolean;
 };
 
@@ -13,7 +21,9 @@ export type MainStateType = {
 };
 
 export type ColumnStateType = {
-  tasks: number[];
+  tasks: {
+    [key: string]: TaskType[];
+  };
   isLoading: boolean;
 };
 
@@ -26,9 +36,22 @@ export type GetColumnsArgsType = {
   idBoard: string;
 };
 
+export type GetTasksArgsType = {
+  token: string;
+  idBoard: string;
+  idColumn: string;
+};
+
 export type CreateBoardArgsType = {
   token: string;
   body: BodyForBoard;
+};
+
+export type CreateTaskArgsType = {
+  token: string;
+  idBoard: string;
+  idColumn: string;
+  body: BodyForTask;
 };
 
 export type ReoderColumnsArgsType = {

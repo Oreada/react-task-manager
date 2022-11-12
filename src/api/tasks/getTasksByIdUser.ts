@@ -1,8 +1,8 @@
 import { URL_TASKS_SET } from 'constants/constants';
-import { Task } from 'types/types';
+import { TaskType } from 'types/types';
 
 //! Get Tasks by UserID, where user is owner or one of invited
-export async function getTasksByIdUser(token: string, idUser: string): Promise<Array<Task>> {
+export async function getTasksByIdUser(token: string, idUser: string): Promise<Array<TaskType>> {
   try {
     const response = await fetch(`${URL_TASKS_SET}?userId=${idUser}`, {
       method: 'GET',
