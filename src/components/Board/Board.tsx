@@ -76,7 +76,7 @@ const Board = () => {
     const taskByColumns: { [key: string]: TaskType[] } = columnsId.reduce(
       (acc, id) => ({
         ...acc,
-        [id]: sortByOrder(allTasks.filter((task) => task.columnId === id)),
+        [id]: allTasks.filter((task) => task.columnId === id),
       }),
       {}
     );
