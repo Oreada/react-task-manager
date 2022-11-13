@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import AboutPage from '../pages/AboutPage';
 import Authentification from '../pages/AuthPage';
 import NoFoundPage from '../pages/NoFoundPage';
-import WelcomePage from '../pages/WelcomePage';
+import WelcomePage from '../pages/WelcomePage/WelcomePage';
 
 const Router = () => {
   return (
