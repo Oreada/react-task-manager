@@ -1,1 +1,1 @@
-export const DRAGGABLE_ID_TASK = 'task';
+export const BUTTON_INNER = 'Delete Task';

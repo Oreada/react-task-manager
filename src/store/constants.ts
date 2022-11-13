@@ -6,14 +6,14 @@ export const INITIAL_MAIN_STATE: MainStateType = {
 };
 
 export const INITIAL_BOARD_STATE: BoardStateType = {
-  allColumns: [],
+  columns: [],
   allTasks: [],
   idBoard: '',
   isLoading: false,
 };
 
 export enum BoardStateKeys {
-  allColumns = 'allColumns',
+  columns = 'columns',
   allTasks = 'allTasks',
   isLoading = 'isLoading',
   idBoard = 'idBoard',

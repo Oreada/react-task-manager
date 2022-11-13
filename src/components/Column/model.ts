@@ -5,4 +5,6 @@ export type ColumnPropsType = {
   title: string;
   tasks: TaskType[];
   addTask: (newTask: TaskType) => void;
+  delColumn: (idColumn: string) => void;
+  delTask: (idTask: string) => void;
 };

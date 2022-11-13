@@ -19,8 +19,8 @@ const boardSlice = createSlice({
   name: SLICE_NAMES.board,
   initialState: INITIAL_BOARD_STATE,
   reducers: {
-    setColumns(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.allColumns>>) {
-      state.allColumns = action.payload.allColumns;
+    setColumns(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.columns>>) {
+      state.columns = action.payload.columns;
     },
     setTasks(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.allTasks>>) {
       state.allTasks = action.payload.allTasks;
@@ -33,13 +33,13 @@ const boardSlice = createSlice({
     builder
       .addCase(getBoardData.pending, (state) => {
         state.isLoading = true;
-        state.allColumns = [];
+        state.columns = [];
         state.allTasks = [];
       })
       .addCase(getBoardData.fulfilled, (state, action) => {
         state.isLoading = false;
         const [columns, tasks] = action.payload;
-        state.allColumns = columns;
+        state.columns = columns;
         state.allTasks = tasks;
       });
   },

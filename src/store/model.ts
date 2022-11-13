@@ -1,16 +1,8 @@
-import {
-  AddColumnType,
-  Board,
-  BodyForBoard,
-  BodyForColumnsSetOrder,
-  BodyForTask,
-  ColumnType,
-  TaskType,
-} from 'types/types';
+import { Board, BodyForBoard, BodyForTask, ColumnType, TaskType } from 'types/types';
 import { store } from './appStore';
 
 export type BoardStateType = {
-  allColumns: ColumnType[];
+  columns: ColumnType[];
   allTasks: TaskType[];
   idBoard: string;
   isLoading: boolean;

@@ -1,7 +1,10 @@
 export const DROPPABLE_ID_COLUMN = 'columnDrop';
 export const DROPPABLE_TYPE_COLUMN = 'droppableColumn';
 export const DRAGGABLE_ID_COLUMN = 'columnDrag';
-export const BUTTON_INNER = 'Create task';
+export enum BUTTON_INNER {
+  createTask = 'Create task',
+  deleteColumn = 'Delete Column',
+}
 
 export const BODY = {
   title: 'Task Kate',
