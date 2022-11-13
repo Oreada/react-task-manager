@@ -77,19 +77,17 @@ const Column = memo(
         <div className={cls.list}>
           <Droppable droppableId={id} type={DROPPABLE_TYPE_COLUMN}>
             {(provider) => (
-              <div ref={provider.innerRef} {...provider.droppableProps}>
-                <div>
-                  {tasks.map(({ _id }, index) => (
-                    <Task key={_id} idColumn={id} idTask={_id} index={index} delTask={delTask} />
-                  ))}
-                  {provider.placeholder}
-                </div>
-                <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
-                <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
+              <div className={cls.tasks} ref={provider.innerRef} {...provider.droppableProps}>
+                {tasks.map(({ _id }, index) => (
+                  <Task key={_id} idColumn={id} idTask={_id} index={index} delTask={delTask} />
+                ))}
+                {provider.placeholder}
               </div>
             )}
           </Droppable>
         </div>
+        <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
+        <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
       </div>
     );
   }
