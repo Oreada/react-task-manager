@@ -225,7 +225,7 @@ const Board = () => {
                         addTask={addTaskMemo}
                         delColumn={delColumnMemo}
                         delTask={delTaskMemo}
-                        tasks={taskByColumnsMemo[_id]}
+                        tasks={JSON.stringify(taskByColumnsMemo[_id])}
                       />
                     </div>
                   )}

@@ -13,80 +13,82 @@ import { setColumns, setTasks } from 'store/boardSlice';
 import { getAllTasksOfColumn } from 'api/tasks/getAllTasksOfColumn';
 import { deleteColumn } from 'api/columns/deleteColumn';
 
-const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
-  // console.log(tasks);
-  // const [tasks, setTasks] = useState<TaskType[]>([]);
-  const { idBoard } = useSelector((state: IRootState) => state.board);
-  // const dispatch = useDispatch<AppDispatch>();
-  // const { allTasks } = useSelector((state: IRootState) => state.board);
+const Column = memo(
+  ({ id, title, addTask, delColumn, delTask, tasks: defaultTasks }: ColumnPropsType) => {
+    const tasks = JSON.parse(defaultTasks) as TaskType[];
+    // const [tasks, setTasks] = useState<TaskType[]>([]);
+    const { idBoard } = useSelector((state: IRootState) => state.board);
+    // const dispatch = useDispatch<AppDispatch>();
+    // const { allTasks } = useSelector((state: IRootState) => state.board);
 
-  // useEffect(() => {
-  //   const getColumnTasks = async () => {
-  //     setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
-  //   };
+    // useEffect(() => {
+    //   const getColumnTasks = async () => {
+    //     setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
+    //   };
 
-  //   getColumnTasks();
-  // }, [id, idBoard]);
+    //   getColumnTasks();
+    // }, [id, idBoard]);
 
-  // useEffect(() => {
-  //   const getColumnTasks = async () => {
-  //     setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
-  //   };
+    // useEffect(() => {
+    //   const getColumnTasks = async () => {
+    //     setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
+    //   };
 
-  //   if (isRendering) {
-  //     getColumnTasks();
-  //   }
-  // }, [id, idBoard, isRendering]);
-  // useEffect(() => {
-  //   dispatch(
-  //     setColumns({
-  //       columns: columns.map((column) => (column._id === id ? { ...column, tasks } : column)),
-  //     })
-  //   );
-  // }, [tasks, id, dispatch]);
+    //   if (isRendering) {
+    //     getColumnTasks();
+    //   }
+    // }, [id, idBoard, isRendering]);
+    // useEffect(() => {
+    //   dispatch(
+    //     setColumns({
+    //       columns: columns.map((column) => (column._id === id ? { ...column, tasks } : column)),
+    //     })
+    //   );
+    // }, [tasks, id, dispatch]);
 
-  const handleClickCreateButton = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    const newTask = await createTask(CURRENT_TOKEN, idBoard, id, {
-      ...BODY,
-      order: tasks.length,
-    });
-    // setTasks([...tasks, newTask]);
-    // dispatch(setTasks({ allTasks: [...allTasks, newTask] }));
-    addTask(newTask);
-    return newTask;
-  };
+    const handleClickCreateButton = async (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      event.preventDefault();
+      const newTask = await createTask(CURRENT_TOKEN, idBoard, id, {
+        ...BODY,
+        order: tasks.length,
+      });
+      // setTasks([...tasks, newTask]);
+      // dispatch(setTasks({ allTasks: [...allTasks, newTask] }));
+      addTask(newTask);
+      return newTask;
+    };
 
-  const handleClickDeleteButton = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    const deletedColumn = await deleteColumn(CURRENT_TOKEN, idBoard, id);
-    // dispatch(setColumns({ columns: columns.filter((column) => column._id !== id) }));
+    const handleClickDeleteButton = async (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      event.preventDefault();
+      const deletedColumn = await deleteColumn(CURRENT_TOKEN, idBoard, id);
+      // dispatch(setColumns({ columns: columns.filter((column) => column._id !== id) }));
 
-    delColumn(id);
-    return deletedColumn;
-  };
+      delColumn(id);
+      return deletedColumn;
+    };
 
-  return (
-    <Droppable droppableId={id} type={DROPPABLE_TYPE_COLUMN}>
-      {(provider) => (
-        <div className={cls.column} ref={provider.innerRef} {...provider.droppableProps}>
-          <h3>{title}</h3>
-          <div className={cls.list}>
-            {tasks.map(({ _id }, index) => (
-              <Task key={_id} idColumn={id} idTask={_id} index={index} delTask={delTask} />
-            ))}
-            {provider.placeholder}
+    return (
+      <Droppable droppableId={id} type={DROPPABLE_TYPE_COLUMN}>
+        {(provider) => (
+          <div className={cls.column} ref={provider.innerRef} {...provider.droppableProps}>
+            <h3>{title}</h3>
+            <div className={cls.list}>
+              {tasks.map(({ _id }, index) => (
+                <Task key={_id} idColumn={id} idTask={_id} index={index} delTask={delTask} />
+              ))}
+              {provider.placeholder}
+            </div>
+            <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
+            <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
           </div>
-          <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
-          <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
-        </div>
-      )}
-    </Droppable>
-  );
-});
+        )}
+      </Droppable>
+    );
+  }
+);
 
 export default memo(Column);
