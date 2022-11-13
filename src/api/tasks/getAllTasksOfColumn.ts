@@ -1,4 +1,4 @@
-import { sortByOrder } from 'api/helpers/sortByOrder';
+import { sortByOrder } from 'components/heplers/sortByOrder';
 import { URL_BOARDS } from 'constants/constants';
 import { TaskType } from 'types/types';
 
@@ -23,7 +23,8 @@ export async function getAllTasksOfColumn(
     }
 
     const tasksList = await response.json();
-    return sortByOrder(tasksList);
+    const sort = sortByOrder<TaskType>(tasksList);
+    return sort;
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);

@@ -10,7 +10,8 @@ import {
 import { store } from './appStore';
 
 export type BoardStateType = {
-  columns: ColumnType[];
+  allColumns: ColumnType[];
+  allTasks: TaskType[];
   idBoard: string;
   isLoading: boolean;
 };
@@ -20,26 +21,13 @@ export type MainStateType = {
   isLoading: boolean;
 };
 
-export type ColumnStateType = {
-  tasks: {
-    [key: string]: TaskType[];
-  };
-  isLoading: boolean;
-};
-
 export type GetBoardArgsType = {
   token: string;
 };
 
-export type GetColumnsArgsType = {
+export type GetBoardDataArgsType = {
   token: string;
   idBoard: string;
-};
-
-export type GetTasksArgsType = {
-  token: string;
-  idBoard: string;
-  idColumn: string;
 };
 
 export type CreateBoardArgsType = {
@@ -52,11 +40,6 @@ export type CreateTaskArgsType = {
   idBoard: string;
   idColumn: string;
   body: BodyForTask;
-};
-
-export type ReoderColumnsArgsType = {
-  token: string;
-  body: BodyForColumnsSetOrder[];
 };
 
 export type IRootState = ReturnType<typeof store.getState>;

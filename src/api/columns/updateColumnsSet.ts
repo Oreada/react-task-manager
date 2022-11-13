@@ -1,4 +1,3 @@
-import { sortByOrder } from 'api/helpers/sortByOrder';
 import { URL_COLUMNS_SET } from 'constants/constants';
 import { ColumnType, BodyForColumnsSetOrder } from 'types/types';
 

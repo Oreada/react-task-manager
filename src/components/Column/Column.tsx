@@ -9,23 +9,33 @@ import { CURRENT_TOKEN } from 'constants/constants';
 import { memo, useEffect, useState } from 'react';
 import { createTask } from 'api/tasks/createTask';
 import { TaskType } from 'types/types';
-import { setColumns } from 'store/boardSlice';
+import { setColumns, setTasks } from 'store/boardSlice';
 import { getAllTasksOfColumn } from 'api/tasks/getAllTasksOfColumn';
 
-const Column = ({ id, title, addTask }: ColumnPropsType) => {
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-  const { idBoard, columns } = useSelector((state: IRootState) => state.board);
-  const dispatch = useDispatch<AppDispatch>();
-  // const { tasks } = useSelector((state: IRootState) => state.column);
+const Column = memo(({ id, title, addTask, tasks }: ColumnPropsType) => {
+  // console.log(tasks);
+  // const [tasks, setTasks] = useState<TaskType[]>([]);
+  const { idBoard } = useSelector((state: IRootState) => state.board);
+  // const dispatch = useDispatch<AppDispatch>();
+  // const { allTasks } = useSelector((state: IRootState) => state.board);
 
-  useEffect(() => {
-    const getColumnTasks = async () => {
-      setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
-    };
+  // useEffect(() => {
+  //   const getColumnTasks = async () => {
+  //     setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
+  //   };
 
-    getColumnTasks();
-  }, [id, idBoard]);
+  //   getColumnTasks();
+  // }, [id, idBoard]);
 
+  // useEffect(() => {
+  //   const getColumnTasks = async () => {
+  //     setTasks(await getAllTasksOfColumn(CURRENT_TOKEN, idBoard, id));
+  //   };
+
+  //   if (isRendering) {
+  //     getColumnTasks();
+  //   }
+  // }, [id, idBoard, isRendering]);
   // useEffect(() => {
   //   dispatch(
   //     setColumns({
@@ -34,20 +44,16 @@ const Column = ({ id, title, addTask }: ColumnPropsType) => {
   //   );
   // }, [tasks, id, dispatch]);
 
-  useEffect(() => {
-    console.log(id, 'render');
-  }, [columns]);
-
   const handleClickCreateButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
     const newTask = await createTask(CURRENT_TOKEN, idBoard, id, {
       ...BODY,
-      order: tasks.length + 1,
+      order: tasks.length,
     });
-    setTasks([...tasks, newTask]);
-
+    // setTasks([...tasks, newTask]);
+    // dispatch(setTasks({ allTasks: [...allTasks, newTask] }));
     addTask(newTask);
   };
 
@@ -67,6 +73,6 @@ const Column = ({ id, title, addTask }: ColumnPropsType) => {
       )}
     </Droppable>
   );
-};
+});
 
 export default memo(Column);

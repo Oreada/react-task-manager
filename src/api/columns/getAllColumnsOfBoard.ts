@@ -1,6 +1,6 @@
+import { sortByOrder } from 'components/heplers/sortByOrder';
 import { URL_BOARDS } from 'constants/constants';
 import { ColumnType } from 'types/types';
-import { sortByOrder } from 'api/helpers/sortByOrder';
 
 //! Get Columns in board
 export async function getAllColumnsOfBoard(

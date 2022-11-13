@@ -1,4 +1,4 @@
-import { BoardStateType, ColumnStateType, MainStateType } from './model';
+import { BoardStateType, MainStateType } from './model';
 
 export const INITIAL_MAIN_STATE: MainStateType = {
   boards: [],
@@ -6,29 +6,21 @@ export const INITIAL_MAIN_STATE: MainStateType = {
 };
 
 export const INITIAL_BOARD_STATE: BoardStateType = {
-  columns: [],
+  allColumns: [],
+  allTasks: [],
   idBoard: '',
   isLoading: false,
 };
 
-export const INITIAL_COLUMN_STATE: ColumnStateType = {
-  tasks: {},
-  isLoading: false,
-};
-
 export enum BoardStateKeys {
-  columns = 'columns',
-  idBoard = 'idBoard',
+  allColumns = 'allColumns',
+  allTasks = 'allTasks',
   isLoading = 'isLoading',
+  idBoard = 'idBoard',
 }
 
 export enum MainStateKeys {
   boards = 'boards',
-  isLoading = 'isLoading',
-}
-
-export enum ColumnStateKeys {
-  tasks = 'tasks',
   isLoading = 'isLoading',
 }
 
@@ -40,8 +32,6 @@ export enum SLICE_NAMES {
 
 export enum ASYNC_ACTION_NAMES {
   getBoards = 'getBoards',
-  getColumns = 'getColumns',
   createBoard = 'createBoard',
-  reoderColumns = 'reoderColumns',
-  getTasks = 'getTasks',
+  getBoardData = 'getBoardData',
 }
