@@ -72,21 +72,25 @@ const Column = memo(
     };
 
     return (
-      <Droppable droppableId={id} type={DROPPABLE_TYPE_COLUMN}>
-        {(provider) => (
-          <div className={cls.column} ref={provider.innerRef} {...provider.droppableProps}>
-            <h3>{title}</h3>
-            <div className={cls.list}>
-              {tasks.map(({ _id }, index) => (
-                <Task key={_id} idColumn={id} idTask={_id} index={index} delTask={delTask} />
-              ))}
-              {provider.placeholder}
-            </div>
-            <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
-            <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
-          </div>
-        )}
-      </Droppable>
+      <div className={cls.column}>
+        <h3>{title}</h3>
+        <div className={cls.list}>
+          <Droppable droppableId={id} type={DROPPABLE_TYPE_COLUMN}>
+            {(provider) => (
+              <div ref={provider.innerRef} {...provider.droppableProps}>
+                <div>
+                  {tasks.map(({ _id }, index) => (
+                    <Task key={_id} idColumn={id} idTask={_id} index={index} delTask={delTask} />
+                  ))}
+                  {provider.placeholder}
+                </div>
+                <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
+                <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
+              </div>
+            )}
+          </Droppable>
+        </div>
+      </div>
     );
   }
 );
