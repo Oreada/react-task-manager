@@ -1,12 +1,13 @@
 .header {
-    position: sticky;
+    /* position: sticky; */
+    /* z-index: 10;
     top: 0;
-    left: 0;
+    left: 0; */
 
     /* background-color: #7c9c8c; */
     background-color: #F3B848;
 
-    font-family: Poppins;
+    /* font-family: 'Noto Sans'; */
     font-weight: 600;
     color: #000000;
     /* color: #f6f6f6; */
@@ -43,11 +44,11 @@
 
 .logo-text {
     font-weight: 600;
-    font-size: 3.2rem;
-    line-height: 4.8rem;
     letter-spacing: 4%;
     /* color: #f6f6f6; */
     color: #f8f8f8;
+
+    text-transform: uppercase;
 }
 
 .navigation {
