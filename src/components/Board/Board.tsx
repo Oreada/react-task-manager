@@ -10,56 +10,51 @@ import {
 } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { DropResult } from 'react-beautiful-dnd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, IRootState } from 'store/model';
-import { getBoardData, setBoardId, setColumns, setTasks } from 'store/boardSlice';
+import { setBoardId } from 'store/boardSlice';
 import { CURRENT_TOKEN } from 'constants/constants';
 import { ColumnType, TaskType } from 'types/types';
-import { updateColumnsSet } from 'api/columns/updateColumnsSet';
-import { updateTasksSet } from 'api/tasks/updateTasksSet';
 import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
 import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
-import { createTask } from 'api/tasks/createTask';
-import { updateTask } from 'api/tasks/updateTask';
-import { isExternalModuleNameRelative } from 'typescript';
 import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
-import { changeTaskColumnApi } from 'api/helpers/changeTaskColumnApi';
-import { sortByOrder } from 'components/heplers/sortByOrder';
 import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
+import { TasksByColumnsType } from './model';
+import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
 
 const Board = () => {
   const { id } = useParams();
+
   const dispatch = useDispatch<AppDispatch>();
-  // const { idBoard, columns, allTasks } = useSelector((state: IRootState) => state.board);
   const { idBoard } = useSelector((state: IRootState) => state.board);
 
-  const [allTasks, setAllTasks] = useState<TaskType[]>([]);
   const [columns, setColumns] = useState<ColumnType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
+
   useEffect(() => {
     if (id) {
-      const getTaskOfBoard = async () => {
-        setAllTasks(await getTasksByIdBoard(CURRENT_TOKEN, id));
-      };
-
-      const getColumnsOfBoard = async () => {
-        setColumns(await getAllColumnsOfBoard(CURRENT_TOKEN, id));
-      };
-
-      const getResult = async () => {
+      const getResult = async (): Promise<void> => {
         setIsLoading(true);
-        await Promise.all([getTaskOfBoard(), getColumnsOfBoard()]);
+
+        const [tasks, columns] = await Promise.all([
+          getTasksByIdBoard(CURRENT_TOKEN, id),
+          getAllColumnsOfBoard(CURRENT_TOKEN, id),
+        ]);
+
+        setColumns(columns);
+        setTasksByColumn(getTaskByColumn(tasks, columns));
         setIsLoading(false);
       };
+
       getResult();
 
       dispatch(setBoardId({ idBoard: id }));
-      // dispatch(getBoardData({ token: CURRENT_TOKEN, idBoard: id }));
     }
   }, [id, dispatch]);
 
@@ -69,58 +64,42 @@ const Board = () => {
     }
   }, [columns]);
 
-  const addTaskMemo = useCallback((newTask: TaskType) => {
-    const addTask = (newTask: TaskType) => {
-      // dispatch(setTasks({ allTasks: [...allTasks, newTask] }));
-      setAllTasks((prevTasks) => {
-        return [...prevTasks, newTask];
-      });
-    };
+  const addTaskMemo = useCallback((newTask: TaskType): void => {
+    const addTask = ({ columnId }: TaskType) =>
+      setTasksByColumn((prevTasks) => ({
+        ...prevTasks,
+        [columnId]: prevTasks ? [...prevTasks[columnId], newTask] : [newTask],
+      }));
 
     addTask(newTask);
   }, []);
 
-  const delColumnMemo = useCallback((idColumn: string) => {
-    const delColumn = (idColumn: string) => {
-      // dispatch(setColumns({ columns: columns.filter((column) => column._id !== idColumn) }));
-      setColumns((prevColumns) => {
-        return prevColumns.filter((column) => column._id !== idColumn);
-      });
-    };
+  const delColumnMemo = useCallback((idColumn: string): void => {
+    const delColumn = (idColumn: string) =>
+      setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
 
     delColumn(idColumn);
   }, []);
 
-  const delTaskMemo = useCallback((idTask: string) => {
-    const delTask = (idTask: string) => {
-      // dispatch(setColumns({ columns: columns.filter((column) => column._id !== idColumn) }));
-      setAllTasks((prevTasks) => {
-        return prevTasks.filter((task) => task._id !== idTask);
-      });
-    };
+  const delTaskMemo = useCallback((deletedTask: TaskType): void => {
+    const delTask = ({ columnId, _id: idDeletedTask }: TaskType) =>
+      setTasksByColumn((prevTasks) =>
+        prevTasks
+          ? {
+              ...prevTasks,
+              [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
+            }
+          : null
+      );
 
-    delTask(idTask);
+    delTask(deletedTask);
   }, []);
 
-  const taskByColumnsMemo = useMemo(() => {
-    const columnsId = columns.map((column) => column._id);
-    const taskByColumns: { [key: string]: TaskType[] } = columnsId.reduce(
-      (acc, id) => ({
-        ...acc,
-        [id]: allTasks.filter((task) => task.columnId === id),
-      }),
-      {}
-    );
-    return taskByColumns;
-  }, [columns, allTasks]);
-
-  const handleDragEnd = async (result: DropResult) => {
-    const {
-      destination,
-      source: { index: sourceIndex, droppableId: sourceColumnId },
-      type,
-    } = result;
-
+  const handleDragEnd = ({
+    destination,
+    source: { index: sourceIndex, droppableId: sourceColumnId },
+    type,
+  }: DropResult): void => {
     if (!destination) {
       return;
     }
@@ -128,115 +107,97 @@ const Board = () => {
     const { droppableId: destColemnId, index: destIndex } = destination;
 
     if (type === DROPPABLE_TYPE_BOARD) {
-      // dispatch(setColumns({ columns: reorderItems<ColumnType>(columns, sourceIndex, destIndex) }));
       setColumns(reorderItems<ColumnType>(columns, sourceIndex, destIndex));
       return;
     }
 
-    if (type === DROPPABLE_TYPE_COLUMN) {
+    if (tasksByColumn && type === DROPPABLE_TYPE_COLUMN) {
       if (sourceColumnId === destColemnId) {
         const newTasks = reorderItems<TaskType>(
-          taskByColumnsMemo[sourceColumnId],
+          tasksByColumn[sourceColumnId],
           sourceIndex,
           destination.index
         );
-        reoderTasksApi(newTasks, sourceColumnId);
 
-        // dispatch(
-        //   setTasks({
-        //     allTasks: Object.values({
-        //       ...taskByColumnsMemo,
-        //       [sourceColumnId]: newTasks,
-        //     }).flat(),
-        //   })
-        // );
-        setAllTasks(
-          Object.values({
-            ...taskByColumnsMemo,
-            [sourceColumnId]: newTasks,
-          }).flat()
-        );
+        reoderTasksApi(newTasks, sourceColumnId);
+        setTasksByColumn({ ...tasksByColumn, [sourceColumnId]: newTasks });
         return;
       }
 
-      const newSourceTasks = [...taskByColumnsMemo[sourceColumnId]];
-      const newDestTasks = [...taskByColumnsMemo[destColemnId]];
+      const newSourceTasks = [...tasksByColumn[sourceColumnId]];
+      const newDestTasks = [...tasksByColumn[destColemnId]];
 
       const [removed] = newSourceTasks.splice(sourceIndex, 1);
-      changeTaskColumnApi(removed, idBoard, destColemnId, destIndex);
-
       const newRemoved = { ...removed, columnId: destColemnId };
+
       newDestTasks.splice(destIndex, 0, newRemoved);
 
-      // dispatch(
-      //   setTasks({
-      //     allTasks: Object.values({
-      //       ...taskByColumnsMemo,
-      //       [sourceColumnId]: newSourceTasks,
-      //       [destColemnId]: newDestTasks,
-      //     }).flat(),
-      //   })
-      // );
+      reoderTasksApi(newDestTasks, destColemnId);
 
-      setAllTasks(
-        Object.values({
-          ...taskByColumnsMemo,
-          [sourceColumnId]: newSourceTasks,
-          [destColemnId]: newDestTasks,
-        }).flat()
-      );
+      setTasksByColumn({
+        ...tasksByColumn,
+        [sourceColumnId]: newSourceTasks,
+        [destColemnId]: newDestTasks,
+      });
       return;
     }
   };
 
   const handleClickCreateColumn = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  ): Promise<void> => {
     event.preventDefault();
+
     const newColumn = await createColumn(CURRENT_TOKEN, idBoard, {
       title: PSEUDO_TITLE,
       order: columns.length,
     });
+
     setColumns([...columns, newColumn]);
-    // dispatch(setColumns({ columns: [...columns, newColumn] }));
   };
 
   return (
     <>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable
-          droppableId={DROPPABLE_ID_BOARD}
-          type={DROPPABLE_TYPE_BOARD}
-          direction={DROPPABLE_DIRECTION_BOARD}
-        >
-          {(provider) => (
-            <div className={cls.board} ref={provider.innerRef} {...provider.droppableProps}>
-              {columns.map(({ _id, title }, index) => (
-                <Draggable key={_id} draggableId={_id} index={index}>
-                  {(provider) => (
-                    <div
-                      {...provider.draggableProps}
-                      {...provider.dragHandleProps}
-                      ref={provider.innerRef}
-                    >
-                      <Column
-                        id={_id}
-                        title={title}
-                        addTask={addTaskMemo}
-                        delColumn={delColumnMemo}
-                        delTask={delTaskMemo}
-                        tasks={JSON.stringify(taskByColumnsMemo[_id])}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provider.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button>
+      {!isLoading && tasksByColumn ? (
+        <>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable
+              droppableId={DROPPABLE_ID_BOARD}
+              type={DROPPABLE_TYPE_BOARD}
+              direction={DROPPABLE_DIRECTION_BOARD}
+            >
+              {(provider) => (
+                <div className={cls.board} ref={provider.innerRef} {...provider.droppableProps}>
+                  {columns.map(({ _id, title }, index) => (
+                    <Draggable key={_id} draggableId={_id} index={index}>
+                      {(provider) => (
+                        <div
+                          {...provider.draggableProps}
+                          {...provider.dragHandleProps}
+                          ref={provider.innerRef}
+                        >
+                          <Column
+                            id={_id}
+                            title={title}
+                            addTask={addTaskMemo}
+                            delColumn={delColumnMemo}
+                            delTask={delTaskMemo}
+                            tasks={tasksByColumn[_id]}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provider.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button>
+        </>
+      ) : (
+        <span></span>
+      )}
     </>
   );
 };

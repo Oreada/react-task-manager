@@ -24,6 +24,7 @@ const MainPage = () => {
 
   const handleClickCreateButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+
     dispatch(createBoardThunk({ token: CURRENT_TOKEN, body: BODY }));
   };
 

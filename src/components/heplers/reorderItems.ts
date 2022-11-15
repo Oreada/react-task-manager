@@ -8,7 +8,8 @@ export const reorderItems = <Type extends ColumnType | TaskType>(
 ) => {
   const result = [...array];
   const [removed] = result.splice(currentIndex, 1);
+
   result.splice(destinationIndex, 0, removed);
 
-  return sortByOrder(result.map((item, index) => ({ ...item, order: index })));
+  return result.map((item, index) => ({ ...item, order: index }));
 };
