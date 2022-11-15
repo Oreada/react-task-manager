@@ -90,13 +90,15 @@ const WelcomePage = () => {
               <div className={styles.team__item}>
                 <div className={styles.developer}>
                   <div className={styles.developer__photo}>
-                    <img
-                      className={styles.developer_image}
-                      src={PhotoSergey}
-                      width="100px"
-                      height="100px"
-                      alt="Developer photo"
-                    />
+                    <a href="https://github.com/KateBlazhko" target="_blank" rel="noreferrer">
+                      <img
+                        className={styles.developer_image}
+                        src={PhotoKatya}
+                        width="100px"
+                        height="100px"
+                        alt="Developer photo"
+                      />
+                    </a>
                   </div>
                   <div className={styles.developer__description}>
                     A description of each developer&apos;s contribution to the joint work. A
@@ -107,13 +109,15 @@ const WelcomePage = () => {
               <div className={styles.team__item}>
                 <div className={styles.developer}>
                   <div className={styles.developer__photo}>
-                    <img
-                      className={styles.developer_image}
-                      src={PhotoKatya}
-                      width="100px"
-                      height="100px"
-                      alt="Developer photo"
-                    />
+                    <a href="https://github.com/ps0m" target="_blank" rel="noreferrer">
+                      <img
+                        className={styles.developer_image}
+                        src={PhotoSergey}
+                        width="100px"
+                        height="100px"
+                        alt="Developer photo"
+                      />
+                    </a>
                   </div>
                   <div className={styles.developer__description}>
                     A description of each developer&apos;s contribution to the joint work. A
@@ -124,13 +128,15 @@ const WelcomePage = () => {
               <div className={styles.team__item}>
                 <div className={styles.developer}>
                   <div className={styles.developer__photo}>
-                    <img
-                      className={styles.developer_image}
-                      src={PhotoOlya}
-                      width="100px"
-                      height="100px"
-                      alt="Developer photo"
-                    />
+                    <a href="https://github.com/Oreada" target="_blank" rel="noreferrer">
+                      <img
+                        className={styles.developer_image}
+                        src={PhotoOlya}
+                        width="100px"
+                        height="100px"
+                        alt="Developer photo"
+                      />
+                    </a>
                   </div>
                   <div className={styles.developer__description}>
                     A description of each developer&apos;s contribution to the joint work. A
