@@ -30,13 +30,9 @@
 .article__title {
     font-weight: 800;
     font-size: 5.4rem;
-
-    color: #000000;
 }
 
-.article__text {
-    color: #000000;
-}
+.article__text {}
 
 .article__button {
     height: 6rem;
@@ -138,12 +134,9 @@
     left: 50%;
 
     transform: translate(-50%, -50%);
-    /* border-radius: 50%; */
 }
 
 .item__picture_first {
-    /* background-image: url(./click-rust.svg); */
-    /* background-image: url(./case-rust.svg); */
     background-image: url(./aim-rust.svg);
     background-repeat: no-repeat;
     background-position: center center;
@@ -313,8 +306,6 @@
 }
 
 .team__item {
-    /* position: relative; */
-
     display: flex;
     flex-direction: column;
     align-items: center;

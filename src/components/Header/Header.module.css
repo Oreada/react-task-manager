@@ -4,13 +4,10 @@
     top: 0;
     left: 0; */
 
-    /* background-color: #7c9c8c; */
     background-color: #F3B848;
 
     /* font-family: 'Noto Sans'; */
     font-weight: 600;
-    color: #000000;
-    /* color: #f6f6f6; */
 }
 
 .header__container {
@@ -45,7 +42,6 @@
 .logo-text {
     font-weight: 600;
     letter-spacing: 2px;
-    /* color: #f6f6f6; */
     color: #f8f8f8;
 
     text-transform: uppercase;
