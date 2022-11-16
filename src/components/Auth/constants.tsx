@@ -48,6 +48,7 @@ export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
     icon: Cicleron,
     minlength: 3,
     validation: VALIDATION_FORM.name,
+    autocomplete: 'name',
   },
   login: {
     label: 'Login',
@@ -57,6 +58,7 @@ export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
     icon: Mail,
     minlength: 3,
     validation: VALIDATION_FORM.login,
+    autocomplete: 'nickname',
   },
   password: {
     label: 'Password',
@@ -66,6 +68,7 @@ export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
     icon: Lock,
     minlength: 8,
     validation: VALIDATION_FORM.password,
+    autocomplete: 'current-password',
   },
 };
 

@@ -1,7 +1,7 @@
-import styles from './WelcomePage.module.css';
-import PhotoOlya from './photo_olya.jpg';
 import PhotoKatya from './photo_katya.jpeg';
+import PhotoOlya from './photo_olya.jpg';
 import PhotoSergey from './photo_sergey.png';
+import styles from './WelcomePage.module.css';
 
 const WelcomePage = () => {
   return (
@@ -31,30 +31,30 @@ const WelcomePage = () => {
               <h4 className={styles.advantages__subtitle}>Why you should try our application</h4>
             </div>
             <div className={styles.advantages__box}>
-              <p className={styles.advantages__item}>
+              <div className={styles.advantages__item}>
                 <div className={styles.item__picture_first}></div>
                 <h5 className={styles.item__title}>Efficiency</h5>
                 <div className={styles.item__text}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
                   voluptas totam odio animi perspiciatis numquam magnam
                 </div>
-              </p>
-              <p className={styles.advantages__item}>
+              </div>
+              <div className={styles.advantages__item}>
                 <div className={styles.item__picture_second}></div>
                 <h5 className={styles.item__title}>Productivity</h5>
                 <div className={styles.item__text}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
                   voluptas totam odio animi perspiciatis numquam magnam
                 </div>
-              </p>
-              <p className={styles.advantages__item}>
+              </div>
+              <div className={styles.advantages__item}>
                 <div className={styles.item__picture_third}></div>
                 <h5 className={styles.item__title}>Interaction</h5>
                 <div className={styles.item__text}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
                   voluptas totam odio animi perspiciatis numquam magnam
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>

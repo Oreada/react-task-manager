@@ -47,6 +47,7 @@ export type TypeFormInputsContent = {
   required: boolean;
   icon: JSX.Element;
   minlength: number;
+  autocomplete?: string;
   validation: TypeValidationRequirements;
 };
 
@@ -150,4 +151,11 @@ export type File = {
   taskId: string; // id of task
   boardId: string; // id of board
   path: string; // "files/taskId-name"
+};
+
+export type UserDecoder = {
+  exp: number;
+  iat: number;
+  id: string;
+  login: string;
 };
