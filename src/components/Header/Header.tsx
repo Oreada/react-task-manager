@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
+  // const [scroll, setScroll] = useState(false);
+
+  // window.addEventListener('scroll', function () {
+  //   if (window.pageXOffset > 0) {
+  //     setScroll(true);
+  //   }
+  // });
+
   return (
+    // <header className={!scroll ? styles.header : styles['header-scroll']}>
     <header className={styles.header}>
       <div className={styles.header__container}>
         <div className={styles['logo-box']}>
