@@ -16,7 +16,7 @@ const WelcomePage = () => {
                 workflow and team cooperation. Join now to organize your tasks and change the way
                 your team works.
               </div>
-              <div className={styles.article__button}>Get started</div>
+              <button className={styles.article__button}>Get started</button>
             </div>
             <div className={styles.hero__picture}></div>
           </div>
@@ -32,28 +32,28 @@ const WelcomePage = () => {
             </div>
             <div className={styles.advantages__box}>
               <p className={styles.advantages__item}>
-                <p className={styles.item__picture_first}></p>
+                <div className={styles.item__picture_first}></div>
                 <h5 className={styles.item__title}>Efficiency</h5>
-                <p className={styles.item__text}>
+                <div className={styles.item__text}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
                   voluptas totam odio animi perspiciatis numquam magnam
-                </p>
+                </div>
               </p>
               <p className={styles.advantages__item}>
-                <p className={styles.item__picture_second}></p>
+                <div className={styles.item__picture_second}></div>
                 <h5 className={styles.item__title}>Productivity</h5>
-                <p className={styles.item__text}>
+                <div className={styles.item__text}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
                   voluptas totam odio animi perspiciatis numquam magnam
-                </p>
+                </div>
               </p>
               <p className={styles.advantages__item}>
-                <p className={styles.item__picture_third}></p>
+                <div className={styles.item__picture_third}></div>
                 <h5 className={styles.item__title}>Interaction</h5>
-                <p className={styles.item__text}>
+                <div className={styles.item__text}>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
                   voluptas totam odio animi perspiciatis numquam magnam
-                </p>
+                </div>
               </p>
             </div>
           </div>

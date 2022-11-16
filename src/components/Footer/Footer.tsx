@@ -45,7 +45,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <p className={styles.footer__adds}>
+          <div className={styles.footer__adds}>
             <p className={styles.footer__rss}>
               <a
                 className={styles.footer__link}
@@ -58,7 +58,7 @@ const Footer = () => {
             </p>
 
             <p className={styles.footer__year}>&apos;22</p>
-          </p>
+          </div>
         </div>
       </div>
     </footer>
