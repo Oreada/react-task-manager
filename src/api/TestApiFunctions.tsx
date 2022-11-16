@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Board, Column, Task } from 'types/types';
+import { Board, ColumnType, TaskType } from 'types/types';
 import { getAllBoards } from './boards/getAllBoards';
 import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
 import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
@@ -29,7 +29,7 @@ export const thirdUser = {
 // boards ids: 636cee7f4f5723389cfea000, 636cef214f5723389cfea002, 636cef524f5723389cfea004
 
 export function TestApiFunctions() {
-  const [result, setResult] = useState<Array<Task>>([]);
+  const [result, setResult] = useState<Array<TaskType>>([]);
   const [error, setError] = useState<string>('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

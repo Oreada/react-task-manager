@@ -1,5 +1,5 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Task, BodyForTaskUpdating } from 'types/types';
+import { TaskType, BodyForTaskUpdating } from 'types/types';
 
 //! Update Task
 export async function updateTask(
@@ -8,7 +8,7 @@ export async function updateTask(
   idColumn: string,
   idTask: string,
   obj: BodyForTaskUpdating
-): Promise<Task> {
+): Promise<TaskType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks/${idTask}`, {
       method: 'PUT',

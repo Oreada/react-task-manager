@@ -1,6 +1,6 @@
 import { PageText } from './Pages.constants';
 
-const AuthPage = (): JSX.Element => {
+const AuthPage = () => {
   return <div>{PageText.authentification}</div>;
 };
 

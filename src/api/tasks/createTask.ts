@@ -1,5 +1,5 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Task, BodyForTask } from 'types/types';
+import { TaskType, BodyForTask } from 'types/types';
 
 //! Create Task in column
 export async function createTask(
@@ -7,7 +7,7 @@ export async function createTask(
   idBoard: string,
   idColumn: string,
   obj: BodyForTask
-): Promise<Task> {
+): Promise<TaskType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks`, {
       method: 'POST',

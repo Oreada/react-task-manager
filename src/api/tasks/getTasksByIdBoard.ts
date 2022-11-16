@@ -1,8 +1,8 @@
 import { URL_TASKS_SET } from 'constants/constants';
-import { Task } from 'types/types';
+import { TaskType } from 'types/types';
 
 //! Get Tasks in selected Board
-export async function getTasksByIdBoard(token: string, idBoard: string): Promise<Array<Task>> {
+export async function getTasksByIdBoard(token: string, idBoard: string): Promise<Array<TaskType>> {
   try {
     const response = await fetch(`${URL_TASKS_SET}/${idBoard}`, {
       method: 'GET',

@@ -1,12 +1,12 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Column, BodyForColumn } from 'types/types';
+import { ColumnType, BodyForColumn } from 'types/types';
 
 //! Create Column in board
 export async function createColumn(
   token: string,
   idBoard: string,
   obj: BodyForColumn
-): Promise<Column> {
+): Promise<ColumnType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns`, {
       method: 'POST',

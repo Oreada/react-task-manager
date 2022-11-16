@@ -1,5 +1,5 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Task } from 'types/types';
+import { TaskType } from 'types/types';
 
 //! Find Task
 export async function getTask(
@@ -7,7 +7,7 @@ export async function getTask(
   idBoard: string,
   idColumn: string,
   idTask: string
-): Promise<Task> {
+): Promise<TaskType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks/${idTask}`, {
       method: 'GET',

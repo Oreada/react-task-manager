@@ -1,8 +1,12 @@
 import { URL_BOARDS } from 'constants/constants';
-import { Column } from 'types/types';
+import { ColumnType } from 'types/types';
 
 //! Find Column
-export async function getColumn(token: string, idBoard: string, idColumn: string): Promise<Column> {
+export async function getColumn(
+  token: string,
+  idBoard: string,
+  idColumn: string
+): Promise<ColumnType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}`, {
       method: 'GET',

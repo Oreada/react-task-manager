@@ -2,16 +2,14 @@ import { Outlet } from 'react-router-dom';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 
-const Layout = (): JSX.Element => {
-  return (
-    <>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
-    </>
-  );
-};
+const Layout = () => (
+  <>
+    <Header />
+    <main>
+      <Outlet />
+    </main>
+    <Footer />
+  </>
+);
 
 export default Layout;

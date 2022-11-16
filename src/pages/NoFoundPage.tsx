@@ -1,6 +1,6 @@
 import { PageText } from './Pages.constants';
 
-const NoFoundPage = (): JSX.Element => {
+const NoFoundPage = () => {
   return <div>{PageText.noFoundPage}</div>;
 };
 

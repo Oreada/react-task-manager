@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+
+.board {
+  overflow-x: scroll;
+  overflow-y: auto;
+  display: flex;
+  width: 100vw;
+  height: 40rem;
+  padding: 2rem;
+}

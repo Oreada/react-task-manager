@@ -1,5 +1,5 @@
 import { URL_BOARDS } from 'constants/constants';
-import { BodyForColumn, Column } from 'types/types';
+import { BodyForColumn, ColumnType } from 'types/types';
 
 //! Update Column
 export async function updateColumn(
@@ -7,7 +7,7 @@ export async function updateColumn(
   idBoard: string,
   idColumn: string,
   obj: BodyForColumn
-): Promise<Column> {
+): Promise<ColumnType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}`, {
       method: 'PUT',
