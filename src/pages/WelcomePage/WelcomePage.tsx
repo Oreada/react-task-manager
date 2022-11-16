@@ -16,7 +16,7 @@ const WelcomePage = () => {
                 workflow and team cooperation. Join now to organize your tasks and change the way
                 your team works.
               </div>
-              <div className={styles.article__button}>Get started</div>
+              <button className={styles.article__button}>Get started</button>
             </div>
             <div className={styles.hero__picture}></div>
           </div>
