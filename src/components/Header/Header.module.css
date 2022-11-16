@@ -52,4 +52,6 @@
     gap: 5rem;
 }
 
-.navigation__item {}
+.navigation__item {
+    color: inherit;
+}
