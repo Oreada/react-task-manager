@@ -1,12 +1,13 @@
 import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { FormEvent, SyntheticEvent, useCallback, useState } from 'react';
+import { useInput } from 'hooks/useInput';
+import { FormEvent, SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { IInput } from 'types/types';
 import { ReactComponent as BlobTwo } from './assets/Blob_2.svg';
 import { ReactComponent as BlobOne } from './assets/Blob_3.svg';
 import { ReactComponent as GroupSvg } from './assets/Group.svg';
 import { ReactComponent as HelloSvg } from './assets/Hello.svg';
-import { FORM_INPUTS } from './constants';
-
+import { FORM_INPUTS, FORM_TEXT, VALIDATION_FORM } from './constants';
 enum typeSubPage {
   signUp,
   signIn,
@@ -14,12 +15,27 @@ enum typeSubPage {
 
 const Auth = () => {
   const [subPage, setSubPage] = useState<typeSubPage>(typeSubPage.signIn);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const name: IInput = useInput('name', '', VALIDATION_FORM.name);
+  const login: IInput = useInput('login', '', VALIDATION_FORM.login);
+  const password: IInput = useInput('password', '', VALIDATION_FORM.password);
+
+  // const [inputStates, setInputStates] = useState<IInput[]>([name, login, password]);
   const [error, setError] = useState('');
+  const [canSubmit, setCanSubmit] = useState(false);
 
   const inputContent = FORM_INPUTS;
+  console.log('Return');
+
+  const inputStates = useMemo(() => [name, login, password], [name, login, password]);
+
+  useEffect(() => {
+    subPage ? inputStates.filter((item) => item !== login) : inputStates;
+  }, [inputStates, login, subPage]);
+
+  useEffect(() => {
+    const canS = inputStates.reduce((acc, cur) => acc && !!cur.value && !cur.isError, true);
+    setCanSubmit(canS);
+  }, [inputStates]);
 
   const changeSubPage = useCallback(
     () => setSubPage((prev) => (prev ? typeSubPage.signUp : typeSubPage.signIn)),
@@ -28,16 +44,12 @@ const Auth = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // signUp
-    // setError('Какая-то ошибка');
   };
 
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setError('');
   };
 
@@ -77,6 +89,7 @@ const Auth = () => {
       >
         <Stack
           component="form"
+          noValidate
           direction="column"
           justifyContent="space-between"
           alignItems="flex-start"
@@ -85,28 +98,34 @@ const Auth = () => {
           onSubmit={handleSubmit}
         >
           <Typography variant="h4" component="p" sx={{ fontWeight: 700 }}>
-            {subPage ? 'Sign in' : 'Sign up'}
+            {subPage ? FORM_TEXT.titleIn : FORM_TEXT.titleUp}
           </Typography>
 
-          {inputContent.map((item) => (
-            <CustomInput
-              icon={item.icon}
-              width="100%"
-              key={item.label}
-              label={item.label}
-              type={item.type}
-              variant="standard"
-              required={item.required}
-              inputProps={{ minLength: item.minlength }}
-            />
-          ))}
+          {inputStates.map(
+            (item, index) =>
+              (subPage || item.name !== 'login') && (
+                <CustomInput
+                  key={item.name}
+                  label={inputContent[item.name].label}
+                  type={inputContent[item.name].type}
+                  name={inputContent[item.name].name}
+                  required={inputContent[item.name].required}
+                  icon={inputContent[item.name].icon}
+                  variant="standard"
+                  width="100%"
+                  inputProps={{ minLength: inputContent[item.name].minlength }}
+                  helperText={inputStates[index].isLeave ? inputStates[index].errorText : ''}
+                  error={inputStates[index].isLeave && inputStates[index].isError}
+                  value={inputStates[index].value}
+                  onChange={inputStates[index].onChange}
+                  onBlur={inputStates[index].onBlur}
+                  onFocus={inputStates[index].onFocus}
+                />
+              )
+          )}
 
-          {/* <Button variant="contained" onSubmit={handleSubmit}>
-            {subPage ? 'Log in' : 'Register'}
-          </Button> */}
-
-          <Button component="label" variant="contained">
-            {subPage ? 'Log in' : 'Register'}
+          <Button component="label" variant="contained" disabled={!canSubmit}>
+            {subPage ? FORM_TEXT.buttonTextIn : FORM_TEXT.buttonTextUp}
             <input hidden type="submit" />
           </Button>
         </Stack>
@@ -119,7 +138,7 @@ const Auth = () => {
         >
           {subPage ? <HelloSvg /> : <GroupSvg />}
           <Button variant="text" onClick={changeSubPage}>
-            {subPage ? 'Create an account' : 'I am already member'}
+            {subPage ? FORM_TEXT.linkTextToPageUp : FORM_TEXT.linkTextToPageIn}
           </Button>
         </Stack>
       </Stack>
