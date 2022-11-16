@@ -74,12 +74,21 @@ const Board = () => {
     addTask(newTask);
   }, []);
 
-  const delColumnMemo = useCallback((idColumn: string): void => {
-    const delColumn = (idColumn: string) =>
-      setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
+  const delColumnMemo = useCallback(
+    (idColumn: string): void => {
+      const delColumn = (idColumn: string) => {
+        setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
+        if (tasksByColumn) {
+          const { [idColumn as keyof TasksByColumnsType]: deletedColumn, ...lastTasks } =
+            tasksByColumn;
+          setTasksByColumn(lastTasks);
+        }
+      };
 
-    delColumn(idColumn);
-  }, []);
+      delColumn(idColumn);
+    },
+    [tasksByColumn]
+  );
 
   const delTaskMemo = useCallback((deletedTask: TaskType): void => {
     const delTask = ({ columnId, _id: idDeletedTask }: TaskType) =>
@@ -154,6 +163,7 @@ const Board = () => {
     });
 
     setColumns([...columns, newColumn]);
+    setTasksByColumn({ ...tasksByColumn, [newColumn._id]: [] });
   };
 
   return (
