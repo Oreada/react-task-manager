@@ -1,9 +1,9 @@
-import Board from 'components/Board/Board';
+import Board from '../components/Board/Board';
 import BoardList from 'pages/MainPage/MainPage';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Authentification from '../pages/AuthPage';
-import NoFoundPage from '../pages/NoFoundPage';
+import NoFoundPage from '../pages/NoFoundPage/NoFoundPage';
 import WelcomePage from '../pages/WelcomePage/WelcomePage';
 
 const Router = () => (

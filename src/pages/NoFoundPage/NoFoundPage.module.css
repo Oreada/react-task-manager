@@ -1,0 +1,28 @@
+.container {
+    min-height: 100%;
+    max-width: 100rem;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.text {
+    font-family: 'Nunito Sans';
+}
+
+.image {
+    max-width: 50%;
+}
