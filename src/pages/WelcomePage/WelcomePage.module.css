@@ -1,0 +1,339 @@
+.hero {
+    background-image: url(./hero-back-orange.svg);
+    background-repeat: no-repeat;
+    background-position: center -60rem;
+
+    padding-top: 6rem;
+}
+
+.hero__container {
+    max-width: 120rem;
+    padding-left: 2rem;
+    margin: 0px auto;
+}
+
+.hero__body {
+    display: flex;
+    gap: 6rem;
+}
+
+.hero__article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4rem;
+
+    font-family: 'Nunito Sans';
+    /* font-family: 'Noto Sans'; */
+}
+
+.article__title {
+    font-weight: 800;
+    font-size: 5.4rem;
+}
+
+.article__text {}
+
+.article__button {
+    height: 6rem;
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8rem;
+    /* font-family: 'Noto Sans'; */
+    font-weight: 600;
+    font-size: 2.4rem;
+
+    /* background-color: #D85841; */
+    /* background-color: #1C4931; */
+    background-color: #e1e4e5;
+    /* color: #f6f6f6; */
+    /* color: #d4d4d4; */
+    /* color: #000000; */
+    color: #1C4931;
+}
+
+.hero__picture {
+    min-width: 70rem;
+    min-height: 50rem;
+
+    background-image: url(./puzzles-green.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+/* ------------------------ */
+
+.advantages {
+    /* font-family: 'Nunito Sans'; */
+
+    padding-top: 16rem;
+}
+
+.advantages__container {
+    max-width: 100rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0px auto;
+}
+
+.advantages__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6rem;
+}
+
+.advantages__title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.advantages__title {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+}
+
+.advantages__subtitle {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.advantages__box {
+    display: flex;
+    gap: 3rem;
+}
+
+.advantages__item {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    line-height: 2.5rem;
+    padding: 5rem;
+    box-shadow: 0px 0px 20px #d4d4d4;
+    border-radius: 1rem;
+
+    transition: all 0.3s ease 0s;
+}
+
+.item__picture_first,
+.item__picture_second,
+.item__picture_third {
+    width: 15rem;
+    height: 15rem;
+    position: absolute;
+    bottom: 55%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.item__picture_first {
+    background-image: url(./aim-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item__picture_second {
+    background-image: url(./clock-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item__picture_third {
+    background-image: url(./global-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item__title {
+    position: relative;
+
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #1C4931;
+
+    text-transform: uppercase;
+
+    padding-top: 30%;
+}
+
+/* .item__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background-color: #1C4931;
+} */
+
+.item__text {}
+
+/* -------------------------------------------------- */
+
+.instructions {
+    font-family: 'Nunito Sans';
+
+    /* background-color: #e1e4e5; */
+    background-color: #1C4931;
+    color: #f8f8f8;
+
+    margin-top: 16rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+.instructions__container {
+    max-width: 120rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0px auto;
+}
+
+.instructions__box {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.instructions__note {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.instructions__title {
+    font-size: 4rem;
+    font-weight: 800;
+}
+
+.instructions__text {}
+
+.instructions__video {}
+
+.instructions__screensaver {
+    width: 50rem;
+    height: 30rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 1rem;
+    /* background-color: #F3B848; */
+    /* background-color: #848484; */
+    /* background-color: #e1e4e5; */
+    background-color: #f8f8f8;
+
+    cursor: pointer;
+}
+
+.instructions__watch-icon {
+    width: 40rem;
+    height: 20rem;
+    /* background-image: url(./youtube-rust.svg); */
+    background-image: url(./youtube-music-2-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+/* ------------------------------------------------------------ */
+
+.team {
+    margin-top: 16rem;
+    padding-bottom: 6rem;
+    margin-bottom: 6rem;
+
+    /* background-image: url(./team-back-star-slice-orange.svg); */
+    background-image: url(./team-back-circles-2.svg);
+    background-repeat: no-repeat;
+    /* background-position: right bottom; */
+    background-position: center center;
+    /* background-size: contain; */
+    background-size: cover;
+
+}
+
+.team__container {
+    max-width: 120rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0px auto;
+}
+
+.team__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6rem;
+}
+
+.team__title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.team__title {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+}
+
+.team__subtitle {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.team__box {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.team__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    line-height: 2.5rem;
+    padding: 2rem 4rem;
+    box-shadow: 0px 0px 20px #d4d4d4;
+    border-radius: 1rem;
+
+    transition: all 0.3s ease 0s;
+}
+
+.developer {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.developer__photo {
+    cursor: pointer;
+}
+
+.developer_image {
+    min-width: 10rem;
+    min-height: 10rem;
+
+    border-radius: 50%;
+}
+
+.developer__description {}

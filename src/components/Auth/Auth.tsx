@@ -1,7 +1,8 @@
 import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
+import { signIn } from 'api/auth/signIn';
 import CustomInput from 'components/CustomInput/CustomInput';
 import { useInput } from 'hooks/useInput';
-import { FormEvent, SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { FormEvent, SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { IInput } from 'types/types';
 import { ReactComponent as BlobTwo } from './assets/Blob_2.svg';
 import { ReactComponent as BlobOne } from './assets/Blob_3.svg';
@@ -19,23 +20,23 @@ const Auth = () => {
   const login: IInput = useInput('login', '', VALIDATION_FORM.login);
   const password: IInput = useInput('password', '', VALIDATION_FORM.password);
 
-  // const [inputStates, setInputStates] = useState<IInput[]>([name, login, password]);
   const [error, setError] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
   const inputContent = FORM_INPUTS;
-  console.log('Return');
+  // const [inputStates, setInputStates] = useState<IInput[]>([login, password]);
 
-  const inputStates = useMemo(() => [name, login, password], [name, login, password]);
-
-  useEffect(() => {
-    subPage ? inputStates.filter((item) => item !== login) : inputStates;
-  }, [inputStates, login, subPage]);
+  // useEffect(() => {
+  //   setInputStates(subPage ? [name, login, password] : [login, password]);
+  // }, [subPage]);
 
   useEffect(() => {
+    const inputStates = subPage ? [login, password] : [name, login, password];
     const canS = inputStates.reduce((acc, cur) => acc && !!cur.value && !cur.isError, true);
     setCanSubmit(canS);
-  }, [inputStates]);
+  }, [login, name, password, subPage]);
+
+  console.log('Render');
 
   const changeSubPage = useCallback(
     () => setSubPage((prev) => (prev ? typeSubPage.signUp : typeSubPage.signIn)),
@@ -44,6 +45,8 @@ const Auth = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const answer = signIn({ login: login.value, password: password.value });
+    console.log(answer);
   };
 
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
@@ -62,6 +65,7 @@ const Auth = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        overflow: 'hidden',
       }}
     >
       <BlobOne
@@ -76,7 +80,7 @@ const Auth = () => {
       />
       <Stack
         direction={subPage ? { xs: 'column', sm: 'row' } : { xs: 'column', sm: 'row-reverse' }}
-        justifyContent="space-between"
+        justifyContent="space-evenly"
         alignItems={{ xs: 'center', sm: 'stretch' }}
         spacing={3}
         maxWidth="md"
@@ -101,9 +105,9 @@ const Auth = () => {
             {subPage ? FORM_TEXT.titleIn : FORM_TEXT.titleUp}
           </Typography>
 
-          {inputStates.map(
-            (item, index) =>
-              (subPage || item.name !== 'login') && (
+          {[name, login, password].map(
+            (item) =>
+              (!subPage || item.name !== 'login') && (
                 <CustomInput
                   key={item.name}
                   label={inputContent[item.name].label}
@@ -114,12 +118,12 @@ const Auth = () => {
                   variant="standard"
                   width="100%"
                   inputProps={{ minLength: inputContent[item.name].minlength }}
-                  helperText={inputStates[index].isLeave ? inputStates[index].errorText : ''}
-                  error={inputStates[index].isLeave && inputStates[index].isError}
-                  value={inputStates[index].value}
-                  onChange={inputStates[index].onChange}
-                  onBlur={inputStates[index].onBlur}
-                  onFocus={inputStates[index].onFocus}
+                  helperText={item.isLeave ? item.errorText : ''}
+                  error={item.isLeave && item.isError}
+                  value={item.value}
+                  onChange={item.onChange}
+                  onBlur={item.onBlur}
+                  onFocus={item.onFocus}
                 />
               )
           )}
