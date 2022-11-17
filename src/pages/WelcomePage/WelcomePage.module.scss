@@ -1,0 +1,341 @@
+@import '../../styles/variables.scss';
+
+.hero {
+    background-image: url(./hero-back-orange.svg);
+    background-repeat: no-repeat;
+    background-position: center rem(-600);
+
+    padding-top: rem(60);
+}
+
+.hero__container {
+    max-width: rem(1200);
+    padding-left: rem(20);
+    margin: 0 auto;
+}
+
+.hero__body {
+    display: flex;
+    gap: rem(60);
+}
+
+.hero__article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: rem(40);
+
+    font-family: 'Nunito Sans';
+    /* font-family: 'Noto Sans'; */
+}
+
+.article__title {
+    font-weight: 800;
+    font-size: rem(54);
+}
+
+.article__text {}
+
+.article__button {
+    height: rem(60);
+    width: rem(200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: rem(80);
+    /* font-family: 'Noto Sans'; */
+    font-weight: 600;
+    font-size: rem(24);
+
+    /* background-color: #D85841; */
+    /* background-color: #1C4931; */
+    background-color: #e1e4e5;
+    /* color: #f6f6f6; */
+    /* color: #d4d4d4; */
+    /* color: #000000; */
+    color: #1C4931;
+}
+
+.hero__picture {
+    min-width: rem(700);
+    min-height: rem(500);
+
+    background-image: url(./puzzles-green.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+/* ------------------------ */
+
+.advantages {
+    /* font-family: 'Nunito Sans'; */
+
+    padding-top: rem(160);
+}
+
+.advantages__container {
+    max-width:rem(1000);
+    padding-left: rem(20);
+    padding-right: rem(20);
+    margin: 0 auto;
+}
+
+.advantages__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(60);
+}
+
+.advantages__title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
+}
+
+.advantages__title {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: rem(40);
+    font-weight: 800;
+}
+
+.advantages__subtitle {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.advantages__box {
+    display: flex;
+    gap: rem(30);
+}
+
+.advantages__item {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
+
+    line-height: rem(25);
+    padding: rem(50);
+    box-shadow: 0 0 rem(20) #d4d4d4;
+    border-radius:rem(10);
+
+    transition: all 0.3s ease 0s;
+}
+
+.item__picture_first,
+.item__picture_second,
+.item__picture_third {
+    width: rem(150);
+    height: rem(150);
+    position: absolute;
+    bottom: 55%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.item__picture_first {
+    background-image: url(./aim-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item__picture_second {
+    background-image: url(./clock-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item__picture_third {
+    background-image: url(./global-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item__title {
+    position: relative;
+
+    font-weight: 600;
+    letter-spacing: rem(1);
+    color: #1C4931;
+
+    text-transform: uppercase;
+
+    padding-top: 30%;
+}
+
+/* .item__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background-color: #1C4931;
+} */
+
+.item__text {}
+
+/* -------------------------------------------------- */
+
+.instructions {
+    font-family: 'Nunito Sans';
+
+    /* background-color: #e1e4e5; */
+    background-color: #1C4931;
+    color: #f8f8f8;
+
+    margin-top: rem(160);
+    padding-top: rem(60);
+    padding-bottom: rem(60);
+}
+
+.instructions__container {
+    max-width: rem(1200);
+    padding-left: rem(20);
+    padding-right: rem(20);
+    margin: 0px auto;
+}
+
+.instructions__box {
+    display: flex;
+    align-items: center;
+    gap: rem(20);
+}
+
+.instructions__note {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(20);
+}
+
+.instructions__title {
+    font-size: rem(40);
+    font-weight: 800;
+}
+
+.instructions__text {}
+
+.instructions__video {}
+
+.instructions__screensaver {
+    width: rem(500);
+    height: rem(300);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: rem(10);
+    /* background-color: #F3B848; */
+    /* background-color: #848484; */
+    /* background-color: #e1e4e5; */
+    background-color: #f8f8f8;
+
+    cursor: pointer;
+}
+
+.instructions__watch-icon {
+    width: rem(400);
+    height: rem(200);
+    /* background-image: url(./youtube-rust.svg); */
+    background-image: url(./youtube-music-2-rust.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+/* ------------------------------------------------------------ */
+
+.team {
+    margin-top: rem(160);
+    padding-bottom: rem(60);
+    margin-bottom: rem(60);
+
+    /* background-image: url(./team-back-star-slice-orange.svg); */
+    background-image: url(./team-back-circles-2.svg);
+    background-repeat: no-repeat;
+    /* background-position: right bottom; */
+    background-position: center center;
+    /* background-size: contain; */
+    background-size: cover;
+
+}
+
+.team__container {
+    max-width: rem(1200);
+    padding-left: rem(20);
+    padding-right: rem(20);
+    margin: 0px auto;
+}
+
+.team__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(60);
+}
+
+.team__title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
+}
+
+.team__title {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: rem(40);
+    font-weight: 800;
+}
+
+.team__subtitle {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.team__box {
+    display: flex;
+    flex-direction: column;
+    gap: rem(30);
+}
+
+.team__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
+
+    line-height: rem(25);
+    padding: rem(20) rem(40);
+    box-shadow: 0px 0px rem(20) #d4d4d4;
+    border-radius: rem(10);
+
+    transition: all 0.3s ease 0s;
+}
+
+.developer {
+    display: flex;
+    align-items: center;
+    gap: rem(50);
+}
+
+.developer__photo {
+    cursor: pointer;
+}
+
+.developer_image {
+    min-width: rem(100);
+    min-height: rem(100);
+
+    border-radius: 50%;
+}
+
+.developer__description {}

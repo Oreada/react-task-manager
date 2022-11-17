@@ -31,7 +31,9 @@ const Header = () => {
             Boards
           </NavLink>
           <p className={styles.navigation__item}>Edit profile</p>
-          <p className={styles.navigation__item}>Sign Out</p>
+          <NavLink to="/form" className={styles.navigation__item}>
+            Sign Out
+          </NavLink>
           <p className={styles.navigation__item}>Eng</p>
         </nav>
       </div>

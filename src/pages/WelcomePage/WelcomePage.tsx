@@ -1,7 +1,7 @@
 import PhotoKatya from './photo_katya.jpeg';
 import PhotoOlya from './photo_olya.jpg';
 import PhotoSergey from './photo_sergey.png';
-import styles from './WelcomePage.module.css';
+import styles from './WelcomePage.module.scss';
 
 const WelcomePage = () => {
   return (
