@@ -1,6 +1,6 @@
-import styles from './Footer.module.css';
-import LogoRSS from './rs_school_js.svg';
+import styles from './Footer.module.scss';
 import GitHubLogo from './git-hub-logo.svg';
+import LogoRSS from './rs_school_js.svg';
 
 const Footer = () => {
   return (
