@@ -15,7 +15,6 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, IRootState } from 'store/model';
 import { setBoardId } from 'store/boardSlice';
-import { CURRENT_TOKEN } from 'constants/constants';
 import { ColumnType, TaskType } from 'types/types';
 import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
 import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
@@ -31,6 +30,7 @@ const Board = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { idBoard } = useSelector((state: IRootState) => state.board);
+  const { token } = useSelector((state: IRootState) => state.auth);
 
   const [columns, setColumns] = useState<ColumnType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,13 +38,13 @@ const Board = () => {
   const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
 
   useEffect(() => {
-    if (id) {
+    if (id && token) {
       const getResult = async (): Promise<void> => {
         setIsLoading(true);
 
         const [tasks, columns] = await Promise.all([
-          getTasksByIdBoard(CURRENT_TOKEN, id),
-          getAllColumnsOfBoard(CURRENT_TOKEN, id),
+          getTasksByIdBoard(token, id),
+          getAllColumnsOfBoard(token, id),
         ]);
 
         setColumns(columns);
@@ -56,13 +56,13 @@ const Board = () => {
 
       dispatch(setBoardId({ idBoard: id }));
     }
-  }, [id, dispatch]);
+  }, [id, token, dispatch]);
 
   useEffect(() => {
-    if (columns.length) {
-      reoderColumnsApi(columns);
+    if (columns.length && token) {
+      reoderColumnsApi(columns, token);
     }
-  }, [columns]);
+  }, [columns, token]);
 
   const addTaskMemo = useCallback((newTask: TaskType): void => {
     const addTask = ({ columnId }: TaskType) =>
@@ -120,7 +120,7 @@ const Board = () => {
       return;
     }
 
-    if (tasksByColumn && type === DROPPABLE_TYPE_COLUMN) {
+    if (token && tasksByColumn && type === DROPPABLE_TYPE_COLUMN) {
       if (sourceColumnId === destColemnId) {
         const newTasks = reorderItems<TaskType>(
           tasksByColumn[sourceColumnId],
@@ -128,7 +128,7 @@ const Board = () => {
           destination.index
         );
 
-        reoderTasksApi(newTasks, sourceColumnId);
+        reoderTasksApi(newTasks, sourceColumnId, token);
         setTasksByColumn({ ...tasksByColumn, [sourceColumnId]: newTasks });
         return;
       }
@@ -141,7 +141,7 @@ const Board = () => {
 
       newDestTasks.splice(destIndex, 0, newRemoved);
 
-      reoderTasksApi(newDestTasks, destColemnId);
+      reoderTasksApi(newDestTasks, destColemnId, token);
 
       setTasksByColumn({
         ...tasksByColumn,
@@ -156,14 +156,15 @@ const Board = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     event.preventDefault();
+    if (token) {
+      const newColumn = await createColumn(token, idBoard, {
+        title: PSEUDO_TITLE,
+        order: columns.length,
+      });
 
-    const newColumn = await createColumn(CURRENT_TOKEN, idBoard, {
-      title: PSEUDO_TITLE,
-      order: columns.length,
-    });
-
-    setColumns([...columns, newColumn]);
-    setTasksByColumn({ ...tasksByColumn, [newColumn._id]: [] });
+      setColumns([...columns, newColumn]);
+      setTasksByColumn({ ...tasksByColumn, [newColumn._id]: [] });
+    }
   };
 
   return (

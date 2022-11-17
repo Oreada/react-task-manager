@@ -4,28 +4,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import cls from './MainPage.module.scss';
-import { BODY, BUTTON_INNER, USER } from './constants';
-import { CURRENT_TOKEN } from 'constants/constants';
+import { BODY, BUTTON_INNER } from './constants';
 import { createBoardThunk, getBoardsThunk } from 'store/mainSlice';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { boards, isLoading } = useSelector((state: IRootState) => state.main);
+  const { token, id } = useSelector((state: IRootState) => state.auth);
 
   useEffect(() => {
     const getBoardsWithSighUp = async () => {
-      // const token = await signIn(USER);
-      // console.log(token);
-      dispatch(getBoardsThunk({ token: CURRENT_TOKEN }));
+      if (token) {
+        dispatch(getBoardsThunk({ token }));
+      }
     };
 
     getBoardsWithSighUp();
-  }, [dispatch]);
+  }, [token, dispatch]);
 
   const handleClickCreateButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-
-    dispatch(createBoardThunk({ token: CURRENT_TOKEN, body: BODY }));
+    if (token && id) {
+      dispatch(
+        createBoardThunk({
+          token,
+          body: {
+            owner: id,
+            users: [id],
+            ...BODY,
+          },
+        })
+      );
+    }
   };
 
   return (
