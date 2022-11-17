@@ -1,4 +1,4 @@
-@import './styles/variables.scss';
+@import "./styles/variables.scss";
 
 * {
   box-sizing: border-box;
@@ -6,23 +6,6 @@
   padding: 0;
 }
 
-html {
-  font-size: 16px;
-  height: 100%;
-}
-
-
-#root{
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.main{
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
 h1,
 h2,
 h3,
@@ -162,6 +145,17 @@ img {
   height: auto;
 }
 
+html {
+  font-size: 16px;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  // display: flex;
+  // flex-direction: column;
+}
+
 body {
   max-width: 100%;
   height: 100%;
@@ -177,22 +171,17 @@ body {
   // background-color: #f8f8f8;
 }
 
-#root {
-  height: 100%;
+.container {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  // max-width: rem(1200);
+  // padding: 0px rem(20);
+  margin: 0px auto;
 }
 
 .main {
-  // min-height: 100%;
-  flex: 1 1 100%;
+  flex: 1 1 auto;
+  // display: flex;
+  // flex-direction: column;
 }
-
-// .container {
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100%;
-//   max-width: rem(1200);
-//   padding: 0px rem(20);
-//   margin: 0px auto;
-// }
