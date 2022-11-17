@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .hero {
     background-image: url(./hero-back-orange.svg);
@@ -25,16 +25,13 @@
     justify-content: center;
     gap: rem(40);
 
-    font-family: 'Nunito Sans';
-    /* font-family: 'Noto Sans'; */
+    font-family: "Nunito Sans";
 }
 
 .article__title {
     font-weight: 800;
     font-size: rem(54);
 }
-
-.article__text {}
 
 .article__button {
     height: rem(60);
@@ -43,17 +40,11 @@
     justify-content: center;
     align-items: center;
     border-radius: rem(80);
-    /* font-family: 'Noto Sans'; */
     font-weight: 600;
     font-size: rem(24);
 
-    /* background-color: #D85841; */
-    /* background-color: #1C4931; */
     background-color: #e1e4e5;
-    /* color: #f6f6f6; */
-    /* color: #d4d4d4; */
-    /* color: #000000; */
-    color: #1C4931;
+    color: #1c4931;
 }
 
 .hero__picture {
@@ -69,13 +60,11 @@
 /* ------------------------ */
 
 .advantages {
-    /* font-family: 'Nunito Sans'; */
-
     padding-top: rem(160);
 }
 
 .advantages__container {
-    max-width:rem(1000);
+    max-width: rem(1000);
     padding-left: rem(20);
     padding-right: rem(20);
     margin: 0 auto;
@@ -121,7 +110,7 @@
     line-height: rem(25);
     padding: rem(50);
     box-shadow: 0 0 rem(20) #d4d4d4;
-    border-radius:rem(10);
+    border-radius: rem(10);
 
     transition: all 0.3s ease 0s;
 }
@@ -164,32 +153,19 @@
 
     font-weight: 600;
     letter-spacing: rem(1);
-    color: #1C4931;
+    color: #1c4931;
 
     text-transform: uppercase;
 
     padding-top: 30%;
 }
 
-/* .item__title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background-color: #1C4931;
-} */
-
-.item__text {}
-
 /* -------------------------------------------------- */
 
 .instructions {
-    font-family: 'Nunito Sans';
+    font-family: "Nunito Sans";
 
-    /* background-color: #e1e4e5; */
-    background-color: #1C4931;
+    background-color: #1c4931;
     color: #f8f8f8;
 
     margin-top: rem(160);
@@ -222,10 +198,6 @@
     font-weight: 800;
 }
 
-.instructions__text {}
-
-.instructions__video {}
-
 .instructions__screensaver {
     width: rem(500);
     height: rem(300);
@@ -235,9 +207,6 @@
     align-items: center;
 
     border-radius: rem(10);
-    /* background-color: #F3B848; */
-    /* background-color: #848484; */
-    /* background-color: #e1e4e5; */
     background-color: #f8f8f8;
 
     cursor: pointer;
@@ -246,7 +215,6 @@
 .instructions__watch-icon {
     width: rem(400);
     height: rem(200);
-    /* background-image: url(./youtube-rust.svg); */
     background-image: url(./youtube-music-2-rust.svg);
     background-repeat: no-repeat;
     background-position: center center;
@@ -260,14 +228,10 @@
     padding-bottom: rem(60);
     margin-bottom: rem(60);
 
-    /* background-image: url(./team-back-star-slice-orange.svg); */
     background-image: url(./team-back-circles-2.svg);
     background-repeat: no-repeat;
-    /* background-position: right bottom; */
     background-position: center center;
-    /* background-size: contain; */
     background-size: cover;
-
 }
 
 .team__container {
@@ -315,7 +279,7 @@
 
     line-height: rem(25);
     padding: rem(20) rem(40);
-    box-shadow: 0px 0px rem(20) #d4d4d4;
+    box-shadow: 0 0 rem(20) #d4d4d4;
     border-radius: rem(10);
 
     transition: all 0.3s ease 0s;
@@ -337,5 +301,3 @@
 
     border-radius: 50%;
 }
-
-.developer__description {}
