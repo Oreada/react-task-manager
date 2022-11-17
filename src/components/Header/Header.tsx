@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -22,7 +22,6 @@ const Header = () => {
     <header className={scroll ? styles['header-scroll'] : styles.header}>
       <div className={styles.header__container}>
         <div className={styles['logo-box']}>
-          {/* <div className={styles['logo-text']}>Teamwork</div> */}
           <NavLink to="/" end>
             <div className={styles['logo-text']}>Teamwork</div>
           </NavLink>
