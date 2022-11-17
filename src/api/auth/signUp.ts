@@ -14,7 +14,10 @@ export async function signUp(obj: BodyForSignUp): Promise<UserInfo> {
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed with status code ${response.status}`);
+      // throw new Error(`Request failed with status code ${response.status}`);
+      throw new Error(`Request failed with status code ${response.status}`, {
+        cause: response.status,
+      });
     }
 
     const newUser: UserInfo = await response.json();
@@ -23,6 +26,6 @@ export async function signUp(obj: BodyForSignUp): Promise<UserInfo> {
   } catch (e: unknown) {
     const err = e as Error;
     console.log('Catched error =', err.message);
-    throw new Error(err.message);
+    throw err;
   }
 }
