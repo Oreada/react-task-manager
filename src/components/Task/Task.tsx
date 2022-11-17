@@ -4,7 +4,6 @@ import { BUTTON_INNER } from './constants';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
-import { CURRENT_TOKEN } from 'constants/constants';
 import { CSSProperties } from 'react';
 import { TaskType } from 'types/types';
 
@@ -19,21 +18,21 @@ function getStyle(provided: DraggableProvided, style: CSSProperties) {
   };
 }
 
-const Task = (
-  { idColumn, idTask, delTask, provider, style }: TaskPropsType,
-  ref: React.LegacyRef<HTMLDivElement>
-) => {
+const Task = ({ idColumn, idTask, delTask, provider, style }: TaskPropsType) => {
   const { idBoard } = useSelector((state: IRootState) => state.board);
+  const { token } = useSelector((state: IRootState) => state.auth);
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<TaskType> => {
+  ): Promise<TaskType | void> => {
     event.preventDefault();
 
-    const deletedTask = await deleteTask(CURRENT_TOKEN, idBoard, idColumn, idTask);
+    if (token) {
+      const deletedTask = await deleteTask(token, idBoard, idColumn, idTask);
 
-    delTask(deletedTask);
-    return deletedTask;
+      delTask(deletedTask);
+      return deletedTask;
+    }
   };
 
   return (

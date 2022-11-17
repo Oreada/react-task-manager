@@ -11,10 +11,9 @@ import {
 import { ColumnPropsType, RenderTaskFuncType, RowProps } from './model';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, IRootState } from 'store/model';
-import { CURRENT_TOKEN } from 'constants/constants';
 import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import { createTask } from 'api/tasks/createTask';
-import { ColumnType, TaskType } from 'types/types';
+import { TaskType } from 'types/types';
 import { setColumns, setTasks } from 'store/boardSlice';
 import { getAllTasksOfColumn } from 'api/tasks/getAllTasksOfColumn';
 import { deleteColumn } from 'api/columns/deleteColumn';
@@ -24,13 +23,13 @@ import {
   areEqual,
   ListOnItemsRenderedProps,
 } from 'react-window';
-import { RenderResult } from '@testing-library/react';
 import { deleteTask } from 'api/tasks/deleteTask';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
   const [scroll, setScroll] = useState<number>(0);
   const { idBoard } = useSelector((state: IRootState) => state.board);
+  const { token } = useSelector((state: IRootState) => state.auth);
 
   useEffect(() => {
     if (listRef && listRef.current) {
@@ -40,26 +39,30 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const handleClickCreateButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<TaskType> => {
+  ): Promise<TaskType | void> => {
     event.preventDefault();
+    if (token) {
+      const newTask = await createTask(token, idBoard, id, {
+        ...BODY,
+        order: tasks.length,
+      });
 
-    const newTask = await createTask(CURRENT_TOKEN, idBoard, id, {
-      ...BODY,
-      order: tasks.length,
-    });
-
-    addTask(newTask);
-    return newTask;
+      addTask(newTask);
+      return newTask;
+    }
   };
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     event.preventDefault();
-    delColumn(id);
 
-    Promise.all(tasks.map(async ({ _id }) => await deleteTask(CURRENT_TOKEN, idBoard, id, _id)));
-    deleteColumn(CURRENT_TOKEN, idBoard, id);
+    if (token) {
+      delColumn(id);
+
+      Promise.all(tasks.map(async ({ _id }) => await deleteTask(token, idBoard, id, _id)));
+      deleteColumn(token, idBoard, id);
+    }
   };
 
   const getRenderTask: RenderTaskFuncType =
