@@ -36,3 +36,9 @@ export type CreateTaskArgsType = {
 
 export type IRootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export type AuthReducer = {
+  id: string | null;
+  login: string | null;
+  token: string | null;
+};
