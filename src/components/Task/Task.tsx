@@ -43,7 +43,7 @@ const Task = (
       ref={provider.innerRef}
       style={getStyle(provider, style)}
     >
-      <div ref={ref}>{idTask}</div>
+      <div>{idTask}</div>
       <button onClick={handleClickDeleteButton}>{BUTTON_INNER}</button>
     </div>
   );

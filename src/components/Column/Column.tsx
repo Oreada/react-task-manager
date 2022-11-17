@@ -25,6 +25,7 @@ import {
   ListOnItemsRenderedProps,
 } from 'react-window';
 import { RenderResult } from '@testing-library/react';
+import { deleteTask } from 'api/tasks/deleteTask';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -35,7 +36,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     if (listRef && listRef.current) {
       listRef.current.scrollToItem(scroll);
     }
-  }, [tasks]);
+  }, [tasks, scroll]);
 
   const handleClickCreateButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -53,13 +54,12 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<ColumnType> => {
+  ): Promise<void> => {
     event.preventDefault();
-
-    const deletedColumn = await deleteColumn(CURRENT_TOKEN, idBoard, id);
-
     delColumn(id);
-    return deletedColumn;
+
+    Promise.all(tasks.map(async ({ _id }) => await deleteTask(CURRENT_TOKEN, idBoard, id, _id)));
+    deleteColumn(CURRENT_TOKEN, idBoard, id);
   };
 
   const getRenderTask: RenderTaskFuncType =

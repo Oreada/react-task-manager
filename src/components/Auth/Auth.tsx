@@ -95,6 +95,7 @@ const Auth = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        padding: '1rem',
         overflow: 'hidden',
       }}
     >

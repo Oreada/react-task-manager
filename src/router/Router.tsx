@@ -3,7 +3,7 @@ import AuthPage from 'pages/AuthPage';
 import BoardList from 'pages/MainPage/MainPage';
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../components/Layout';
-import NoFoundPage from '../pages/NoFoundPage';
+import NoFoundPage from '../pages/NoFoundPage/NoFoundPage';
 import WelcomePage from '../pages/WelcomePage/WelcomePage';
 
 const Router = () => (
