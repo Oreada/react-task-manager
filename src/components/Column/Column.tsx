@@ -26,6 +26,7 @@ import {
 import { deleteTask } from 'api/tasks/deleteTask';
 import { BasicModal } from 'components/Modal/Modal';
 import { FormTask } from 'components/FormTask/FormTask';
+import Button from '@mui/material/Button';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -141,12 +142,12 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           );
         }}
       </Droppable>
-      <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
-      <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
 
-      <BasicModal title="Create task">
+      <BasicModal title="Create task" func={handleClickCreateButton}>
         <FormTask />
       </BasicModal>
+
+      <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
     </div>
   );
 });
