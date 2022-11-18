@@ -24,6 +24,8 @@ import {
   ListOnItemsRenderedProps,
 } from 'react-window';
 import { deleteTask } from 'api/tasks/deleteTask';
+import { BasicModal } from 'components/Modal/Modal';
+import { FormTask } from 'components/FormTask/FormTask';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -67,7 +69,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const getRenderTask: RenderTaskFuncType =
     (style?: CSSProperties) =>
-    (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
+      (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
       (
         <Task
           idColumn={id}
@@ -141,6 +143,10 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       </Droppable>
       <button onClick={handleClickCreateButton}>{BUTTON_INNER.createTask}</button>
       <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
+
+      <BasicModal title="Create task">
+        <FormTask />
+      </BasicModal>
     </div>
   );
 });
