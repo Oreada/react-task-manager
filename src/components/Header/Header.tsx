@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 
@@ -6,7 +6,6 @@ const Header = () => {
   const [scroll, setScroll] = useState(false);
 
   const changeHeaderStyles = () => {
-    console.log(window.scrollY);
     if (window.scrollY > 100) {
       setScroll(true);
     } else {
