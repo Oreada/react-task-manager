@@ -18,7 +18,7 @@ function getStyle(provided: DraggableProvided, style: CSSProperties) {
   };
 }
 
-const Task = ({ idColumn, idTask, delTask, provider, style }: TaskPropsType) => {
+const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPropsType) => {
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
 
@@ -42,7 +42,7 @@ const Task = ({ idColumn, idTask, delTask, provider, style }: TaskPropsType) => 
       ref={provider.innerRef}
       style={getStyle(provider, style)}
     >
-      <div>{idTask}</div>
+      <div>{titleTask}</div>
       <button onClick={handleClickDeleteButton}>{BUTTON_INNER}</button>
     </div>
   );

@@ -75,6 +75,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
         <Task
           idColumn={id}
           idTask={tasks[rubric.source.index]._id}
+          titleTask={tasks[rubric.source.index].title}
           delTask={delTask}
           provider={provider}
           isDragging={snapshot.isDragging}
@@ -99,6 +100,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           <Task
             idColumn={id}
             idTask={item._id}
+            titleTask={item.title}
             delTask={delTask}
             provider={provider}
             isDragging={snapshot.isDragging}
