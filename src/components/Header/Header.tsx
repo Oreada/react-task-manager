@@ -6,7 +6,6 @@ const Header = () => {
   const [scroll, setScroll] = useState(false);
 
   const changeHeaderStyles = () => {
-    console.log(window.scrollY);
     if (window.scrollY > 100) {
       setScroll(true);
     } else {
