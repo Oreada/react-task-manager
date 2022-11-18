@@ -5,8 +5,8 @@ import { AppDispatch, IRootState } from 'store/model';
 import cls from './MainPage.module.scss';
 import { BODY, BUTTON_INNER } from './constants';
 import { createBoardThunk, getBoardsThunk } from 'store/mainSlice';
-import { ReactComponent as MainSvg } from './assets/MainSvg.svg';
-import { Card, Container, Grid, Typography } from '@mui/material';
+import { ReactComponent as Back } from './assets/Back.svg';
+import { Card, Container, Divider, Grid, Typography } from '@mui/material';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -55,24 +55,32 @@ const MainPage = () => {
         overflow: 'hidden',
       }}
     >
-      <MainSvg
+      <Back
         style={{
           position: 'absolute',
-          width: 300,
-          height: 300,
+          width: '120%',
+          height: '120%',
           top: 0,
-          left: '50%',
+          left: 0,
           zIndex: -1,
-          fill: '#D85841',
-          transform: 'translateX(-50%)',
         }}
       />
       <Grid container spacing={4}>
-        {boards.map(({ _id, title }) => (
+        {boards.map(({ _id, title, owner }) => (
           <Grid item key={_id}>
-            <Card>
-              <Typography variant="h5" sx={{ fontFamily: 'inherit' }}>
+            <Card
+              sx={{
+                padding: '50px',
+                boxShadow: '0 0 20px #d4d4d4',
+                borderRadius: '10px',
+              }}
+            >
+              <Typography variant="h6" sx={{ fontFamily: 'inherit' }}>
                 {title}
+              </Typography>
+              <Divider color={'#1c4931'} />
+              <Typography variant="h6" component={'span'} sx={{ fontFamily: 'inherit' }}>
+                {owner}
               </Typography>
             </Card>
           </Grid>
