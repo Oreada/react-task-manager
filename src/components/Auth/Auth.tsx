@@ -2,11 +2,14 @@ import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mu
 import { signIn } from 'api/auth/signIn';
 import { parseBase64 } from 'api/helpers/parseBase64';
 import CustomInput from 'components/CustomInput/CustomInput';
+import { LOCAL_STORAGE_KEY } from 'constants/constants';
+import { saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { authSlice } from 'store/authSlice';
-import { AppDispatch } from 'store/model';
+import { AppDispatch, AuthReducer } from 'store/model';
 import { IInput, UserDecoder } from 'types/types';
 import { signUp } from '../../api/auth/signUp';
 import { ReactComponent as BlobTwo } from './assets/Blob_2.svg';
@@ -21,18 +24,19 @@ enum typeSubPage {
 }
 
 const Auth = () => {
-  const name: IInput = useInput('name', '', VALIDATION_FORM.name);
-  const login: IInput = useInput('login', '', VALIDATION_FORM.login);
-  const password: IInput = useInput('password', '', VALIDATION_FORM.password);
-
   const [subPage, setSubPage] = useState<typeSubPage>(typeSubPage.signIn);
   const [error, setError] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
-  const inputContent = FORM_INPUTS;
+  const name: IInput = useInput('name', '', VALIDATION_FORM.name);
+  const login: IInput = useInput('login', '', VALIDATION_FORM.login);
+  const password: IInput = useInput('password', '', VALIDATION_FORM.password);
+
   const dispatch = useDispatch<AppDispatch>();
   const { setId } = authSlice.actions;
-  // const setId = useSelector((state: IRootState) => state.auth.id);
+  const navigate = useNavigate();
+  const goHome = () => navigate('/');
+  const inputContent = FORM_INPUTS;
 
   useEffect(() => {
     const inputStates = subPage ? [login, password] : [name, login, password];
@@ -56,6 +60,8 @@ const Auth = () => {
       const user: UserDecoder = parseBase64(token);
 
       dispatch(setId({ id: user.id, login: user.login, token: token }));
+      saveToLocal<AuthReducer>(LOCAL_STORAGE_KEY, { id: user.id, login: user.login, token: token });
+      goHome();
     } catch (err: unknown) {
       const error = err as Error;
       if (typeof error.cause !== 'number') {

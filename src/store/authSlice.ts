@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { INITIAL_AUTH_STATE, SLICE_NAMES } from './constants';
+import { LOCAL_STORAGE_KEY } from 'constants/constants';
+import { readFromLocal } from 'helpers';
+import { SLICE_NAMES } from './constants';
 import { AuthReducer } from './model';
+
+export const INITIAL_AUTH_STATE: AuthReducer = readFromLocal(LOCAL_STORAGE_KEY);
 
 export const authSlice = createSlice({
   name: SLICE_NAMES.auth,
