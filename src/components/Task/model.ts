@@ -1,3 +1,4 @@
+import { CSSProperties } from '@mui/styled-engine';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { TaskType } from 'types/types';
 
@@ -16,6 +17,6 @@ export type TaskPropsType = {
   provider: DraggableProvided;
   isClone?: boolean;
   isGroupedOver?: boolean;
-  style: Object;
+  style: CSSProperties;
   index?: number;
 };

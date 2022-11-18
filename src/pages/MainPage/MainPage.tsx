@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, To, useNavigate } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import cls from './MainPage.module.scss';
 import { BODY, BUTTON_INNER } from './constants';
@@ -10,6 +10,7 @@ import { Card, Container, Divider, Grid, Typography } from '@mui/material';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { boards, isLoading } = useSelector((state: IRootState) => state.main);
   const { token, id } = useSelector((state: IRootState) => state.auth);
 
@@ -23,7 +24,7 @@ const MainPage = () => {
     getBoardsWithSighUp();
   }, [token, dispatch]);
 
-  const handleClickCreateButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClickCreateButton = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
     if (token && id) {
       dispatch(
@@ -36,6 +37,13 @@ const MainPage = () => {
           },
         })
       );
+    }
+  };
+
+  const handleClickGoTo = (to: To) => (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.preventDefault();
+    if (token && id) {
+      navigate(to);
     }
   };
 
@@ -55,6 +63,40 @@ const MainPage = () => {
         overflow: 'hidden',
       }}
     >
+      <Card
+        sx={{
+          width: '300px',
+          height: '100px',
+          padding: '20px',
+          boxShadow: '0 0 20px #d4d4d4',
+          borderRadius: '10px',
+          border: '2px dashed #d4d4d4'
+        }}
+        onClick={handleClickCreateButton}
+      ></Card>
+      {/* <button onClick={handleClickCreateButton}>{BUTTON_INNER}</button> */}
+      <Divider color={'#1c4931'} />
+      <Grid container spacing={4}>
+        {boards.map(({ _id, title, owner }) => (
+          <Grid item key={_id} lg={4} md={6} xs={12}>
+            <Card
+              sx={{
+                width: '300px',
+                height: '100px',
+                padding: '20px',
+                boxShadow: '0 0 20px #d4d4d4',
+                borderRadius: '10px',
+              }}
+              onClick={handleClickGoTo(`${_id}`)}
+            >
+              <Typography variant="h6" sx={{ fontFamily: 'inherit' }}>
+                {title}
+              </Typography>
+              
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
       <Back
         style={{
           position: 'absolute',
@@ -65,28 +107,6 @@ const MainPage = () => {
           zIndex: -1,
         }}
       />
-      <Grid container spacing={4}>
-        {boards.map(({ _id, title, owner }) => (
-          <Grid item key={_id}>
-            <Card
-              sx={{
-                padding: '50px',
-                boxShadow: '0 0 20px #d4d4d4',
-                borderRadius: '10px',
-              }}
-            >
-              <Typography variant="h6" sx={{ fontFamily: 'inherit' }}>
-                {title}
-              </Typography>
-              <Divider color={'#1c4931'} />
-              <Typography variant="h6" component={'span'} sx={{ fontFamily: 'inherit' }}>
-                {owner}
-              </Typography>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <button onClick={handleClickCreateButton}>{BUTTON_INNER}</button>
     </Container>
   );
 };
