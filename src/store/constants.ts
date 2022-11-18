@@ -1,4 +1,4 @@
-import { AuthReducer, BoardStateType, MainStateType } from './model';
+import { BoardStateType, MainStateType } from './model';
 
 export const INITIAL_MAIN_STATE: MainStateType = {
   boards: [],
@@ -36,9 +36,3 @@ export enum ASYNC_ACTION_NAMES {
   createBoard = 'createBoard',
   getBoardData = 'getBoardData',
 }
-
-export const INITIAL_AUTH_STATE: AuthReducer = {
-  id: null,
-  login: null,
-  token: null,
-};
