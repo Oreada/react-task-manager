@@ -19,7 +19,6 @@ const style = {
 };
 
 const initialValues = {
-  id: 0,
   title: '',
   description: '',
 };
