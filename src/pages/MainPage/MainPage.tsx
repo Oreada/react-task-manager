@@ -179,15 +179,15 @@ const MainPage = () => {
           </Grid>
         ))}
 
-        <BasicModal title="Create board" func={handleClickCreateButton}>
-          <FormBoard bodyForBoard={bodyForBoard} setBodyForBoard={setBodyForBoard} />
-        </BasicModal>
+        <Grid item xs>
+          <BasicModal title="Create board" func={handleClickCreateButton}>
+            <FormBoard bodyForBoard={bodyForBoard} setBodyForBoard={setBodyForBoard} />
+          </BasicModal>
 
-        {/* <Grid item xs>
-          <div className={styles.card + ' ' + styles.create} onClick={handleClickCreateButton}>
+          {/* <div className={styles.card + ' ' + styles.create} onClick={handleClickCreateButton}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
-          </div>
-        </Grid> */}
+          </div> */}
+        </Grid>
       </Grid>
       <Back className={styles.back} />
     </Container>
