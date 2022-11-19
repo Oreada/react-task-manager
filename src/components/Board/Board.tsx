@@ -24,6 +24,8 @@ import { createColumn } from 'api/columns/createColumn';
 import { TasksByColumnsType } from './model';
 import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import { BasicModal } from 'components/Modal/Modal';
+import { FormColumn } from 'components/FormColumn/FormColumn';
 
 const Board = () => {
   const { id } = useParams();
@@ -36,6 +38,8 @@ const Board = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
+
+  const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
   useEffect(() => {
     if (id && token) {
@@ -158,7 +162,7 @@ const Board = () => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
-        title: PSEUDO_TITLE,
+        title: titleForColumn,
         order: columns.length,
       });
 
@@ -208,9 +212,13 @@ const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <div className={styles.create} onClick={handleClickCreateColumn}>
+          {/* <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button> */}
+          {/* <BasicModal title="Create column" func={handleClickCreateColumn}>
+            <FormColumn titleForColumn={titleForColumn} setTitleForColumn={setTitleForColumn} />
+          </BasicModal> */}
+          {/* <div className={styles.create} onClick={handleClickCreateColumn}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
-          </div>
+          </div> */}
         </div>
       ) : (
         <span></span>
