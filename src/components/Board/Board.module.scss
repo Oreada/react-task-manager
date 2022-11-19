@@ -1,10 +1,32 @@
 @import '../../styles/variables.scss';
 
 .board {
-  overflow-x: scroll;
-  overflow-y: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   display: flex;
   width: 100vw;
-  height: 40rem;
-  padding: 2rem;
+  height: rem(400);
+  padding: rem(20);
+}
+
+.columns {
+  display: flex;
+  height: 100%;
+}
+
+.create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: rem(200);
+  min-height: rem(10);
+  padding: 0;
+  margin-left: 1rem;
+  background-color: $color-instructions-text;
+  border: 2px dashed $color-button;
+
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
 }

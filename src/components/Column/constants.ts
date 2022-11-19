@@ -1,6 +1,6 @@
 export const DROPPABLE_TYPE_COLUMN = 'droppableColumn';
 export const DRAGGABLE_ID_COLUMN = 'columnDrag';
-export const DROPPABLE_MODE_COLUMN = 'virtual';
+
 export enum BUTTON_INNER {
   createTask = 'Create task',
   deleteColumn = 'Delete Column',
@@ -14,3 +14,5 @@ export const BODY = {
 };
 
 export const SCROLL = 'Scrolling';
+
+export const MAX_VISIBLE_TASKS = 4;

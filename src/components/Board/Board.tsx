@@ -1,8 +1,7 @@
 import Column from 'components/Column/Column';
-import cls from './Board.module.scss';
+import styles from './Board.module.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
-  BUTTON_INNER,
   DROPPABLE_DIRECTION_BOARD,
   DROPPABLE_ID_BOARD,
   DROPPABLE_TYPE_BOARD,
@@ -24,6 +23,7 @@ import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
 import { TasksByColumnsType } from './model';
 import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 const Board = () => {
   const { id } = useParams();
@@ -153,7 +153,7 @@ const Board = () => {
   };
 
   const handleClickCreateColumn = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): Promise<void> => {
     event.preventDefault();
     if (token) {
@@ -170,7 +170,7 @@ const Board = () => {
   return (
     <>
       {!isLoading && tasksByColumn ? (
-        <>
+        <div className={styles.board}>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable
               droppableId={DROPPABLE_ID_BOARD}
@@ -178,7 +178,11 @@ const Board = () => {
               direction={DROPPABLE_DIRECTION_BOARD}
             >
               {(provider) => (
-                <div className={cls.board} ref={provider.innerRef} {...provider.droppableProps}>
+                <div
+                  className={styles.columns}
+                  ref={provider.innerRef}
+                  {...provider.droppableProps}
+                >
                   {columns.map(({ _id, title }, index) => (
                     <Draggable key={_id} draggableId={_id} index={index}>
                       {(provider) => (
@@ -204,8 +208,10 @@ const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button>
-        </>
+          <div className={styles.create} onClick={handleClickCreateColumn}>
+            <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
+          </div>
+        </div>
       ) : (
         <span></span>
       )}
