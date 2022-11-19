@@ -7,16 +7,16 @@ import { IRootState } from 'store/model';
 import { CSSProperties } from 'react';
 import { TaskType } from 'types/types';
 
-// function getStyle(provided: DraggableProvided, style: CSSProperties) {
-//   if (!style) {
-//     return provided.draggableProps.style;
-//   }
+function getStyle(provided: DraggableProvided, style: CSSProperties) {
+  if (!style) {
+    return provided.draggableProps.style;
+  }
 
-//   return {
-//     ...provided.draggableProps.style,
-//     ...style,
-//   };
-// }
+  return {
+    ...provided.draggableProps.style,
+    ...style,
+  };
+}
 
 const Task = ({ idColumn, idTask, delTask, provider, style }: TaskPropsType) => {
   const { idBoard } = useSelector((state: IRootState) => state.board);
@@ -40,7 +40,7 @@ const Task = ({ idColumn, idTask, delTask, provider, style }: TaskPropsType) => 
       {...provider.draggableProps}
       {...provider.dragHandleProps}
       ref={provider.innerRef}
-      style={provider.draggableProps.style}
+      style={getStyle(provider, style)}
     >
       <div>{idTask}</div>
       <button onClick={handleClickDeleteButton}>{BUTTON_INNER}</button>
