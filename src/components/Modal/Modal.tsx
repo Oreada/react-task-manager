@@ -28,7 +28,7 @@ const style = {
   gap: 5,
 
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  // border: '2px solid #000',
   boxShadow: 24,
   p: 5,
 };
@@ -73,6 +73,7 @@ export function BasicModal(props: ModalProps) {
 
             <Button
               variant="outlined"
+              size="large"
               color="success"
               onClick={(event) => {
                 props.func(event);
