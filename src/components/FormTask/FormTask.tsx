@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, TextField } from '@mui/material';
 import { BodyForTask } from 'types/types';
 import { IRootState } from 'store/model';
@@ -19,7 +19,6 @@ const style = {
 };
 
 const initialValues = {
-  id: 0,
   title: '',
   description: '',
 };
@@ -36,14 +35,33 @@ export function FormTask(props: FormTaskProps) {
       ...values,
       [name]: value,
     });
+  };
 
+  const handleSubmitTitle = () => {
     props.setBodyForTask({
       ...props.bodyForTask,
-      [name]: value,
+      title: values.title,
       userId: id ? id : '',
       users: [id ? id : ''],
     });
   };
+
+  const handleSubmitDescription = () => {
+    props.setBodyForTask({
+      ...props.bodyForTask,
+      description: values.description,
+      userId: id ? id : '',
+      users: [id ? id : ''],
+    });
+  };
+
+  useEffect(() => {
+    handleSubmitTitle();
+  }, [values.title]);
+
+  useEffect(() => {
+    handleSubmitDescription();
+  }, [values.description]);
 
   return (
     <form style={{ width: '100%' }}>
@@ -54,6 +72,7 @@ export function FormTask(props: FormTaskProps) {
           name="title"
           value={values.title}
           onChange={handleInputChange}
+          onSubmit={handleSubmitTitle}
           autoFocus={true}
           fullWidth
         />
@@ -63,6 +82,7 @@ export function FormTask(props: FormTaskProps) {
           name="description"
           value={values.description}
           onChange={handleInputChange}
+          onSubmit={handleSubmitDescription}
           multiline={true}
           minRows={5}
           fullWidth

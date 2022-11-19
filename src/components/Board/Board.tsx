@@ -1,8 +1,7 @@
 import Column from 'components/Column/Column';
-import cls from './Board.module.scss';
+import styles from './Board.module.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
-  BUTTON_INNER,
   DROPPABLE_DIRECTION_BOARD,
   DROPPABLE_ID_BOARD,
   DROPPABLE_TYPE_BOARD,
@@ -24,6 +23,9 @@ import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
 import { TasksByColumnsType } from './model';
 import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import { BasicModal } from 'components/Modal/Modal';
+import { FormColumn } from 'components/FormColumn/FormColumn';
 
 const Board = () => {
   const { id } = useParams();
@@ -36,6 +38,8 @@ const Board = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
+
+  const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
   useEffect(() => {
     if (id && token) {
@@ -158,7 +162,7 @@ const Board = () => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
-        title: PSEUDO_TITLE,
+        title: titleForColumn,
         order: columns.length,
       });
 
@@ -170,7 +174,7 @@ const Board = () => {
   return (
     <>
       {!isLoading && tasksByColumn ? (
-        <>
+        <div className={styles.board}>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable
               droppableId={DROPPABLE_ID_BOARD}
@@ -178,7 +182,11 @@ const Board = () => {
               direction={DROPPABLE_DIRECTION_BOARD}
             >
               {(provider) => (
-                <div className={cls.board} ref={provider.innerRef} {...provider.droppableProps}>
+                <div
+                  className={styles.columns}
+                  ref={provider.innerRef}
+                  {...provider.droppableProps}
+                >
                   {columns.map(({ _id, title }, index) => (
                     <Draggable key={_id} draggableId={_id} index={index}>
                       {(provider) => (
@@ -204,8 +212,15 @@ const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button>
-        </>
+          <div className={styles.create}>
+            <BasicModal title="Create column" func={handleClickCreateColumn}>
+              <FormColumn titleForColumn={titleForColumn} setTitleForColumn={setTitleForColumn} />
+            </BasicModal>
+          </div>
+          {/* <div className={styles.create} onClick={handleClickCreateColumn}>
+            <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
+          </div> */}
+        </div>
       ) : (
         <span></span>
       )}
