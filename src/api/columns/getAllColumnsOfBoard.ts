@@ -3,10 +3,7 @@ import { URL_BOARDS } from 'constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Get Columns in board
-export async function getAllColumnsOfBoard(
-  token: string,
-  idBoard: string
-): Promise<Array<ColumnType>> {
+export async function getAllColumnsOfBoard(token: string, idBoard: string): Promise<Array<ColumnType>> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns`, {
       method: 'GET',

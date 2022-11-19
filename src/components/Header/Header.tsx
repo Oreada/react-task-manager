@@ -75,18 +75,10 @@ const Header = () => {
               </>
             ) : (
               <>
-                <NavLink
-                  to={AUTHENTICATION_PATH}
-                  state={typeSubPage.signIn}
-                  className={styles.navigation__item}
-                >
+                <NavLink to={AUTHENTICATION_PATH} state={typeSubPage.signIn} className={styles.navigation__item}>
                   Sign In
                 </NavLink>
-                <NavLink
-                  to={AUTHENTICATION_PATH}
-                  state={typeSubPage.signUp}
-                  className={styles.navigation__item}
-                >
+                <NavLink to={AUTHENTICATION_PATH} state={typeSubPage.signUp} className={styles.navigation__item}>
                   Sign Up
                 </NavLink>
               </>

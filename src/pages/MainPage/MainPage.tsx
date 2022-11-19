@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import { BODY, MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
-import {
-  createBoardThunk,
-  deleteBoardThunk,
-  editBoardThunk,
-  getBoardsThunk,
-} from 'store/mainSlice';
+import { createBoardThunk, deleteBoardThunk, editBoardThunk, getBoardsThunk } from 'store/mainSlice';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';

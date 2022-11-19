@@ -2,10 +2,7 @@ import { URL_COLUMNS_SET } from 'constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Get Columns by UserID, where user is owner or one of invited
-export async function getColumnsByIdUser(
-  token: string,
-  idUser: string
-): Promise<Array<ColumnType>> {
+export async function getColumnsByIdUser(token: string, idUser: string): Promise<Array<ColumnType>> {
   try {
     const response = await fetch(`${URL_COLUMNS_SET}?userId=${idUser}`, {
       method: 'GET',

@@ -2,10 +2,7 @@ import { URL_COLUMNS_SET } from 'constants/constants';
 import { ColumnType, BodyForColumnsSetOrder } from 'types/types';
 
 //! Change order of list of columns
-export async function updateColumnsSet(
-  token: string,
-  body: Array<BodyForColumnsSetOrder>
-): Promise<Array<ColumnType>> {
+export async function updateColumnsSet(token: string, body: Array<BodyForColumnsSetOrder>): Promise<Array<ColumnType>> {
   try {
     const response = await fetch(URL_COLUMNS_SET, {
       method: 'PATCH',

@@ -2,10 +2,7 @@ import { URL_TASKS_SET } from 'constants/constants';
 import { TaskType, BodyForTasksSetOrder } from 'types/types';
 
 //! Change order of list of tasks
-export async function updateTasksSet(
-  token: string,
-  body: Array<BodyForTasksSetOrder>
-): Promise<Array<TaskType>> {
+export async function updateTasksSet(token: string, body: Array<BodyForTasksSetOrder>): Promise<Array<TaskType>> {
   try {
     const response = await fetch(URL_TASKS_SET, {
       method: 'PATCH',

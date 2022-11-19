@@ -3,10 +3,7 @@ import { ColumnType } from 'types/types';
 
 //! Get Columns by list of columnId
 //! Если передать неверный ID в списке, ошибки не будет, получим Columns только по верным ID
-export async function getColumnsByIdsColumns(
-  token: string,
-  idsColumns: Array<string>
-): Promise<Array<ColumnType>> {
+export async function getColumnsByIdsColumns(token: string, idsColumns: Array<string>): Promise<Array<ColumnType>> {
   try {
     const queryFormatted = JSON.stringify(idsColumns);
 

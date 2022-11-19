@@ -3,10 +3,7 @@ import { Board } from 'types/types';
 
 //! Get Boards by list of boardId
 //! Если передать неверный ID в списке, ошибки не будет, получим Boards только по верным ID
-export async function getBoardsByIdsBoards(
-  token: string,
-  idsBoards: Array<string>
-): Promise<Array<Board>> {
+export async function getBoardsByIdsBoards(token: string, idsBoards: Array<string>): Promise<Array<Board>> {
   try {
     const queryFormatted = JSON.stringify(idsBoards);
 

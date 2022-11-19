@@ -1,31 +1,24 @@
-import Column from 'components/Column/Column';
-import styles from './Board.module.scss';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import {
-  DROPPABLE_DIRECTION_BOARD,
-  DROPPABLE_ID_BOARD,
-  DROPPABLE_TYPE_BOARD,
-  PSEUDO_TITLE,
-} from './constants';
-import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
-import { DropResult } from 'react-beautiful-dnd';
-import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from 'store/model';
-import { setBoardId } from 'store/boardSlice';
-import { ColumnType, TaskType } from 'types/types';
-import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
-import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
-import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
-import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
-import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
-import { TasksByColumnsType } from './model';
-import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { BasicModal } from 'components/Modal/Modal';
+import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
+import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
+import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
+import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
+import Column from 'components/Column/Column';
+import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
+import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
+import { reorderItems } from 'components/heplers/reorderItems';
+import { BasicModal } from 'components/Modal/Modal';
+import { useCallback, useEffect, useState } from 'react';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { setBoardId } from 'store/boardSlice';
+import { AppDispatch, IRootState } from 'store/model';
+import { ColumnType, TaskType } from 'types/types';
+import styles from './Board.module.scss';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
+import { TasksByColumnsType } from './model';
 
 const Board = () => {
   const { id } = useParams();
@@ -46,10 +39,7 @@ const Board = () => {
       const getResult = async (): Promise<void> => {
         setIsLoading(true);
 
-        const [tasks, columns] = await Promise.all([
-          getTasksByIdBoard(token, id),
-          getAllColumnsOfBoard(token, id),
-        ]);
+        const [tasks, columns] = await Promise.all([getTasksByIdBoard(token, id), getAllColumnsOfBoard(token, id)]);
 
         setColumns(columns);
         setTasksByColumn(getTaskByColumn(tasks, columns));
@@ -83,8 +73,7 @@ const Board = () => {
       const delColumn = (idColumn: string) => {
         setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
         if (tasksByColumn) {
-          const { [idColumn as keyof TasksByColumnsType]: deletedColumn, ...lastTasks } =
-            tasksByColumn;
+          const { [idColumn as keyof TasksByColumnsType]: deletedColumn, ...lastTasks } = tasksByColumn;
           setTasksByColumn(lastTasks);
         }
       };
@@ -97,12 +86,7 @@ const Board = () => {
   const delTaskMemo = useCallback((deletedTask: TaskType): void => {
     const delTask = ({ columnId, _id: idDeletedTask }: TaskType) =>
       setTasksByColumn((prevTasks) =>
-        prevTasks
-          ? {
-              ...prevTasks,
-              [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
-            }
-          : null
+        prevTasks ? { ...prevTasks, [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask) } : null
       );
 
     delTask(deletedTask);
@@ -126,11 +110,7 @@ const Board = () => {
 
     if (token && tasksByColumn && type === DROPPABLE_TYPE_COLUMN) {
       if (sourceColumnId === destColemnId) {
-        const newTasks = reorderItems<TaskType>(
-          tasksByColumn[sourceColumnId],
-          sourceIndex,
-          destination.index
-        );
+        const newTasks = reorderItems<TaskType>(tasksByColumn[sourceColumnId], sourceIndex, destination.index);
 
         reoderTasksApi(newTasks, sourceColumnId, token);
         setTasksByColumn({ ...tasksByColumn, [sourceColumnId]: newTasks });
@@ -156,9 +136,7 @@ const Board = () => {
     }
   };
 
-  const handleClickCreateColumn = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<void> => {
+  const handleClickCreateColumn = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
@@ -182,19 +160,11 @@ const Board = () => {
               direction={DROPPABLE_DIRECTION_BOARD}
             >
               {(provider) => (
-                <div
-                  className={styles.columns}
-                  ref={provider.innerRef}
-                  {...provider.droppableProps}
-                >
+                <div className={styles.columns} ref={provider.innerRef} {...provider.droppableProps}>
                   {columns.map(({ _id, title }, index) => (
                     <Draggable key={_id} draggableId={_id} index={index}>
                       {(provider) => (
-                        <div
-                          {...provider.draggableProps}
-                          {...provider.dragHandleProps}
-                          ref={provider.innerRef}
-                        >
+                        <div {...provider.draggableProps} {...provider.dragHandleProps} ref={provider.innerRef}>
                           <Column
                             id={_id}
                             title={title}

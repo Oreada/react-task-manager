@@ -40,7 +40,13 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "printWidth": 120,
+        "arrowParens": "always"
       }
     ],
     "@typescript-eslint/interface-name-prefix": "off",
@@ -58,18 +64,5 @@
       "pragma": "React",
       "version": "detect"
     }
-  },
-  "prettier/prettier": [
-    "error",
-    {
-      "singleQuote": true,
-      "parser": "flow",
-      "endOfLine": "auto",
-      "semi": true,
-      "tabWidth": 2,
-      "trailingComma": "es5",
-      "printWidth": 100,
-      "arrowParens": "always"
-    }
-  ]
+  }
 }

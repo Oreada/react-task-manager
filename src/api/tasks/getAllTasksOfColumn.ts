@@ -3,11 +3,7 @@ import { URL_BOARDS } from 'constants/constants';
 import { TaskType } from 'types/types';
 
 //! Get Tasks in columns
-export async function getAllTasksOfColumn(
-  token: string,
-  idBoard: string,
-  idColumn: string
-): Promise<Array<TaskType>> {
+export async function getAllTasksOfColumn(token: string, idBoard: string, idColumn: string): Promise<Array<TaskType>> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}/tasks`, {
       method: 'GET',
