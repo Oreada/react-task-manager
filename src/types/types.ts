@@ -161,3 +161,8 @@ export type UserDecoder = {
   id: string;
   login: string;
 };
+
+export enum typeSubPage {
+  signUp,
+  signIn,
+}
