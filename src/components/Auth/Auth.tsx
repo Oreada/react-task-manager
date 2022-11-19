@@ -8,6 +8,7 @@ import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { AUTHENTICATION_PATH, ROOT_PATH } from 'router/constants';
 import { authSlice } from 'store/authSlice';
 import { AppDispatch, AuthReducer } from 'store/model';
 import { IInput, typeSubPage, UserDecoder } from 'types/types';
@@ -35,7 +36,7 @@ const Auth = () => {
   const subPage: typeSubPage =
     location.state === typeSubPage.signIn ? typeSubPage.signIn : typeSubPage.signUp;
 
-  const goHome = () => navigate('/');
+  const goHome = () => navigate(ROOT_PATH);
 
   useEffect(() => {
     const inputStates =
@@ -44,11 +45,6 @@ const Auth = () => {
 
     setCanSubmit(canS);
   }, [login, name, password, subPage]);
-
-  // const changeSubPage = useCallback(
-  //   () => setSubPage((prev) => (prev ? typeSubPage.signUp : typeSubPage.signIn)),
-  //   []
-  // );
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -189,7 +185,7 @@ const Auth = () => {
             <GroupSvg style={{ fill: '#F3B848' }} />
           )}
           <NavLink
-            to="/form"
+            to={AUTHENTICATION_PATH}
             state={subPage === typeSubPage.signIn ? typeSubPage.signUp : typeSubPage.signIn}
             style={{ color: 'inherit' }}
           >

@@ -4,6 +4,7 @@ import { removeLocal } from 'helpers';
 import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { AUTHENTICATION_PATH, BOARDS_PATH, ROOT_PATH } from 'router/constants';
 import { authSlice } from 'store/authSlice';
 import { INITIAL_AUTH_STATE } from 'store/constants';
 import { AppDispatch, IRootState } from 'store/model';
@@ -45,14 +46,14 @@ const Header = () => {
       <header className={scroll ? styles['header-scroll'] : styles.header}>
         <div className={styles.header__container}>
           <div className={styles['logo-box']}>
-            <NavLink to="/" end>
+            <NavLink to={ROOT_PATH} end>
               <div className={styles['logo-text']}>Teamwork</div>
             </NavLink>
           </div>
           <nav className={styles.navigation}>
             {id ? (
               <>
-                <NavLink to="/boards" className={styles.navigation__item}>
+                <NavLink to={BOARDS_PATH} className={styles.navigation__item}>
                   Boards
                 </NavLink>
                 <p className={styles.navigation__item}>Edit profile</p>
@@ -74,10 +75,18 @@ const Header = () => {
               </>
             ) : (
               <>
-                <NavLink to="/form" state={typeSubPage.signIn} className={styles.navigation__item}>
+                <NavLink
+                  to={AUTHENTICATION_PATH}
+                  state={typeSubPage.signIn}
+                  className={styles.navigation__item}
+                >
                   Sign In
                 </NavLink>
-                <NavLink to="/form" state={typeSubPage.signUp} className={styles.navigation__item}>
+                <NavLink
+                  to={AUTHENTICATION_PATH}
+                  state={typeSubPage.signUp}
+                  className={styles.navigation__item}
+                >
                   Sign Up
                 </NavLink>
               </>
