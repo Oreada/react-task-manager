@@ -10,6 +10,7 @@ interface FormTaskProps {
 }
 
 const style = {
+  maxWidth: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -45,7 +46,7 @@ export function FormTask(props: FormTaskProps) {
   };
 
   return (
-    <form>
+    <form style={{ width: '100%' }}>
       <Box sx={style}>
         <TextField
           variant="outlined"
@@ -54,6 +55,7 @@ export function FormTask(props: FormTaskProps) {
           value={values.title}
           onChange={handleInputChange}
           autoFocus={true}
+          fullWidth
         />
         <TextField
           variant="outlined"
@@ -63,6 +65,7 @@ export function FormTask(props: FormTaskProps) {
           onChange={handleInputChange}
           multiline={true}
           minRows={5}
+          fullWidth
         />
       </Box>
     </form>
