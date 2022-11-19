@@ -5,6 +5,7 @@ import { INITIAL_AUTH_STATE, SLICE_NAMES } from './constants';
 import { AuthReducer } from './model';
 
 const stateFromLocal: AuthReducer | null = readFromLocal(LOCAL_STORAGE_KEY);
+
 export const initialAuth: AuthReducer = stateFromLocal ? stateFromLocal : INITIAL_AUTH_STATE;
 
 export const authSlice = createSlice({
