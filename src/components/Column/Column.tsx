@@ -1,32 +1,29 @@
-import { BODY, BUTTON_INNER, DROPPABLE_MODE_COLUMN, DROPPABLE_TYPE_COLUMN } from './constants';
-import cls from './Column.module.scss';
+import { deleteColumn } from 'api/columns/deleteColumn';
+import { createTask } from 'api/tasks/createTask';
+import { deleteTask } from 'api/tasks/deleteTask';
+import { FormTask } from 'components/FormTask/FormTask';
+import { BasicModal } from 'components/Modal/Modal';
 import Task from 'components/Task/Task';
+import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import {
-  Droppable,
   Draggable,
   DraggableProvided,
-  DraggableStateSnapshot,
   DraggableRubric,
+  DraggableStateSnapshot,
+  Droppable,
 } from 'react-beautiful-dnd';
-import { ColumnPropsType, RenderTaskFuncType, RowProps } from './model';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from 'store/model';
-import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
-import { createTask } from 'api/tasks/createTask';
-import { BodyForTask, TaskType } from 'types/types';
-import { setColumns, setTasks } from 'store/boardSlice';
-import { getAllTasksOfColumn } from 'api/tasks/getAllTasksOfColumn';
-import { deleteColumn } from 'api/columns/deleteColumn';
+import { useSelector } from 'react-redux';
 import {
-  VariableSizeList as List,
-  ListChildComponentProps,
   areEqual,
+  ListChildComponentProps,
   ListOnItemsRenderedProps,
+  VariableSizeList as List,
 } from 'react-window';
-import { deleteTask } from 'api/tasks/deleteTask';
-import { BasicModal } from 'components/Modal/Modal';
-import { FormTask } from 'components/FormTask/FormTask';
-import Button from '@mui/material/Button';
+import { IRootState } from 'store/model';
+import { BodyForTask, TaskType } from 'types/types';
+import cls from './Column.module.scss';
+import { BUTTON_INNER, DROPPABLE_MODE_COLUMN, DROPPABLE_TYPE_COLUMN } from './constants';
+import { ColumnPropsType, RenderTaskFuncType } from './model';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -73,20 +70,23 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     }
   };
 
-  const getRenderTask: RenderTaskFuncType =
-    (style?: CSSProperties) =>
-      (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
-      (
-        <Task
-          idColumn={id}
-          idTask={tasks[rubric.source.index]._id}
-          titleTask={tasks[rubric.source.index].title}
-          delTask={delTask}
-          provider={provider}
-          isDragging={snapshot.isDragging}
-          style={{ margin: 0 }}
-        />
-      );
+  const getRenderTask: RenderTaskFuncType = (style?: CSSProperties) => {
+    return (
+      provider: DraggableProvided,
+      snapshot: DraggableStateSnapshot,
+      rubric: DraggableRubric
+    ) => (
+      <Task
+        idColumn={id}
+        idTask={tasks[rubric.source.index]._id}
+        titleTask={tasks[rubric.source.index].title}
+        delTask={delTask}
+        provider={provider}
+        isDragging={snapshot.isDragging}
+        style={{ margin: 0 }}
+      />
+    );
+  };
 
   const Row = memo(({ data, index, style }: ListChildComponentProps) => {
     const item = data[index];

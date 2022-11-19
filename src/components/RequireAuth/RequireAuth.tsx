@@ -11,7 +11,6 @@ interface IRequireAuth {
 const RequireAuth: FC<IRequireAuth> = ({ children }) => {
   const { id } = useSelector((state: IRootState) => state.auth);
   const location = useLocation();
-  console.log(location);
 
   if (!id && location.pathname !== AUTHENTICATION_PATH) {
     return <Navigate to={AUTHENTICATION_PATH} state={typeSubPage.signIn} />;
