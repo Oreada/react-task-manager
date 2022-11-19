@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import { Box, TextField } from '@mui/material';
+import { BodyForTask } from 'types/types';
+import { IRootState } from 'store/model';
+import { useSelector } from 'react-redux';
+
+interface FormTaskProps {
+  bodyForTask: BodyForTask;
+  setBodyForTask: (arg: BodyForTask) => void;
+}
 
 const style = {
   display: 'flex',
@@ -15,8 +23,10 @@ const initialValues = {
   description: '',
 };
 
-export function FormTask() {
+export function FormTask(props: FormTaskProps) {
   const [values, setValues] = useState(initialValues);
+
+  const { id } = useSelector((state: IRootState) => state.auth);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -24,6 +34,13 @@ export function FormTask() {
     setValues({
       ...values,
       [name]: value,
+    });
+
+    props.setBodyForTask({
+      ...props.bodyForTask,
+      [name]: value,
+      userId: id ? id : '',
+      users: [id ? id : ''],
     });
   };
 

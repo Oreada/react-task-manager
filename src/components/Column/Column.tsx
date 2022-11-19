@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, IRootState } from 'store/model';
 import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import { createTask } from 'api/tasks/createTask';
-import { TaskType } from 'types/types';
+import { BodyForTask, TaskType } from 'types/types';
 import { setColumns, setTasks } from 'store/boardSlice';
 import { getAllTasksOfColumn } from 'api/tasks/getAllTasksOfColumn';
 import { deleteColumn } from 'api/columns/deleteColumn';
@@ -34,6 +34,14 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
 
+  const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
+    order: tasks.length,
+    userId: '',
+    users: [''],
+    title: 'no title',
+    description: 'no description',
+  });
+
   useEffect(() => {
     if (listRef && listRef.current) {
       listRef.current.scrollToItem(scroll);
@@ -45,10 +53,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   ): Promise<TaskType | void> => {
     event.preventDefault();
     if (token) {
-      const newTask = await createTask(token, idBoard, id, {
-        ...BODY,
-        order: tasks.length,
-      });
+      const newTask = await createTask(token, idBoard, id, bodyForTask);
 
       addTask(newTask);
       return newTask;
@@ -146,7 +151,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       </Droppable>
 
       <BasicModal title="Create task" func={handleClickCreateButton}>
-        <FormTask />
+        <FormTask bodyForTask={bodyForTask} setBodyForTask={setBodyForTask} />
       </BasicModal>
 
       <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
