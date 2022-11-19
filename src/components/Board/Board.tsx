@@ -24,6 +24,8 @@ import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
 import { TasksByColumnsType } from './model';
 import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
+import { BasicModal } from 'components/Modal/Modal';
+import { FormColumn } from 'components/FormColumn/FormColumn';
 
 const Board = () => {
   const { id } = useParams();
@@ -36,6 +38,8 @@ const Board = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
+
+  const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
   useEffect(() => {
     if (id && token) {
@@ -95,9 +99,9 @@ const Board = () => {
       setTasksByColumn((prevTasks) =>
         prevTasks
           ? {
-              ...prevTasks,
-              [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
-            }
+            ...prevTasks,
+            [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
+          }
           : null
       );
 
@@ -158,7 +162,7 @@ const Board = () => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
-        title: PSEUDO_TITLE,
+        title: titleForColumn,
         order: columns.length,
       });
 
@@ -204,7 +208,10 @@ const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button>
+
+          <BasicModal title="Create column" func={handleClickCreateColumn}>
+            <FormColumn titleForColumn={titleForColumn} setTitleForColumn={setTitleForColumn} />
+          </BasicModal>
         </>
       ) : (
         <span></span>
