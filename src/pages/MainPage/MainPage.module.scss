@@ -8,10 +8,42 @@
   width: 100%;
 }
 
-.boards {
+.card {
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-wrap: wrap;
+  width: rem(300);
+  margin: 0 auto;
+  min-height: rem(100);
+  padding: rem(20) rem(50) rem(20) rem(20);
+  box-shadow: 0 0 20px $color-box-shadow;
+  border-radius: 10px;
+  background-color: white;
+  transition: 0.5s all;
+
+  &:hover {
+    transform: translateY(-5%);
+    cursor: pointer;
+  }
+}
+
+.create {
+  justify-content: center;
+  padding: 0;
+  background-color: $color-instructions-text;
+  border: 2px dashed $color-button;
+
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+}
+
+.back {
+  position: absolute;
   width: 100%;
+  top: 50px;
+  left: 0;
+  z-index: -1;
 }

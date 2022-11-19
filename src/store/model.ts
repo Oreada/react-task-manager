@@ -27,6 +27,17 @@ export type CreateBoardArgsType = {
   body: BodyForBoard;
 };
 
+export type DeleteBoardArgsType = {
+  token: string;
+  idBoard: string;
+};
+
+export type EditBoardArgsType = {
+  token: string;
+  idBoard: string;
+  body: BodyForBoard;
+};
+
 export type CreateTaskArgsType = {
   token: string;
   idBoard: string;

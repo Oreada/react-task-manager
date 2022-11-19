@@ -4,7 +4,10 @@ import { readFromLocal } from 'helpers';
 import { SLICE_NAMES } from './constants';
 import { AuthReducer } from './model';
 
-export const INITIAL_AUTH_STATE: AuthReducer = readFromLocal(LOCAL_STORAGE_KEY);
+const stateFromLocal: AuthReducer | null = readFromLocal(LOCAL_STORAGE_KEY);
+export const INITIAL_AUTH_STATE: AuthReducer = stateFromLocal
+  ? stateFromLocal
+  : { id: null, login: null, token: null };
 
 export const authSlice = createSlice({
   name: SLICE_NAMES.auth,
