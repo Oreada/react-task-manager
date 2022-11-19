@@ -1,4 +1,4 @@
-import { BODY, BUTTON_INNER, DROPPABLE_MODE_COLUMN, DROPPABLE_TYPE_COLUMN } from './constants';
+import { BODY, BUTTON_INNER, DROPPABLE_TYPE_COLUMN, MAX_VISIBLE_TASKS } from './constants';
 import cls from './Column.module.scss';
 import Task from 'components/Task/Task';
 import {
@@ -75,7 +75,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const getRenderTask: RenderTaskFuncType =
     (style?: CSSProperties) =>
-      (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
+    (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
       (
         <Task
           idColumn={id}
@@ -119,19 +119,21 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) =>
     setScroll(visibleStartIndex);
 
+  const styleRow = {};
+
   return (
     <div className={cls.column}>
       <h3>{title}</h3>
       <Droppable
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}
-        mode={DROPPABLE_MODE_COLUMN}
+        mode={tasks.length > MAX_VISIBLE_TASKS ? 'virtual' : undefined}
         renderClone={getRenderTask()}
       >
         {(provider, snapshot) => {
           const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;
 
-          return (
+          return itemCount > MAX_VISIBLE_TASKS ? (
             <List
               height={200}
               itemCount={itemCount}
@@ -146,6 +148,13 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
             >
               {Row}
             </List>
+          ) : (
+            <div className={cls.list} ref={provider.innerRef} {...provider.droppableProps}>
+              {tasks.map((task, index) => (
+                <Row key={task._id} data={tasks} index={index} style={styleRow} />
+              ))}
+              {provider.placeholder}
+            </div>
           );
         }}
       </Droppable>
