@@ -83,7 +83,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   };
 
   const getRenderTask: RenderTaskFuncType =
-    (style?: CSSProperties) =>
+    (style: CSSProperties) =>
     (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
       (
         <Task
@@ -93,7 +93,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           delTask={delTask}
           provider={provider}
           isDragging={snapshot.isDragging}
-          style={{ margin: 0 }}
+          style={style}
         />
       );
 
@@ -110,7 +110,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
     return (
       <Draggable key={item._id} draggableId={item._id} index={index}>
-        {(provider, snapshot) => (
+        {/* {(provider, snapshot) => (
           <Task
             idColumn={id}
             idTask={item._id}
@@ -120,7 +120,9 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
             isDragging={snapshot.isDragging}
             style={patchedStyle}
           />
-        )}
+          
+        )} */}
+        {getRenderTask(patchedStyle)}
       </Draggable>
     );
   }, areEqual);
@@ -151,7 +153,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}
         mode={tasks.length > MAX_VISIBLE_TASKS ? 'virtual' : undefined}
-        renderClone={getRenderTask()}
+        renderClone={getRenderTask({ margin: 0 })}
       >
         {(provider, snapshot) => {
           const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;

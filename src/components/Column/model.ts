@@ -20,7 +20,7 @@ export type RowProps = {
 };
 
 export type RenderTaskFuncType = (
-  style?: CSSProperties
+  style: CSSProperties
 ) => (
   provider: DraggableProvided,
   snapshot: DraggableStateSnapshot,
