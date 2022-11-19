@@ -1,17 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LOCAL_STORAGE_KEY } from 'constants/constants';
 import { readFromLocal } from 'helpers';
-import { SLICE_NAMES } from './constants';
+import { INITIAL_AUTH_STATE, SLICE_NAMES } from './constants';
 import { AuthReducer } from './model';
 
 const stateFromLocal: AuthReducer | null = readFromLocal(LOCAL_STORAGE_KEY);
-export const INITIAL_AUTH_STATE: AuthReducer = stateFromLocal
-  ? stateFromLocal
-  : { id: null, login: null, token: null };
+
+export const initialAuth: AuthReducer = stateFromLocal ? stateFromLocal : INITIAL_AUTH_STATE;
 
 export const authSlice = createSlice({
   name: SLICE_NAMES.auth,
-  initialState: INITIAL_AUTH_STATE,
+  initialState: initialAuth,
   reducers: {
     setId(state, action: PayloadAction<AuthReducer>) {
       state.id = action.payload.id;
