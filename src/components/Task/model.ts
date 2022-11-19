@@ -1,4 +1,4 @@
-import { CSSProperties } from '@mui/styled-engine';
+import { CSSProperties } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { TaskType } from 'types/types';
 
