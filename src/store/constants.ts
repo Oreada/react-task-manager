@@ -9,6 +9,7 @@ export const INITIAL_BOARD_STATE: BoardStateType = {
   columns: [],
   allTasks: [],
   idBoard: '',
+  titleBoard: '',
   isLoading: false,
 };
 
@@ -17,6 +18,7 @@ export enum BoardStateKeys {
   allTasks = 'allTasks',
   isLoading = 'isLoading',
   idBoard = 'idBoard',
+  titleBoard = 'titleBoard',
 }
 
 export enum MainStateKeys {
@@ -37,6 +39,7 @@ export enum ReducerNameActionTypes {
   getBoardData = 'getBoardData',
   deleteBoard = 'deleteBoard',
   editBoard = 'editBoard',
+  setBoardTitle = 'setBoardTitle',
 }
 
 export const INITIAL_AUTH_STATE: AuthReducer = {

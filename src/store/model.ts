@@ -5,6 +5,7 @@ export type BoardStateType = {
   columns: ColumnType[];
   allTasks: TaskType[];
   idBoard: string;
+  titleBoard: string;
   isLoading: boolean;
 };
 

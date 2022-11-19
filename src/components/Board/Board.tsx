@@ -26,12 +26,13 @@ import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { BasicModal } from 'components/Modal/Modal';
 import { FormColumn } from 'components/FormColumn/FormColumn';
+import { Container, Typography } from '@mui/material';
 
 const Board = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
-  const { idBoard } = useSelector((state: IRootState) => state.board);
+  const { idBoard, titleBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [columns, setColumns] = useState<ColumnType[]>([]);
@@ -172,7 +173,29 @@ const Board = () => {
   };
 
   return (
-    <>
+    <Container
+      maxWidth="lg"
+      sx={{
+        position: 'relative',
+        flex: '1 1 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        padding: '2rem 1rem 0 1rem',
+        overflow: 'hidden',
+      }}
+    >
+      <Typography
+        variant="h3"
+        sx={{
+          fontFamily: '"Nunito Sans", sans-serif',
+          fontSize: '40px',
+          fontWeight: 800,
+        }}
+      >
+        {titleBoard}
+      </Typography>
       {!isLoading && tasksByColumn ? (
         <div className={styles.board}>
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -224,7 +247,7 @@ const Board = () => {
       ) : (
         <span></span>
       )}
-    </>
+    </Container>
   );
 };
 

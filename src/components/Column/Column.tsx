@@ -9,13 +9,11 @@ import {
   DraggableRubric,
 } from 'react-beautiful-dnd';
 import { ColumnPropsType, RenderTaskFuncType, RowProps } from './model';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from 'store/model';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'store/model';
 import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import { createTask } from 'api/tasks/createTask';
 import { BodyForTask, TaskType } from 'types/types';
-import { setColumns, setTasks } from 'store/boardSlice';
-import { getAllTasksOfColumn } from 'api/tasks/getAllTasksOfColumn';
 import { deleteColumn } from 'api/columns/deleteColumn';
 import {
   VariableSizeList as List,
@@ -26,7 +24,9 @@ import {
 import { deleteTask } from 'api/tasks/deleteTask';
 import { BasicModal } from 'components/Modal/Modal';
 import { FormTask } from 'components/FormTask/FormTask';
-import Button from '@mui/material/Button';
+import { Divider, IconButton, Typography } from '@mui/material';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -70,6 +70,15 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
       Promise.all(tasks.map(async ({ _id }) => await deleteTask(token, idBoard, id, _id)));
       deleteColumn(token, idBoard, id);
+    }
+  };
+
+  const handleClickEdit = async (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): Promise<void> => {
+    event.preventDefault();
+
+    if (token) {
     }
   };
 
@@ -119,11 +128,25 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) =>
     setScroll(visibleStartIndex);
 
-  const styleRow = {};
-
   return (
     <div className={cls.column}>
-      <h3>{title}</h3>
+      <Typography
+        variant="h6"
+        sx={{
+          width: '100%',
+          fontFamily: '"Noto Sans", sans-serif',
+          letterSpacing: '0.0625rem',
+          fontWeight: 600,
+          fontSize: '18px',
+          color: '#1c4931',
+          textTransform: 'uppercase',
+          textAlign: 'left',
+        }}
+        onClick={handleClickEdit}
+      >
+        {title}
+      </Typography>
+      <Divider sx={{ width: '100%', color: '#d4d4d4' }} />
       <Droppable
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}
@@ -135,14 +158,14 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
           return itemCount > MAX_VISIBLE_TASKS ? (
             <List
-              height={200}
+              height={150}
               itemCount={itemCount}
               itemSize={() => 40}
-              width={180}
+              width={200}
               ref={listRef}
               outerRef={provider.innerRef}
               itemData={tasks}
-              style={{ transition: 'background-color 0.2s ease' }}
+              style={{ transition: 'background-color 0.2s ease', paddingBottom: '10px' }}
               overscanCount={10}
               onItemsRendered={handleRender}
             >
@@ -151,7 +174,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           ) : (
             <div className={cls.list} ref={provider.innerRef} {...provider.droppableProps}>
               {tasks.map((task, index) => (
-                <Row key={task._id} data={tasks} index={index} style={styleRow} />
+                <Row key={task._id} data={tasks} index={index} style={{}} />
               ))}
               {provider.placeholder}
             </div>
@@ -162,8 +185,13 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       <BasicModal title="Create task" func={handleClickCreateButton}>
         <FormTask bodyForTask={bodyForTask} setBodyForTask={setBodyForTask} />
       </BasicModal>
-
-      <button onClick={handleClickDeleteButton}>{BUTTON_INNER.deleteColumn}</button>
+      <IconButton
+        onClick={handleClickDeleteButton}
+        aria-label="delete"
+        sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+      >
+        <DeleteOutlineOutlinedIcon />
+      </IconButton>
     </div>
   );
 });

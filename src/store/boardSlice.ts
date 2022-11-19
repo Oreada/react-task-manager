@@ -32,6 +32,9 @@ const boardSlice = createSlice({
     setBoardId(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.idBoard>>) {
       state.idBoard = action.payload.idBoard;
     },
+    setBoardTitle(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.titleBoard>>) {
+      state.titleBoard = action.payload.titleBoard;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,6 +52,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { setColumns, setBoardId, setTasks } = boardSlice.actions;
+export const { setColumns, setBoardId, setTasks, setBoardTitle } = boardSlice.actions;
 
 export default boardSlice.reducer;

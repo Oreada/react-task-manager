@@ -15,6 +15,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { ReactComponent as Back } from './assets/Back.svg';
 import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import styles from './MainPage.module.scss';
+import { setBoardTitle } from 'store/boardSlice';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,12 +52,13 @@ const MainPage = () => {
   };
 
   const handleClickGoTo =
-    (to: To) =>
+    (to: To, title: string) =>
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
       event.preventDefault();
 
       if (token && idUser) {
         navigate(to);
+        dispatch(setBoardTitle({ titleBoard: title }));
       }
     };
 
@@ -125,7 +127,7 @@ const MainPage = () => {
       <Grid container spacing={4}>
         {boards.map(({ _id, title, description }) => (
           <Grid item key={_id} xs>
-            <div className={styles.card} onClick={handleClickGoTo(`${_id}`)}>
+            <div className={styles.card} onClick={handleClickGoTo(`${_id}`, title)}>
               <Typography
                 variant="h6"
                 sx={{
