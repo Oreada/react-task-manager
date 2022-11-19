@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
-import { BODY, MAIN_PAGE_TITLE } from './constants';
+import { BODY, MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import {
   createBoardThunk,
   deleteBoardThunk,
@@ -13,7 +13,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { ReactComponent as Back } from './assets/Back.svg';
-import { Container, Grid, IconButton, Typography } from '@mui/material';
+import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import styles from './MainPage.module.scss';
 
 const MainPage = () => {
@@ -85,9 +85,10 @@ const MainPage = () => {
             token,
             idBoard,
             body: {
-              title: 'title',
               owner: idUser,
               users: [idUser],
+              description: 'Description',
+              title: 'new title',
             },
           })
         );
@@ -122,27 +123,40 @@ const MainPage = () => {
         {MAIN_PAGE_TITLE}
       </Typography>
       <Grid container spacing={4}>
-        {boards.map(({ _id, title, owner }) => (
+        {boards.map(({ _id, title, description }) => (
           <Grid item key={_id} xs>
             <div className={styles.card} onClick={handleClickGoTo(`${_id}`)}>
               <Typography
                 variant="h6"
                 sx={{
+                  width: '100%',
                   fontFamily: '"Noto Sans", sans-serif',
                   letterSpacing: '0.0625rem',
                   fontWeight: 600,
-                  fontSize: '16px',
+                  fontSize: '18px',
                   color: '#1c4931',
                   textTransform: 'uppercase',
-                  textAlign: 'center',
+                  textAlign: 'left',
                 }}
               >
                 {title}
               </Typography>
+              <Divider sx={{ width: '100%', color: '#d4d4d4' }} />
+              <Typography
+                variant="body1"
+                sx={{
+                  fontFamily: '"Noto Sans", sans-serif',
+                  fontWeight: 400,
+                  fontSize: '20px',
+                  textAlign: 'left',
+                }}
+              >
+                {description ? description : NO_DESCRIPTION}
+              </Typography>
               <IconButton
                 onClick={handleClickDelButton(_id)}
                 aria-label="delete"
-                sx={{ position: 'absolute', top: 0, right: 30, zIndex: 2 }}
+                sx={{ position: 'absolute', top: 30, right: 0, zIndex: 2 }}
               >
                 <DeleteOutlineOutlinedIcon />
               </IconButton>

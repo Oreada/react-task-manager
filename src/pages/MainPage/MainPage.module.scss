@@ -11,12 +11,12 @@
 .card {
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   width: rem(300);
-  height: rem(100);
   margin: 0 auto;
-  padding: rem(20);
+  min-height: rem(100);
+  padding: rem(20) rem(50) rem(20) rem(20);
   box-shadow: 0 0 20px $color-box-shadow;
   border-radius: 10px;
   background-color: white;
@@ -29,6 +29,8 @@
 }
 
 .create {
+  justify-content: center;
+  padding: 0;
   background-color: $color-instructions-text;
   border: 2px dashed $color-button;
 

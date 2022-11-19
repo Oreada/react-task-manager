@@ -3,8 +3,7 @@ import { createBoard } from 'api/boards/createBoard';
 import { deleteBoard } from 'api/boards/deleteBoard';
 import { getAllBoards } from 'api/boards/getAllBoards';
 import { updateBoard } from 'api/boards/updateBoard';
-import { deleteColumn } from 'api/columns/deleteColumn';
-import { Board, ColumnType } from 'types/types';
+import { Board } from 'types/types';
 import { INITIAL_MAIN_STATE, ReducerNameActionTypes } from './constants';
 import { SLICE_NAMES } from './constants';
 import {
