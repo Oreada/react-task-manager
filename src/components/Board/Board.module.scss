@@ -16,17 +16,17 @@
 
 .create {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-width: rem(200);
-  min-height: rem(10);
+  min-width: rem(190);
+  // min-height: rem(10);
   padding: 0;
   margin-left: 1rem;
-  background-color: $color-instructions-text;
-  border: 2px dashed $color-button;
+  // background-color: $color-instructions-text;
+  // border: 2px dashed $color-button;
 
-  &:hover {
-    background-color: white;
-    cursor: pointer;
-  }
+  // &:hover {
+  //   background-color: white;
+  //   cursor: pointer;
+  // }
 }

@@ -157,7 +157,7 @@ const Board = () => {
   };
 
   const handleClickCreateColumn = async (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     event.preventDefault();
     if (token) {
@@ -212,10 +212,11 @@ const Board = () => {
               )}
             </Droppable>
           </DragDropContext>
-          {/* <button onClick={handleClickCreateColumn}>{BUTTON_INNER}</button> */}
-          {/* <BasicModal title="Create column" func={handleClickCreateColumn}>
-            <FormColumn titleForColumn={titleForColumn} setTitleForColumn={setTitleForColumn} />
-          </BasicModal> */}
+          <div className={styles.create}>
+            <BasicModal title="Create column" func={handleClickCreateColumn}>
+              <FormColumn titleForColumn={titleForColumn} setTitleForColumn={setTitleForColumn} />
+            </BasicModal>
+          </div>
           {/* <div className={styles.create} onClick={handleClickCreateColumn}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
           </div> */}
