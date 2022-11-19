@@ -48,7 +48,7 @@ export function BasicModal(props: ModalProps) {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <>
       <Button
         variant="outlined"
         endIcon={<AddCircleRoundedIcon />}
@@ -85,6 +85,6 @@ export function BasicModal(props: ModalProps) {
           </ThemeProvider>
         </Box>
       </Modal>
-    </div>
+    </>
   );
 }

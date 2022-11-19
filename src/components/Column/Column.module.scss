@@ -9,20 +9,16 @@
   width: 200px;
   padding: 1rem;
   margin-left: 1rem;
-  min-height: 3rem;
   background-color: $color-column-bg;
 }
 
-// .list {
-//   overflow-y: scroll auto;
-//   overflow-x: auto;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   align-items: center;
-//   max-height: 20rem;
-//   width: 100%;
-// }
+.list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: rem(10);
+}
 
 .tasks {
   min-height: 1rem;
@@ -30,8 +26,5 @@
 }
 
 .task {
-  // width: 90%;
-  // height: 4rem;
-  // margin-bottom: 1rem;
   background-color: $color-task-bg;
 }
