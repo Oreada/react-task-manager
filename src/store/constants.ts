@@ -31,10 +31,12 @@ export enum SLICE_NAMES {
   auth = 'auth',
 }
 
-export enum ASYNC_ACTION_NAMES {
+export enum ReducerNameActionTypes {
   getBoards = 'getBoards',
   createBoard = 'createBoard',
   getBoardData = 'getBoardData',
+  deleteBoard = 'deleteBoard',
+  editBoard = 'editBoard',
 }
 
 export const INITIAL_AUTH_STATE: AuthReducer = {

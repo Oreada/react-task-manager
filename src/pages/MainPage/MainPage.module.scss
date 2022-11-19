@@ -8,11 +8,39 @@
   width: 100%;
 }
 
-.boards {
+.card {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  width: rem(300);
+  height: rem(100);
+  margin: 0 auto;
+  padding: rem(20);
+  box-shadow: 0 0 20px $color-box-shadow;
+  border-radius: 10px;
+  transition: 0.5s all;
+
+  &:hover {
+    transform: translateY(-5%);
+    cursor: pointer;
+  }
+}
+
+.create {
+  background-color: $color-instructions-text;
+  border: 2px dashed $color-button;
+
+  &:hover {
+    background-color: transparent;
+    cursor: pointer;
+  }
+}
+
+.back {
+  position: absolute;
   width: 100%;
-  border: 2px dashed #d4d4d4;
+  top: 50px;
+  left: 0;
+  z-index: -1;
 }
