@@ -19,4 +19,5 @@ export type TaskPropsType = {
   isGroupedOver?: boolean;
   style: CSSProperties;
   index?: number;
+  titleTask: string;
 };
