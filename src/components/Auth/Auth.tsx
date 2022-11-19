@@ -5,12 +5,13 @@ import CustomInput from 'components/CustomInput/CustomInput';
 import { LOCAL_STORAGE_KEY } from 'constants/constants';
 import { saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
-import { FormEvent, SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { AUTHENTICATION_PATH, ROOT_PATH } from 'router/constants';
 import { authSlice } from 'store/authSlice';
 import { AppDispatch, AuthReducer } from 'store/model';
-import { IInput, UserDecoder } from 'types/types';
+import { IInput, typeSubPage, UserDecoder } from 'types/types';
 import { signUp } from '../../api/auth/signUp';
 import { ReactComponent as BlobTwo } from './assets/Blob_2.svg';
 import { ReactComponent as BlobOne } from './assets/Blob_3.svg';
@@ -18,37 +19,32 @@ import { ReactComponent as GroupSvg } from './assets/Group.svg';
 import { ReactComponent as HelloSvg } from './assets/Hello.svg';
 import { FORM_INPUTS, FORM_TEXT, VALIDATION_FORM } from './constants';
 
-enum typeSubPage {
-  signUp,
-  signIn,
-}
-
 const Auth = () => {
-  const [subPage, setSubPage] = useState<typeSubPage>(typeSubPage.signIn);
   const [error, setError] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
   const name: IInput = useInput('name', '', VALIDATION_FORM.name);
   const login: IInput = useInput('login', '', VALIDATION_FORM.login);
   const password: IInput = useInput('password', '', VALIDATION_FORM.password);
+  const inputContent = FORM_INPUTS;
 
   const dispatch = useDispatch<AppDispatch>();
   const { setId } = authSlice.actions;
+
   const navigate = useNavigate();
-  const goHome = () => navigate('/');
-  const inputContent = FORM_INPUTS;
+  const location = useLocation();
+  const subPage: typeSubPage =
+    location.state === typeSubPage.signIn ? typeSubPage.signIn : typeSubPage.signUp;
+
+  const goHome = () => navigate(ROOT_PATH);
 
   useEffect(() => {
-    const inputStates = subPage ? [login, password] : [name, login, password];
+    const inputStates =
+      subPage === typeSubPage.signIn ? [login, password] : [name, login, password];
     const canS = inputStates.reduce((acc, cur) => acc && !!cur.value && !cur.isError, true);
 
     setCanSubmit(canS);
   }, [login, name, password, subPage]);
-
-  const changeSubPage = useCallback(
-    () => setSubPage((prev) => (prev ? typeSubPage.signUp : typeSubPage.signIn)),
-    []
-  );
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -117,7 +113,11 @@ const Auth = () => {
         }}
       />
       <Stack
-        direction={subPage ? { xs: 'column', sm: 'row' } : { xs: 'column', sm: 'row-reverse' }}
+        direction={
+          subPage === typeSubPage.signIn
+            ? { xs: 'column', sm: 'row' }
+            : { xs: 'column', sm: 'row-reverse' }
+        }
         justifyContent="space-evenly"
         alignItems={{ xs: 'center', sm: 'stretch' }}
         spacing={3}
@@ -140,12 +140,12 @@ const Auth = () => {
           onSubmit={handleSubmit}
         >
           <Typography variant="h4" component="p" sx={{ fontWeight: 700 }}>
-            {subPage ? FORM_TEXT.titleIn : FORM_TEXT.titleUp}
+            {subPage === typeSubPage.signIn ? FORM_TEXT.titleIn : FORM_TEXT.titleUp}
           </Typography>
 
           {[name, login, password].map(
             (item) =>
-              (!subPage || item.name !== 'name') && (
+              (subPage !== typeSubPage.signIn || item.name !== 'name') && (
                 <CustomInput
                   key={item.name}
                   label={inputContent[item.name].label}
@@ -168,7 +168,7 @@ const Auth = () => {
           )}
 
           <Button component="label" variant="contained" disabled={!canSubmit}>
-            {subPage ? FORM_TEXT.buttonTextIn : FORM_TEXT.buttonTextUp}
+            {subPage === typeSubPage.signIn ? FORM_TEXT.buttonTextIn : FORM_TEXT.buttonTextUp}
             <input hidden type="submit" />
           </Button>
         </Stack>
@@ -179,14 +179,20 @@ const Auth = () => {
           spacing={2}
           sx={{ width: '50%' }}
         >
-          {subPage ? (
+          {subPage === typeSubPage.signIn ? (
             <HelloSvg style={{ fill: '#F3B848' }} />
           ) : (
             <GroupSvg style={{ fill: '#F3B848' }} />
           )}
-          <Button variant="text" onClick={changeSubPage}>
-            {subPage ? FORM_TEXT.linkTextToPageUp : FORM_TEXT.linkTextToPageIn}
-          </Button>
+          <NavLink
+            to={AUTHENTICATION_PATH}
+            state={subPage === typeSubPage.signIn ? typeSubPage.signUp : typeSubPage.signIn}
+            style={{ color: 'inherit' }}
+          >
+            {subPage === typeSubPage.signIn
+              ? FORM_TEXT.linkTextToPageUp
+              : FORM_TEXT.linkTextToPageIn}
+          </NavLink>
         </Stack>
       </Stack>
       <BlobTwo
