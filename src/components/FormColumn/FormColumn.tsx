@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, TextField } from '@mui/material';
 
 interface FormColumnProps {
@@ -21,9 +21,15 @@ export function FormColumn(props: FormColumnProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const title = event.target.value;
     setValueInput(title);
-
-    props.setTitleForColumn(title);
   };
+
+  const handleSubmit = () => {
+    props.setTitleForColumn(valueInput);
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [valueInput]);
 
   return (
     <form style={{ width: '100%' }}>
@@ -34,6 +40,7 @@ export function FormColumn(props: FormColumnProps) {
           name="title"
           value={valueInput}
           onChange={handleInputChange}
+          onSubmit={handleSubmit}
           autoFocus={true}
           fullWidth
         />

@@ -1,5 +1,5 @@
 import { URL_COLUMNS_SET } from 'constants/constants';
-import { ColumnType, BodyForColumnsSet } from 'types/types';
+import { BodyForColumnsSet, ColumnType } from 'types/types';
 
 //! Create set of Columns
 export async function createColumnsSet(

@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import { Board, ColumnType, TaskType } from 'types/types';
-import { getAllBoards } from './boards/getAllBoards';
-import { getAllColumnsOfBoard } from './columns/getAllColumnsOfBoard';
-import { getAllTasksOfColumn } from './tasks/getAllTasksOfColumn';
-import { updateTask } from './tasks/updateTask';
+import { TaskType } from 'types/types';
 import { getTasksByIdBoard } from './tasks/getTasksByIdBoard';
 
 // 636b5a6b83f1e2fe95e7a283

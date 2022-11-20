@@ -1,30 +1,30 @@
-import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
+import { deleteColumn } from 'api/columns/deleteColumn';
+import { createTask } from 'api/tasks/createTask';
+import { deleteTask } from 'api/tasks/deleteTask';
+import { FormTask } from 'components/FormTask/FormTask';
+import { BasicModal } from 'components/Modal/Modal';
 import Task from 'components/Task/Task';
+import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import {
-  Droppable,
   Draggable,
   DraggableProvided,
-  DraggableStateSnapshot,
   DraggableRubric,
+  DraggableStateSnapshot,
+  Droppable,
 } from 'react-beautiful-dnd';
-import { ColumnPropsType, RenderTaskFuncType } from './model';
 import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
-import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
-import { createTask } from 'api/tasks/createTask';
-import { BodyForTask, TaskType } from 'types/types';
-import { deleteColumn } from 'api/columns/deleteColumn';
 import {
-  VariableSizeList as List,
-  ListChildComponentProps,
   areEqual,
+  ListChildComponentProps,
   ListOnItemsRenderedProps,
+  VariableSizeList as List,
 } from 'react-window';
-import { deleteTask } from 'api/tasks/deleteTask';
-import { BasicModal } from 'components/Modal/Modal';
-import { FormTask } from 'components/FormTask/FormTask';
-import { IconButton, Typography } from '@mui/material';
+import { IRootState } from 'store/model';
+import { BodyForTask, TaskType } from 'types/types';
+import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
+import { ColumnPropsType, RenderTaskFuncType } from './model';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { IconButton, Typography } from '@mui/material';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -48,6 +48,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<TaskType | void> => {
     event.preventDefault();
+
     if (token) {
       const newTask = await createTask(token, idBoard, id, bodyForTask);
 

@@ -1,5 +1,5 @@
 import { URL_BOARDS } from 'constants/constants';
-import { ColumnType, BodyForColumn } from 'types/types';
+import { BodyForColumn, ColumnType } from 'types/types';
 
 //! Create Column in board
 export async function createColumn(

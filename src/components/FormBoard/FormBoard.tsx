@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
 import { Box, TextField } from '@mui/material';
-import { BodyForTask } from 'types/types';
-import { IRootState } from 'store/model';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { IRootState } from 'store/model';
+import { BodyForBoard } from 'types/types';
 
-interface FormTaskProps {
-  bodyForTask: BodyForTask;
-  setBodyForTask: (arg: BodyForTask) => void;
+interface FormBoardProps {
+  bodyForBoard: BodyForBoard;
+  setBodyForBoard: (arg: BodyForBoard) => void;
 }
 
 const style = {
@@ -23,7 +23,7 @@ const initialValues = {
   description: '',
 };
 
-export function FormTask(props: FormTaskProps) {
+export function FormBoard(props: FormBoardProps) {
   const [values, setValues] = useState(initialValues);
 
   const { id } = useSelector((state: IRootState) => state.auth);
@@ -38,19 +38,19 @@ export function FormTask(props: FormTaskProps) {
   };
 
   const handleSubmitTitle = () => {
-    props.setBodyForTask({
-      ...props.bodyForTask,
+    props.setBodyForBoard({
+      ...props.bodyForBoard,
       title: values.title,
-      userId: id ? id : '',
+      owner: id ? id : '',
       users: [id ? id : ''],
     });
   };
 
   const handleSubmitDescription = () => {
-    props.setBodyForTask({
-      ...props.bodyForTask,
+    props.setBodyForBoard({
+      ...props.bodyForBoard,
       description: values.description,
-      userId: id ? id : '',
+      owner: id ? id : '',
       users: [id ? id : ''],
     });
   };
@@ -68,7 +68,7 @@ export function FormTask(props: FormTaskProps) {
       <Box sx={style}>
         <TextField
           variant="outlined"
-          label="Task title"
+          label="Board title"
           name="title"
           value={values.title}
           onChange={handleInputChange}
@@ -78,7 +78,7 @@ export function FormTask(props: FormTaskProps) {
         />
         <TextField
           variant="outlined"
-          label="Task description"
+          label="Board description"
           name="description"
           value={values.description}
           onChange={handleInputChange}

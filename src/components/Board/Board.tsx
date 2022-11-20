@@ -1,6 +1,9 @@
+import { createColumn } from 'api/columns/createColumn';
+import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
+import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
 import styles from './Board.module.scss';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import {
   BUTTON_INNER,
   DROPPABLE_DIRECTION_BOARD,
@@ -8,21 +11,17 @@ import {
   DROPPABLE_TYPE_BOARD,
 } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
-import { DropResult } from 'react-beautiful-dnd';
+import { FormColumn } from 'components/FormColumn/FormColumn';
+import { BasicModal } from 'components/Modal/Modal';
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { ColumnType, TaskType } from 'types/types';
-import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
-import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
-import { reorderItems } from 'components/helpers/reorderItems';
-import { createColumn } from 'api/columns/createColumn';
-import { TasksByColumnsType } from './model';
-import { BasicModal } from 'components/Modal/Modal';
-import { FormColumn } from 'components/FormColumn/FormColumn';
 import { Typography } from '@mui/material';
+import { TasksByColumnsType } from './model';
+import { reorderItems } from 'components/helpers/reorderItems';
 
 const Board = () => {
   const { id } = useParams();

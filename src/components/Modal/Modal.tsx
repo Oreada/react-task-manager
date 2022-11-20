@@ -10,7 +10,7 @@ import { TaskType } from 'types/types';
 interface ModalProps {
   children: React.ReactNode;
   title: string;
-  func: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<TaskType | void>;
+  func: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<TaskType | void> | void;
 }
 
 const style = {
