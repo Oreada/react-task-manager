@@ -8,16 +8,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, IRootState } from 'store/model';
-import { setBoardId } from 'store/boardSlice';
+import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { ColumnType, TaskType } from 'types/types';
 import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
 import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
 import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
-import { reorderItems } from 'components/heplers/reorderItems';
+import { reorderItems } from 'components/helpers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
 import { TasksByColumnsType } from './model';
-import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
 import { BasicModal } from 'components/Modal/Modal';
 import { FormColumn } from 'components/FormColumn/FormColumn';
 import { Container, Typography } from '@mui/material';
@@ -26,29 +25,30 @@ const Board = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
-  const { idBoard, titleBoard } = useSelector((state: IRootState) => state.board);
+  const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
+    (state: IRootState) => state.board
+  );
   const { token } = useSelector((state: IRootState) => state.auth);
 
-  const [columns, setColumns] = useState<ColumnType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [columns, setColumns] = useState<ColumnType[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
+  // const [tasksByColumn, setTasksByColumn] = useState<TasksByColumnsType | null>(null);
 
   const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
   useEffect(() => {
     if (id && token) {
       const getResult = async (): Promise<void> => {
-        setIsLoading(true);
+        // setIsLoading(true);
 
-        const [tasks, columns] = await Promise.all([
-          getTasksByIdBoard(token, id),
-          getAllColumnsOfBoard(token, id),
-        ]);
-
-        setColumns(columns);
-        setTasksByColumn(getTaskByColumn(tasks, columns));
-        setIsLoading(false);
+        // const [tasks, columns] = await Promise.all([
+        //   getTasksByIdBoard(token, id),
+        //   getAllColumnsOfBoard(token, id),
+        // ]);
+        dispatch(getBoardData({ token, idBoard: id }));
+        // setColumns(columns);
+        // setIsLoading(false);
       };
 
       getResult();
@@ -63,45 +63,82 @@ const Board = () => {
     }
   }, [columns, token]);
 
-  const addTaskMemo = useCallback((newTask: TaskType): void => {
-    const addTask = ({ columnId }: TaskType) =>
-      setTasksByColumn((prevTasks) => ({
-        ...prevTasks,
-        [columnId]: prevTasks ? [...prevTasks[columnId], newTask] : [newTask],
-      }));
+  // useEffect(() => {
+  //   if (tasks.length && columns.length) {
+  //     setTasksByColumn(getTaskByColumn(tasks, columns));
+  //   }
+  // }, [columns, tasks]);
 
-    addTask(newTask);
-  }, []);
+  const addTaskMemo = useCallback(
+    (newTask: TaskType): void => {
+      const addTask = ({ columnId }: TaskType) =>
+        // setTasksByColumn((prevTasks) => ({
+        //   ...prevTasks,
+        //   [columnId]: prevTasks ? [...prevTasks[columnId], newTask] : [newTask],
+        // }));
+        taskByColumns &&
+        dispatch(
+          setTasksByColumn({
+            taskByColumns: {
+              ...taskByColumns,
+              [columnId]: taskByColumns[columnId]
+                ? [...taskByColumns[columnId], newTask]
+                : [newTask],
+            },
+          })
+        );
+
+      addTask(newTask);
+    },
+    [taskByColumns]
+  );
 
   const delColumnMemo = useCallback(
     (idColumn: string): void => {
       const delColumn = (idColumn: string) => {
-        setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
-        if (tasksByColumn) {
+        // setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
+        dispatch(setColumns({ columns: columns.filter(({ _id }) => _id !== idColumn) }));
+
+        if (taskByColumns) {
           const { [idColumn as keyof TasksByColumnsType]: deletedColumn, ...lastTasks } =
-            tasksByColumn;
-          setTasksByColumn(lastTasks);
+            taskByColumns;
+          // setTasksByColumn(lastTasks);
+          dispatch(setTasksByColumn({ taskByColumns: lastTasks }));
         }
       };
 
       delColumn(idColumn);
     },
-    [tasksByColumn]
+    [taskByColumns]
   );
 
-  const delTaskMemo = useCallback((deletedTask: TaskType): void => {
-    const delTask = ({ columnId, _id: idDeletedTask }: TaskType) =>
-      setTasksByColumn((prevTasks) =>
-        prevTasks
-          ? {
-              ...prevTasks,
-              [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
-            }
-          : null
-      );
+  const delTaskMemo = useCallback(
+    (deletedTask: TaskType): void => {
+      const delTask = ({ columnId, _id: idDeletedTask }: TaskType) =>
+        // setTasksByColumn((prevTasks) =>
+        //   prevTasks
+        //     ? {
+        //         ...prevTasks,
+        //         [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
+        //       }
+        //     : null
+        // )
+        {
+          taskByColumns &&
+            dispatch(
+              setTasksByColumn({
+                taskByColumns: {
+                  ...taskByColumns,
+                  [columnId]: taskByColumns[columnId].filter(({ _id }) => _id !== idDeletedTask),
+                },
+              })
+            );
+        };
 
-    delTask(deletedTask);
-  }, []);
+      delTask(deletedTask);
+    },
+    [taskByColumns]
+  );
 
   const handleDragEnd = ({
     destination,
@@ -115,25 +152,29 @@ const Board = () => {
     const { droppableId: destColemnId, index: destIndex } = destination;
 
     if (type === DROPPABLE_TYPE_BOARD) {
-      setColumns(reorderItems<ColumnType>(columns, sourceIndex, destIndex));
+      // setColumns(reorderItems<ColumnType>(columns, sourceIndex, destIndex));
+      dispatch(setColumns({ columns: reorderItems<ColumnType>(columns, sourceIndex, destIndex) }));
       return;
     }
 
-    if (token && tasksByColumn && type === DROPPABLE_TYPE_COLUMN) {
+    if (token && taskByColumns && type === DROPPABLE_TYPE_COLUMN) {
       if (sourceColumnId === destColemnId) {
         const newTasks = reorderItems<TaskType>(
-          tasksByColumn[sourceColumnId],
+          taskByColumns[sourceColumnId],
           sourceIndex,
           destination.index
         );
 
         reoderTasksApi(newTasks, sourceColumnId, token);
-        setTasksByColumn({ ...tasksByColumn, [sourceColumnId]: newTasks });
+        // setTasksByColumn({ ...tasksByColumn, [sourceColumnId]: newTasks });
+        dispatch(
+          setTasksByColumn({ taskByColumns: { ...taskByColumns, [sourceColumnId]: newTasks } })
+        );
         return;
       }
 
-      const newSourceTasks = [...tasksByColumn[sourceColumnId]];
-      const newDestTasks = [...tasksByColumn[destColemnId]];
+      const newSourceTasks = [...taskByColumns[sourceColumnId]];
+      const newDestTasks = [...taskByColumns[destColemnId]];
 
       const [removed] = newSourceTasks.splice(sourceIndex, 1);
       const newRemoved = { ...removed, columnId: destColemnId };
@@ -142,11 +183,20 @@ const Board = () => {
 
       reoderTasksApi(newDestTasks, destColemnId, token);
 
-      setTasksByColumn({
-        ...tasksByColumn,
-        [sourceColumnId]: newSourceTasks,
-        [destColemnId]: newDestTasks,
-      });
+      // setTasksByColumn({
+      //   ...tasksByColumn,
+      //   [sourceColumnId]: newSourceTasks,
+      //   [destColemnId]: newDestTasks,
+      // });
+      dispatch(
+        setTasksByColumn({
+          taskByColumns: {
+            ...taskByColumns,
+            [sourceColumnId]: newSourceTasks,
+            [destColemnId]: newDestTasks,
+          },
+        })
+      );
       return;
     }
   };
@@ -161,8 +211,10 @@ const Board = () => {
         order: columns.length,
       });
 
-      setColumns([...columns, newColumn]);
-      setTasksByColumn({ ...tasksByColumn, [newColumn._id]: [] });
+      // setColumns([...columns, newColumn]);
+      dispatch(setColumns({ columns: [...columns, newColumn] }));
+      // setTasksByColumn({ ...tasksByColumn, [newColumn._id]: [] });
+      dispatch(setTasksByColumn({ taskByColumns: { ...taskByColumns, [newColumn._id]: [] } }));
     }
   };
 
@@ -190,7 +242,7 @@ const Board = () => {
       >
         {titleBoard}
       </Typography>
-      {!isLoading && tasksByColumn ? (
+      {!isLoading ? (
         <div className={styles.board}>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable
@@ -218,7 +270,7 @@ const Board = () => {
                             addTask={addTaskMemo}
                             delColumn={delColumnMemo}
                             delTask={delTaskMemo}
-                            tasks={tasksByColumn[_id]}
+                            tasks={taskByColumns ? taskByColumns[_id] : []}
                           />
                         </div>
                       )}

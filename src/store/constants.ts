@@ -7,7 +7,8 @@ export const INITIAL_MAIN_STATE: MainStateType = {
 
 export const INITIAL_BOARD_STATE: BoardStateType = {
   columns: [],
-  allTasks: [],
+  tasks: [],
+  taskByColumns: null,
   idBoard: '',
   titleBoard: '',
   isLoading: false,
@@ -15,7 +16,8 @@ export const INITIAL_BOARD_STATE: BoardStateType = {
 
 export enum BoardStateKeys {
   columns = 'columns',
-  allTasks = 'allTasks',
+  tasks = 'tasks',
+  taskByColumns = 'taskByColumns',
   isLoading = 'isLoading',
   idBoard = 'idBoard',
   titleBoard = 'titleBoard',

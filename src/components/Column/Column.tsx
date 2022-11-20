@@ -30,7 +30,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
   const [scroll, setScroll] = useState<number>(0);
-  const { idBoard } = useSelector((state: IRootState) => state.board);
+  const { idBoard, columns } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
@@ -47,7 +47,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     if (listRef && listRef.current) {
       listRef.current.scrollToItem(scroll);
     }
-  }, [tasks]);
+  }, [columns]);
 
   const handleClickCreateButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

@@ -1,9 +1,11 @@
+import { TasksByColumnsType } from 'components/Board/model';
 import { Board, BodyForBoard, BodyForTask, ColumnType, TaskType } from 'types/types';
 import { store } from './appStore';
 
 export type BoardStateType = {
   columns: ColumnType[];
-  allTasks: TaskType[];
+  tasks: TaskType[];
+  taskByColumns: TasksByColumnsType | null;
   idBoard: string;
   titleBoard: string;
   isLoading: boolean;
