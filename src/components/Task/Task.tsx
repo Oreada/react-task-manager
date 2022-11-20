@@ -9,17 +9,10 @@ import { TaskType } from 'types/types';
 import { Box, IconButton, Typography } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import styles from './Task.module.scss';
+
 function getStyle(provided: DraggableProvided, style: CSSProperties) {
   return {
-    display: 'flex',
-    alignItems: 'center',
-    width: 200,
-    border: '1px solid #d4d4d4',
-    borderRadius: '4px',
-    padding: 10,
-    '&:hover': {
-      background: '#d4d4d4',
-    },
     ...provided.draggableProps.style,
     ...style,
   };
@@ -59,6 +52,7 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
       style={getStyle(provider, style)}
       onMouseOver={handlePointerOver}
       onMouseOut={handlePointerOut}
+      className={styles.task}
     >
       <Typography
         variant="body1"

@@ -219,31 +219,20 @@ const Board = () => {
   };
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        position: 'relative',
-        flex: '1 1 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '100%',
-        padding: '2rem 1rem 0 1rem',
-        overflow: 'hidden',
-      }}
-    >
+    <div className={styles.wrap}>
       <Typography
         variant="h3"
         sx={{
           fontFamily: '"Nunito Sans", sans-serif',
           fontSize: '40px',
           fontWeight: 800,
+          textAlign: 'center',
         }}
       >
         {titleBoard}
       </Typography>
       {!isLoading ? (
-        <div className={styles.board}>
+        <>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable
               droppableId={DROPPABLE_ID_BOARD}
@@ -251,11 +240,7 @@ const Board = () => {
               direction={DROPPABLE_DIRECTION_BOARD}
             >
               {(provider) => (
-                <div
-                  className={styles.columns}
-                  ref={provider.innerRef}
-                  {...provider.droppableProps}
-                >
+                <div className={styles.board} ref={provider.innerRef} {...provider.droppableProps}>
                   {columns.map(({ _id, title }, index) => (
                     <Draggable key={_id} draggableId={_id} index={index}>
                       {(provider) => (
@@ -263,6 +248,8 @@ const Board = () => {
                           {...provider.draggableProps}
                           {...provider.dragHandleProps}
                           ref={provider.innerRef}
+                          className={styles.column}
+                          // style={{ touchAction: 'none' }}
                         >
                           <Column
                             id={_id}
@@ -277,23 +264,27 @@ const Board = () => {
                     </Draggable>
                   ))}
                   {provider.placeholder}
+                  <div className={styles.create}>
+                    <BasicModal title="Create column" func={handleClickCreateColumn}>
+                      <FormColumn
+                        titleForColumn={titleForColumn}
+                        setTitleForColumn={setTitleForColumn}
+                      />
+                    </BasicModal>
+                  </div>
                 </div>
               )}
             </Droppable>
           </DragDropContext>
-          <div className={styles.create}>
-            <BasicModal title="Create column" func={handleClickCreateColumn}>
-              <FormColumn titleForColumn={titleForColumn} setTitleForColumn={setTitleForColumn} />
-            </BasicModal>
-          </div>
+
           {/* <div className={styles.create} onClick={handleClickCreateColumn}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
           </div> */}
-        </div>
+        </>
       ) : (
         <span></span>
       )}
-    </Container>
+    </div>
   );
 };
 

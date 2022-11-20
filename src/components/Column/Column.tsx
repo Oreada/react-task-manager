@@ -29,6 +29,8 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
+  const columnRef = useRef<HTMLDivElement>(null);
+
   const [scroll, setScroll] = useState<number>(0);
   const { idBoard, columns } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
@@ -42,8 +44,6 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   });
 
   useEffect(() => {
-    console.log('scroll');
-
     if (listRef && listRef.current) {
       listRef.current.scrollToItem(scroll);
     }
@@ -128,12 +128,11 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   }, areEqual);
 
   const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) => {
-    console.log(visibleStartIndex);
     setScroll(visibleStartIndex);
   };
 
   return (
-    <div className={cls.column}>
+    <>
       <Typography
         variant="h6"
         sx={{
@@ -155,21 +154,24 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}
         mode="virtual"
-        renderClone={getRenderTask({ margin: 0 })}
+        renderClone={getRenderTask({ margin: 0, width: 200 })}
       >
         {(provider, snapshot) => {
           const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;
-
           return (
             <List
-              height={itemCount > MAX_VISIBLE_TASKS ? 150 : itemCount * 50}
+              height={itemCount > 0 ? 200 : 10}
               itemCount={itemCount}
               itemSize={() => 40}
               width={200}
               ref={listRef}
               outerRef={provider.innerRef}
               itemData={tasks}
-              style={{ transition: 'background-color 0.2s ease', paddingBottom: '10px' }}
+              style={{
+                transition: 'background-color 0.2s ease',
+                paddingBottom: '10px',
+                touchAction: 'none',
+              }}
               overscanCount={10}
               onItemsRendered={handleRender}
             >
@@ -188,7 +190,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       >
         <DeleteOutlineOutlinedIcon />
       </IconButton>
-    </div>
+    </>
   );
 });
 
