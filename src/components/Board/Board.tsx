@@ -1,12 +1,7 @@
 import Column from 'components/Column/Column';
 import styles from './Board.module.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import {
-  DROPPABLE_DIRECTION_BOARD,
-  DROPPABLE_ID_BOARD,
-  DROPPABLE_TYPE_BOARD,
-  PSEUDO_TITLE,
-} from './constants';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { DropResult } from 'react-beautiful-dnd';
 import { useCallback, useEffect, useState } from 'react';
@@ -23,7 +18,6 @@ import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
 import { TasksByColumnsType } from './model';
 import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { BasicModal } from 'components/Modal/Modal';
 import { FormColumn } from 'components/FormColumn/FormColumn';
 import { Container, Typography } from '@mui/material';

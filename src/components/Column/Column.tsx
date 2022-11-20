@@ -1,4 +1,4 @@
-import { BODY, BUTTON_INNER, DROPPABLE_TYPE_COLUMN, MAX_VISIBLE_TASKS } from './constants';
+import { DROPPABLE_TYPE_COLUMN, MAX_VISIBLE_TASKS } from './constants';
 import cls from './Column.module.scss';
 import Task from 'components/Task/Task';
 import {
@@ -8,7 +8,7 @@ import {
   DraggableStateSnapshot,
   DraggableRubric,
 } from 'react-beautiful-dnd';
-import { ColumnPropsType, RenderTaskFuncType, RowProps } from './model';
+import { ColumnPropsType, RenderTaskFuncType } from './model';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
 import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
@@ -24,9 +24,8 @@ import {
 import { deleteTask } from 'api/tasks/deleteTask';
 import { BasicModal } from 'components/Modal/Modal';
 import { FormTask } from 'components/FormTask/FormTask';
-import { Divider, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -43,10 +42,12 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   });
 
   useEffect(() => {
+    console.log('scroll');
+
     if (listRef && listRef.current) {
       listRef.current.scrollToItem(scroll);
     }
-  }, [tasks, scroll]);
+  }, [tasks]);
 
   const handleClickCreateButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -104,7 +105,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       return null;
     }
 
-    const patchedStyle = {
+    const patchedStyle: CSSProperties = {
       ...style,
     };
 
@@ -120,15 +121,16 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
             isDragging={snapshot.isDragging}
             style={patchedStyle}
           />
-          
         )} */}
         {getRenderTask(patchedStyle)}
       </Draggable>
     );
   }, areEqual);
 
-  const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) =>
+  const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) => {
+    console.log(visibleStartIndex);
     setScroll(visibleStartIndex);
+  };
 
   return (
     <div className={cls.column}>
@@ -148,19 +150,19 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       >
         {title}
       </Typography>
-      <Divider sx={{ width: '100%', color: '#d4d4d4' }} />
+      {/* <Divider sx={{ width: '100%', color: '#d4d4d4' }} /> */}
       <Droppable
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}
-        mode={tasks.length > MAX_VISIBLE_TASKS ? 'virtual' : undefined}
+        mode="virtual"
         renderClone={getRenderTask({ margin: 0 })}
       >
         {(provider, snapshot) => {
           const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;
 
-          return itemCount > MAX_VISIBLE_TASKS ? (
+          return (
             <List
-              height={150}
+              height={itemCount > MAX_VISIBLE_TASKS ? 150 : itemCount * 50}
               itemCount={itemCount}
               itemSize={() => 40}
               width={200}
@@ -173,17 +175,9 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
             >
               {Row}
             </List>
-          ) : (
-            <div className={cls.list} ref={provider.innerRef} {...provider.droppableProps}>
-              {tasks.map((task, index) => (
-                <Row key={task._id} data={tasks} index={index} style={{}} />
-              ))}
-              {provider.placeholder}
-            </div>
           );
         }}
       </Droppable>
-
       <BasicModal title="Create task" func={handleClickCreateButton}>
         <FormTask bodyForTask={bodyForTask} setBodyForTask={setBodyForTask} />
       </BasicModal>
