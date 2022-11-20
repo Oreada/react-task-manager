@@ -1,13 +1,11 @@
 import { TaskPropsType } from './model';
 import { DraggableProvided } from 'react-beautiful-dnd';
-import { BUTTON_INNER } from './constants';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
 import { CSSProperties, useState } from 'react';
 import { TaskType } from 'types/types';
-import { Box, IconButton, Typography } from '@mui/material';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import styles from './Task.module.scss';
 
@@ -23,13 +21,9 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
   const { token } = useSelector((state: IRootState) => state.auth);
   const [isHovering, setIsHovering] = useState(false);
 
-  const handlePointerOver = () => {
-    setIsHovering(true);
-  };
+  const handlePointerOver = (): void => setIsHovering(true);
 
-  const handlePointerOut = () => {
-    setIsHovering(false);
-  };
+  const handlePointerOut = (): void => setIsHovering(false);
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

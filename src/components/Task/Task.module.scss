@@ -6,7 +6,8 @@
   padding: 10px;
   transition: 0.5s transform;
   touch-action: none;
-  // '&:hover': {
-  //   background: '#d4d4d4',
-  // },
+
+  &:hover {
+    background-color: #d4d4d4;
+  }
 }

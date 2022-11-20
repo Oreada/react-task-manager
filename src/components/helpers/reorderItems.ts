@@ -1,5 +1,4 @@
 import { ColumnType, TaskType } from 'types/types';
-import { sortByOrder } from './sortByOrder';
 
 export const reorderItems = <Type extends ColumnType | TaskType>(
   array: Type[],

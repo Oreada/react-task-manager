@@ -1,5 +1,4 @@
-import { DROPPABLE_TYPE_COLUMN, MAX_VISIBLE_TASKS } from './constants';
-import cls from './Column.module.scss';
+import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
 import Task from 'components/Task/Task';
 import {
   Droppable,
@@ -29,7 +28,6 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
-  const columnRef = useRef<HTMLDivElement>(null);
 
   const [scroll, setScroll] = useState<number>(0);
   const { idBoard, columns } = useSelector((state: IRootState) => state.board);
@@ -37,10 +35,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
     order: tasks.length,
-    userId: '',
-    users: [''],
-    title: 'no title',
-    description: 'no description',
+    ...INITIAL_BODY_FOR_TASK,
   });
 
   useEffect(() => {
@@ -83,9 +78,16 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     }
   };
 
+  const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps): void =>
+    setScroll(visibleStartIndex);
+
   const getRenderTask: RenderTaskFuncType =
     (style: CSSProperties) =>
-    (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) =>
+    (
+      provider: DraggableProvided,
+      snapshot: DraggableStateSnapshot,
+      rubric: DraggableRubric
+    ): JSX.Element =>
       (
         <Task
           idColumn={id}
@@ -98,7 +100,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
         />
       );
 
-  const Row = memo(({ data, index, style }: ListChildComponentProps) => {
+  const Row = memo(({ data, index, style }: ListChildComponentProps): JSX.Element | null => {
     const item = data[index];
 
     if (!item) {
@@ -111,25 +113,10 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
     return (
       <Draggable key={item._id} draggableId={item._id} index={index}>
-        {/* {(provider, snapshot) => (
-          <Task
-            idColumn={id}
-            idTask={item._id}
-            titleTask={item.title}
-            delTask={delTask}
-            provider={provider}
-            isDragging={snapshot.isDragging}
-            style={patchedStyle}
-          />
-        )} */}
         {getRenderTask(patchedStyle)}
       </Draggable>
     );
   }, areEqual);
-
-  const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) => {
-    setScroll(visibleStartIndex);
-  };
 
   return (
     <>
@@ -149,7 +136,6 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       >
         {title}
       </Typography>
-      {/* <Divider sx={{ width: '100%', color: '#d4d4d4' }} /> */}
       <Droppable
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}
@@ -180,7 +166,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           );
         }}
       </Droppable>
-      <BasicModal title="Create task" func={handleClickCreateButton}>
+      <BasicModal title={BUTTON_INNER} func={handleClickCreateButton}>
         <FormTask bodyForTask={bodyForTask} setBodyForTask={setBodyForTask} />
       </BasicModal>
       <IconButton
