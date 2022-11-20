@@ -1,8 +1,11 @@
 import { URL_COLUMNS_SET } from 'constants/constants';
-import { ColumnType, BodyForColumnsSet } from 'types/types';
+import { BodyForColumnsSet, ColumnType } from 'types/types';
 
 //! Create set of Columns
-export async function createColumnsSet(token: string, body: Array<BodyForColumnsSet>): Promise<Array<ColumnType>> {
+export async function createColumnsSet(
+  token: string,
+  body: Array<BodyForColumnsSet>
+): Promise<Array<ColumnType>> {
   try {
     const response = await fetch(URL_COLUMNS_SET, {
       method: 'POST',

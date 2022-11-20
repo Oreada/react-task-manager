@@ -2,7 +2,11 @@ import { URL_BOARDS } from 'constants/constants';
 import { Board, BodyForBoard } from 'types/types';
 
 //! Update Board
-export async function updateBoard(token: string, idBoard: string, obj: BodyForBoard): Promise<Board> {
+export async function updateBoard(
+  token: string,
+  idBoard: string,
+  obj: BodyForBoard
+): Promise<Board> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}`, {
       method: 'PUT',

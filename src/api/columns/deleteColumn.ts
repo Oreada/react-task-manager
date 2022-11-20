@@ -2,7 +2,11 @@ import { URL_BOARDS } from 'constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Delete Column
-export async function deleteColumn(token: string, idBoard: string, idColumn: string): Promise<ColumnType> {
+export async function deleteColumn(
+  token: string,
+  idBoard: string,
+  idColumn: string
+): Promise<ColumnType> {
   try {
     const response = await fetch(`${URL_BOARDS}/${idBoard}/columns/${idColumn}`, {
       method: 'DELETE',

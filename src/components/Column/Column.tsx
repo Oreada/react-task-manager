@@ -5,9 +5,20 @@ import { FormTask } from 'components/FormTask/FormTask';
 import { BasicModal } from 'components/Modal/Modal';
 import Task from 'components/Task/Task';
 import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
-import { Draggable, DraggableProvided, DraggableRubric, DraggableStateSnapshot, Droppable } from 'react-beautiful-dnd';
+import {
+  Draggable,
+  DraggableProvided,
+  DraggableRubric,
+  DraggableStateSnapshot,
+  Droppable,
+} from 'react-beautiful-dnd';
 import { useSelector } from 'react-redux';
-import { areEqual, ListChildComponentProps, ListOnItemsRenderedProps, VariableSizeList as List } from 'react-window';
+import {
+  areEqual,
+  ListChildComponentProps,
+  ListOnItemsRenderedProps,
+  VariableSizeList as List,
+} from 'react-window';
 import { IRootState } from 'store/model';
 import { BodyForTask, TaskType } from 'types/types';
 import cls from './Column.module.scss';
@@ -46,7 +57,9 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     }
   };
 
-  const handleClickDeleteButton = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+  const handleClickDeleteButton = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> => {
     event.preventDefault();
 
     if (token) {
@@ -58,7 +71,11 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   };
 
   const getRenderTask: RenderTaskFuncType = (style?: CSSProperties) => {
-    return (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) => (
+    return (
+      provider: DraggableProvided,
+      snapshot: DraggableStateSnapshot,
+      rubric: DraggableRubric
+    ) => (
       <Task
         idColumn={id}
         idTask={tasks[rubric.source.index]._id}
@@ -99,7 +116,8 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     );
   }, areEqual);
 
-  const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) => setScroll(visibleStartIndex);
+  const handleRender = ({ visibleStartIndex }: ListOnItemsRenderedProps) =>
+    setScroll(visibleStartIndex);
 
   const styleRow = {};
 

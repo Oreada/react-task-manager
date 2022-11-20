@@ -2,7 +2,11 @@ import { URL_USERS } from 'constants/constants';
 import { BodyForSignUp, UserInfo } from 'types/types';
 
 //! Update User
-export async function updateUser(token: string, idUser: string, obj: BodyForSignUp): Promise<UserInfo> {
+export async function updateUser(
+  token: string,
+  idUser: string,
+  obj: BodyForSignUp
+): Promise<UserInfo> {
   try {
     const response = await fetch(`${URL_USERS}/${idUser}`, {
       method: 'PUT',

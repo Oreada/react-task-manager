@@ -6,7 +6,12 @@ import { updateBoard } from 'api/boards/updateBoard';
 import { Board } from 'types/types';
 import { INITIAL_MAIN_STATE, ReducerNameActionTypes } from './constants';
 import { SLICE_NAMES } from './constants';
-import { CreateBoardArgsType, DeleteBoardArgsType, EditBoardArgsType, GetBoardArgsType } from './model';
+import {
+  CreateBoardArgsType,
+  DeleteBoardArgsType,
+  EditBoardArgsType,
+  GetBoardArgsType,
+} from './model';
 
 export const getBoardsThunk = createAsyncThunk<Board[], GetBoardArgsType>(
   ReducerNameActionTypes.getBoards,

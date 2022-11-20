@@ -49,7 +49,12 @@ export function BasicModal(props: ModalProps) {
 
   return (
     <>
-      <Button variant="outlined" endIcon={<AddCircleRoundedIcon />} color="success" onClick={handleOpen}>
+      <Button
+        variant="outlined"
+        endIcon={<AddCircleRoundedIcon />}
+        color="success"
+        onClick={handleOpen}
+      >
         {props.title}
       </Button>
       <Modal

@@ -21,4 +21,8 @@ export type RowProps = {
 
 export type RenderTaskFuncType = (
   style?: CSSProperties
-) => (provider: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) => JSX.Element;
+) => (
+  provider: DraggableProvided,
+  snapshot: DraggableStateSnapshot,
+  rubric: DraggableRubric
+) => JSX.Element;

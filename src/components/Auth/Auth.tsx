@@ -33,12 +33,14 @@ const Auth = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const subPage: typeSubPage = location.state === typeSubPage.signIn ? typeSubPage.signIn : typeSubPage.signUp;
+  const subPage: typeSubPage =
+    location.state === typeSubPage.signIn ? typeSubPage.signIn : typeSubPage.signUp;
 
   const goHome = () => navigate(ROOT_PATH);
 
   useEffect(() => {
-    const inputStates = subPage === typeSubPage.signIn ? [login, password] : [name, login, password];
+    const inputStates =
+      subPage === typeSubPage.signIn ? [login, password] : [name, login, password];
     const canS = inputStates.reduce((acc, cur) => acc && !!cur.value && !cur.isError, true);
 
     setCanSubmit(canS);
@@ -54,7 +56,11 @@ const Auth = () => {
       const user: UserDecoder = parseBase64(token);
 
       dispatch(setId({ id: user.id, login: user.login, token: token }));
-      saveToLocal<AuthReducer>(LOCAL_STORAGE_KEY, { id: user.id, login: user.login, token: token });
+      saveToLocal<AuthReducer>(LOCAL_STORAGE_KEY, {
+        id: user.id,
+        login: user.login,
+        token: token,
+      });
       goHome();
     } catch (err: unknown) {
       const error = err as Error;
@@ -111,7 +117,11 @@ const Auth = () => {
         }}
       />
       <Stack
-        direction={subPage === typeSubPage.signIn ? { xs: 'column', sm: 'row' } : { xs: 'column', sm: 'row-reverse' }}
+        direction={
+          subPage === typeSubPage.signIn
+            ? { xs: 'column', sm: 'row' }
+            : { xs: 'column', sm: 'row-reverse' }
+        }
         justifyContent="space-evenly"
         alignItems={{ xs: 'center', sm: 'stretch' }}
         spacing={3}
@@ -166,7 +176,13 @@ const Auth = () => {
             <input hidden type="submit" />
           </Button>
         </Stack>
-        <Stack direction="column" justifyContent="space-between" alignItems="center" spacing={2} sx={{ width: '50%' }}>
+        <Stack
+          direction="column"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+          sx={{ width: '50%' }}
+        >
           {subPage === typeSubPage.signIn ? (
             <HelloSvg style={{ fill: '#F3B848' }} />
           ) : (
@@ -177,7 +193,9 @@ const Auth = () => {
             state={subPage === typeSubPage.signIn ? typeSubPage.signUp : typeSubPage.signIn}
             style={{ color: 'inherit' }}
           >
-            {subPage === typeSubPage.signIn ? FORM_TEXT.linkTextToPageUp : FORM_TEXT.linkTextToPageIn}
+            {subPage === typeSubPage.signIn
+              ? FORM_TEXT.linkTextToPageUp
+              : FORM_TEXT.linkTextToPageIn}
           </NavLink>
         </Stack>
       </Stack>

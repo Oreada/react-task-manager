@@ -2,7 +2,11 @@ import { ChangeEvent, FocusEvent, useCallback, useState } from 'react';
 import { TypeField, TypeValidationRequirements } from 'types/types';
 import { useValidation } from './useValidation';
 
-export const useInput = (name: TypeField, initialValue: string, validations: TypeValidationRequirements) => {
+export const useInput = (
+  name: TypeField,
+  initialValue: string,
+  validations: TypeValidationRequirements
+) => {
   const [value, setValue] = useState(initialValue);
   const [isLeave, setIsLeave] = useState(false);
   const valid = useValidation(value, validations);

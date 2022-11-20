@@ -39,7 +39,10 @@ const Board = () => {
       const getResult = async (): Promise<void> => {
         setIsLoading(true);
 
-        const [tasks, columns] = await Promise.all([getTasksByIdBoard(token, id), getAllColumnsOfBoard(token, id)]);
+        const [tasks, columns] = await Promise.all([
+          getTasksByIdBoard(token, id),
+          getAllColumnsOfBoard(token, id),
+        ]);
 
         setColumns(columns);
         setTasksByColumn(getTaskByColumn(tasks, columns));
@@ -73,7 +76,8 @@ const Board = () => {
       const delColumn = (idColumn: string) => {
         setColumns((prevColumns) => prevColumns.filter(({ _id }) => _id !== idColumn));
         if (tasksByColumn) {
-          const { [idColumn as keyof TasksByColumnsType]: deletedColumn, ...lastTasks } = tasksByColumn;
+          const { [idColumn as keyof TasksByColumnsType]: deletedColumn, ...lastTasks } =
+            tasksByColumn;
           setTasksByColumn(lastTasks);
         }
       };
@@ -86,7 +90,12 @@ const Board = () => {
   const delTaskMemo = useCallback((deletedTask: TaskType): void => {
     const delTask = ({ columnId, _id: idDeletedTask }: TaskType) =>
       setTasksByColumn((prevTasks) =>
-        prevTasks ? { ...prevTasks, [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask) } : null
+        prevTasks
+          ? {
+              ...prevTasks,
+              [columnId]: prevTasks[columnId].filter(({ _id }) => _id !== idDeletedTask),
+            }
+          : null
       );
 
     delTask(deletedTask);
@@ -110,7 +119,11 @@ const Board = () => {
 
     if (token && tasksByColumn && type === DROPPABLE_TYPE_COLUMN) {
       if (sourceColumnId === destColemnId) {
-        const newTasks = reorderItems<TaskType>(tasksByColumn[sourceColumnId], sourceIndex, destination.index);
+        const newTasks = reorderItems<TaskType>(
+          tasksByColumn[sourceColumnId],
+          sourceIndex,
+          destination.index
+        );
 
         reoderTasksApi(newTasks, sourceColumnId, token);
         setTasksByColumn({ ...tasksByColumn, [sourceColumnId]: newTasks });
@@ -136,7 +149,9 @@ const Board = () => {
     }
   };
 
-  const handleClickCreateColumn = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+  const handleClickCreateColumn = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
@@ -160,11 +175,19 @@ const Board = () => {
               direction={DROPPABLE_DIRECTION_BOARD}
             >
               {(provider) => (
-                <div className={styles.columns} ref={provider.innerRef} {...provider.droppableProps}>
+                <div
+                  className={styles.columns}
+                  ref={provider.innerRef}
+                  {...provider.droppableProps}
+                >
                   {columns.map(({ _id, title }, index) => (
                     <Draggable key={_id} draggableId={_id} index={index}>
                       {(provider) => (
-                        <div {...provider.draggableProps} {...provider.dragHandleProps} ref={provider.innerRef}>
+                        <div
+                          {...provider.draggableProps}
+                          {...provider.dragHandleProps}
+                          ref={provider.innerRef}
+                        >
                           <Column
                             id={_id}
                             title={title}
