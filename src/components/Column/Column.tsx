@@ -42,6 +42,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
     if (listRef && listRef.current) {
       listRef.current.scrollToItem(scroll);
     }
+    // eslint-disable-next-line
   }, [columns]);
 
   const handleClickCreateButton = async (

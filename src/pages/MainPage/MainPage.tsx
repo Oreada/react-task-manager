@@ -177,7 +177,7 @@ const MainPage = () => {
           </Grid>
         ))}
 
-        <Grid item xs>
+        <Grid item xs className={styles.create} sx={{ padding: 0 }}>
           <BasicModal title="Create board" func={handleClickCreateButton}>
             <FormBoard bodyForBoard={bodyForBoard} setBodyForBoard={setBodyForBoard} />
           </BasicModal>

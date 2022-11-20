@@ -71,7 +71,7 @@ const Board = () => {
 
       addTask(newTask);
     },
-    [taskByColumns]
+    [taskByColumns, dispatch]
   );
 
   const delColumnMemo = useCallback(
@@ -89,7 +89,8 @@ const Board = () => {
 
       delColumn(idColumn);
     },
-    [taskByColumns]
+    // eslint-disable-next-line
+    [taskByColumns, dispatch]
   );
 
   const delTaskMemo = useCallback(
@@ -108,7 +109,7 @@ const Board = () => {
 
       delTask(deletedTask);
     },
-    [taskByColumns]
+    [taskByColumns, dispatch]
   );
 
   const handleDragEnd = ({
