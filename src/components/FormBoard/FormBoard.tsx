@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
 import { Box, TextField } from '@mui/material';
-import { BodyForBoard } from 'types/types';
-import { IRootState } from 'store/model';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { IRootState } from 'store/model';
+import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
   bodyForBoard: BodyForBoard;

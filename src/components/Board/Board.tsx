@@ -1,31 +1,24 @@
-import Column from 'components/Column/Column';
-import styles from './Board.module.scss';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import {
-  DROPPABLE_DIRECTION_BOARD,
-  DROPPABLE_ID_BOARD,
-  DROPPABLE_TYPE_BOARD,
-  PSEUDO_TITLE,
-} from './constants';
-import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
-import { DropResult } from 'react-beautiful-dnd';
-import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from 'store/model';
-import { setBoardId } from 'store/boardSlice';
-import { ColumnType, TaskType } from 'types/types';
-import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
-import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
-import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
-import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
-import { reorderItems } from 'components/heplers/reorderItems';
 import { createColumn } from 'api/columns/createColumn';
-import { TasksByColumnsType } from './model';
-import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { BasicModal } from 'components/Modal/Modal';
+import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
+import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
+import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
+import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
+import Column from 'components/Column/Column';
+import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
+import { getTaskByColumn } from 'components/heplers/getTaskByColumn';
+import { reorderItems } from 'components/heplers/reorderItems';
+import { BasicModal } from 'components/Modal/Modal';
+import { useCallback, useEffect, useState } from 'react';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { setBoardId } from 'store/boardSlice';
+import { AppDispatch, IRootState } from 'store/model';
+import { ColumnType, TaskType } from 'types/types';
+import styles from './Board.module.scss';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
+import { TasksByColumnsType } from './model';
 
 const Board = () => {
   const { id } = useParams();

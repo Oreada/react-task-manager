@@ -25,7 +25,8 @@
     "@typescript-eslint",
     "react",
     "prettier",
-    "react-hooks"
+    "react-hooks",
+    "eslint-plugin-prettier"
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
@@ -58,18 +59,5 @@
       "pragma": "React",
       "version": "detect"
     }
-  },
-  "prettier/prettier": [
-    "error",
-    {
-      "singleQuote": true,
-      "parser": "flow",
-      "endOfLine": "auto",
-      "semi": true,
-      "tabWidth": 2,
-      "trailingComma": "es5",
-      "printWidth": 100,
-      "arrowParens": "always"
-    }
-  ]
+  }
 }

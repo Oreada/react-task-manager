@@ -1,23 +1,22 @@
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { FormBoard } from 'components/FormBoard/FormBoard';
+import { BasicModal } from 'components/Modal/Modal';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
-import { AppDispatch, IRootState } from 'store/model';
-import { BODY, MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import {
   createBoardThunk,
   deleteBoardThunk,
   editBoardThunk,
   getBoardsThunk,
 } from 'store/mainSlice';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { ReactComponent as Back } from './assets/Back.svg';
-import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
-import styles from './MainPage.module.scss';
-import { BasicModal } from 'components/Modal/Modal';
-import { FormBoard } from 'components/FormBoard/FormBoard';
+import { AppDispatch, IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
+import { ReactComponent as Back } from './assets/Back.svg';
+import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
+import styles from './MainPage.module.scss';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -60,50 +59,47 @@ const MainPage = () => {
 
   const handleClickGoTo =
     (to: To) =>
-      (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        event.preventDefault();
-
-        if (token && idUser) {
-          navigate(to);
-        }
-      };
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+      event.preventDefault();
+      if (token && idUser) {
+        navigate(to);
+      }
+    };
 
   const handleClickDelButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-        event.preventDefault();
-        //todo modal
-
-        if (token) {
-          dispatch(deleteBoardThunk({ token, idBoard }));
-        }
-
-        event.stopPropagation();
-      };
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      event.preventDefault();
+      //todo modal
+      if (token) {
+        dispatch(deleteBoardThunk({ token, idBoard }));
+      }
+      event.stopPropagation();
+    };
 
   const handleClickEditButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-        event.preventDefault();
-        //todo modal
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      event.preventDefault();
+      //todo modal
 
-        if (token && idUser) {
-          dispatch(
-            editBoardThunk({
-              token,
-              idBoard,
-              body: {
-                owner: idUser,
-                users: [idUser],
-                description: 'Description',
-                title: 'new title',
-              },
-            })
-          );
-        }
+      if (token && idUser) {
+        dispatch(
+          editBoardThunk({
+            token,
+            idBoard,
+            body: {
+              owner: idUser,
+              users: [idUser],
+              description: 'Description',
+              title: 'new title',
+            },
+          })
+        );
+      }
 
-        event.stopPropagation();
-      };
+      event.stopPropagation();
+    };
 
   return (
     <Container
