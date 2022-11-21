@@ -1,5 +1,5 @@
-import { Box, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Box, TextField, Button } from '@mui/material';
+import { FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
@@ -7,6 +7,9 @@ import { BodyForBoard } from 'types/types';
 interface FormBoardProps {
   bodyForBoard: BodyForBoard;
   setBodyForBoard: (arg: BodyForBoard) => void;
+  func: (event: FormEvent<HTMLFormElement>) => void;
+  openModal: boolean;
+  setOpenModal: (arg: boolean) => void;
 }
 
 const style = {
@@ -64,7 +67,13 @@ export function FormBoard(props: FormBoardProps) {
   }, [values.description]);
 
   return (
-    <form style={{ width: '100%' }}>
+    <form
+      style={{ width: '100%' }}
+      onSubmit={(event) => {
+        props.func(event);
+        props.setOpenModal(false);
+      }}
+    >
       <Box sx={style}>
         <TextField
           variant="outlined"
@@ -75,6 +84,7 @@ export function FormBoard(props: FormBoardProps) {
           onSubmit={handleSubmitTitle}
           autoFocus={true}
           fullWidth
+          required
         />
         <TextField
           variant="outlined"
@@ -86,7 +96,11 @@ export function FormBoard(props: FormBoardProps) {
           multiline={true}
           minRows={5}
           fullWidth
+          required
         />
+        <Button type="submit" variant="outlined" size="large" color="success">
+          Add
+        </Button>
       </Box>
     </form>
   );

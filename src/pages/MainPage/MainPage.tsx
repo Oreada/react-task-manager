@@ -2,8 +2,8 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { FormBoard } from 'components/FormBoard/FormBoard';
-import { BasicModal } from 'components/Modal/Modal';
-import { useEffect, useState } from 'react';
+import { BasicModal } from 'components/Modal/BasicModal';
+import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import {
@@ -18,6 +18,7 @@ import { ReactComponent as Back } from './assets/Back.svg';
 import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import styles from './MainPage.module.scss';
 import { setBoardTitle } from 'store/boardSlice';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,6 +26,8 @@ const MainPage = () => {
 
   const { boards, isLoading } = useSelector((state: IRootState) => state.main);
   const { token, id: idUser } = useSelector((state: IRootState) => state.auth);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [bodyForBoard, setBodyForBoard] = useState<BodyForBoard>({
     owner: idUser ? idUser : '',
@@ -43,9 +46,7 @@ const MainPage = () => {
     getBoardsWithSighUp();
   }, [token, dispatch]);
 
-  const handleClickCreateButton = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
+  const handleClickCreateButton = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     if (token && idUser) {
@@ -60,48 +61,48 @@ const MainPage = () => {
 
   const handleClickGoTo =
     (to: To, title: string) =>
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-      event.preventDefault();
-      if (token && idUser) {
-        navigate(to);
-        dispatch(setBoardTitle({ titleBoard: title }));
-      }
-    };
+      (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.preventDefault();
+        if (token && idUser) {
+          navigate(to);
+          dispatch(setBoardTitle({ titleBoard: title }));
+        }
+      };
 
   const handleClickDelButton =
     (idBoard: string) =>
-    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-      event.preventDefault();
-      //todo modal
-      if (token) {
-        dispatch(deleteBoardThunk({ token, idBoard }));
-      }
-      event.stopPropagation();
-    };
+      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        event.preventDefault();
+        //todo modal
+        if (token) {
+          dispatch(deleteBoardThunk({ token, idBoard }));
+        }
+        event.stopPropagation();
+      };
 
   const handleClickEditButton =
     (idBoard: string) =>
-    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-      event.preventDefault();
-      //todo modal
+      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        event.preventDefault();
+        //todo modal
 
-      if (token && idUser) {
-        dispatch(
-          editBoardThunk({
-            token,
-            idBoard,
-            body: {
-              owner: idUser,
-              users: [idUser],
-              description: 'Description',
-              title: 'new title',
-            },
-          })
-        );
-      }
+        if (token && idUser) {
+          dispatch(
+            editBoardThunk({
+              token,
+              idBoard,
+              body: {
+                owner: idUser,
+                users: [idUser],
+                description: 'Description',
+                title: 'new title',
+              },
+            })
+          );
+        }
 
-      event.stopPropagation();
-    };
+        event.stopPropagation();
+      };
 
   return (
     <Container
@@ -178,14 +179,20 @@ const MainPage = () => {
         ))}
 
         <Grid item xs className={styles.create} sx={{ padding: 0 }}>
-          <BasicModal title="Create board" func={handleClickCreateButton}>
-            <FormBoard bodyForBoard={bodyForBoard} setBodyForBoard={setBodyForBoard} />
-          </BasicModal>
-
-          {/* <div className={styles.card + ' ' + styles.create} onClick={handleClickCreateButton}>
+          <div className={styles.card + ' ' + styles.create} onClick={() => setOpenModal(true)}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
-          </div> */}
+          </div>
         </Grid>
+
+        <BasicModal title="Create board" openModal={openModal} setOpenModal={setOpenModal}>
+          <FormBoard
+            bodyForBoard={bodyForBoard}
+            setBodyForBoard={setBodyForBoard}
+            func={handleClickCreateButton}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          />
+        </BasicModal>
       </Grid>
       <Back className={styles.back} />
     </Container>

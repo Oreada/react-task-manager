@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Box, TextField } from '@mui/material';
+import { FormEvent, useEffect, useState } from 'react';
+import { Box, TextField, Button } from '@mui/material';
 
 interface FormColumnProps {
   titleForColumn: string;
   setTitleForColumn: (arg: string) => void;
+  func: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  openModal: boolean;
+  setOpenModal: (arg: boolean) => void;
 }
 
 const style = {
@@ -32,7 +35,13 @@ export function FormColumn(props: FormColumnProps) {
   }, [valueInput]);
 
   return (
-    <form style={{ width: '100%' }}>
+    <form
+      style={{ width: '100%' }}
+      onSubmit={(event) => {
+        props.func(event);
+        props.setOpenModal(false);
+      }}
+    >
       <Box sx={style}>
         <TextField
           variant="outlined"
@@ -43,7 +52,11 @@ export function FormColumn(props: FormColumnProps) {
           onSubmit={handleSubmit}
           autoFocus={true}
           fullWidth
+          required
         />
+        <Button type="submit" variant="outlined" size="large" color="success">
+          Add
+        </Button>
       </Box>
     </form>
   );
