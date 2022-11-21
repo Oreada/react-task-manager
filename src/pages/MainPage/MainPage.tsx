@@ -178,7 +178,7 @@ const MainPage = () => {
           </Grid>
         ))}
 
-        <Grid item xs className={styles.create} sx={{ padding: 0 }}>
+        <Grid item xs>
           <div className={styles.card + ' ' + styles.create} onClick={() => setOpenModal(true)}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
           </div>
