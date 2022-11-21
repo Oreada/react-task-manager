@@ -88,11 +88,11 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const getRenderTask: RenderTaskFuncType =
     (style: CSSProperties) =>
-      (
-        provider: DraggableProvided,
-        snapshot: DraggableStateSnapshot,
-        rubric: DraggableRubric
-      ): JSX.Element =>
+    (
+      provider: DraggableProvided,
+      snapshot: DraggableStateSnapshot,
+      rubric: DraggableRubric
+    ): JSX.Element =>
       (
         <Task
           idColumn={id}

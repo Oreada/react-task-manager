@@ -61,48 +61,48 @@ const MainPage = () => {
 
   const handleClickGoTo =
     (to: To, title: string) =>
-      (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        event.preventDefault();
-        if (token && idUser) {
-          navigate(to);
-          dispatch(setBoardTitle({ titleBoard: title }));
-        }
-      };
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+      event.preventDefault();
+      if (token && idUser) {
+        navigate(to);
+        dispatch(setBoardTitle({ titleBoard: title }));
+      }
+    };
 
   const handleClickDelButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-        event.preventDefault();
-        //todo modal
-        if (token) {
-          dispatch(deleteBoardThunk({ token, idBoard }));
-        }
-        event.stopPropagation();
-      };
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      event.preventDefault();
+      //todo modal
+      if (token) {
+        dispatch(deleteBoardThunk({ token, idBoard }));
+      }
+      event.stopPropagation();
+    };
 
   const handleClickEditButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-        event.preventDefault();
-        //todo modal
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      event.preventDefault();
+      //todo modal
 
-        if (token && idUser) {
-          dispatch(
-            editBoardThunk({
-              token,
-              idBoard,
-              body: {
-                owner: idUser,
-                users: [idUser],
-                description: 'Description',
-                title: 'new title',
-              },
-            })
-          );
-        }
+      if (token && idUser) {
+        dispatch(
+          editBoardThunk({
+            token,
+            idBoard,
+            body: {
+              owner: idUser,
+              users: [idUser],
+              description: 'Description',
+              title: 'new title',
+            },
+          })
+        );
+      }
 
-        event.stopPropagation();
-      };
+      event.stopPropagation();
+    };
 
   return (
     <Container
@@ -178,7 +178,7 @@ const MainPage = () => {
           </Grid>
         ))}
 
-        <Grid item xs className={styles.create} sx={{ padding: 0 }}>
+        <Grid item xs>
           <div className={styles.card + ' ' + styles.create} onClick={() => setOpenModal(true)}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
           </div>
