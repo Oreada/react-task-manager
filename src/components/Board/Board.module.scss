@@ -1,11 +1,16 @@
 @import '../../styles/variables.scss';
 
+.wrap {
+  flex-grow: 1;
+  padding-top: rem(20);
+}
+
 .board {
   overflow-x: auto;
-  overflow-y: hidden;
+
   display: flex;
   width: 100vw;
-  height: rem(400);
+  height: calc((100vh - 123px - 90px) - 20px - 47px);
   padding: rem(20);
 }
 
@@ -17,8 +22,8 @@
 .create {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  min-width: rem(190);
+  justify-content: flex-start;
+  min-width: rem(200);
   // min-height: rem(10);
   padding: 0;
   margin-left: 1rem;
@@ -29,4 +34,19 @@
   //   background-color: white;
   //   cursor: pointer;
   // }
+}
+
+.column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: rem(10);
+  width: rem(250);
+  max-height: 330px;
+  padding: rem(20) rem(30) rem(20) rem(20);
+  margin-left: 1rem;
+  box-shadow: 0 0 20px $color-box-shadow;
+  border-radius: 10px;
+  background-color: white;
 }

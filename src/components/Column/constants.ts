@@ -1,10 +1,7 @@
 export const DROPPABLE_TYPE_COLUMN = 'droppableColumn';
 export const DRAGGABLE_ID_COLUMN = 'columnDrag';
 
-export enum BUTTON_INNER {
-  createTask = 'Create task',
-  deleteColumn = 'Delete Column',
-}
+export const BUTTON_INNER = 'Create task';
 
 export const BODY = {
   title: 'Task Kate',
@@ -15,4 +12,9 @@ export const BODY = {
 
 export const SCROLL = 'Scrolling';
 
-export const MAX_VISIBLE_TASKS = 4;
+export const INITIAL_BODY_FOR_TASK = {
+  userId: '',
+  users: [''],
+  title: 'no title',
+  description: 'no description',
+};

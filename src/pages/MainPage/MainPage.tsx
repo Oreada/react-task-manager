@@ -17,6 +17,7 @@ import { BodyForBoard } from 'types/types';
 import { ReactComponent as Back } from './assets/Back.svg';
 import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import styles from './MainPage.module.scss';
+import { setBoardTitle } from 'store/boardSlice';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,11 +59,12 @@ const MainPage = () => {
   };
 
   const handleClickGoTo =
-    (to: To) =>
+    (to: To, title: string) =>
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
       event.preventDefault();
       if (token && idUser) {
         navigate(to);
+        dispatch(setBoardTitle({ titleBoard: title }));
       }
     };
 
@@ -129,7 +131,7 @@ const MainPage = () => {
       <Grid container spacing={4}>
         {boards.map(({ _id, title, description }) => (
           <Grid item key={_id} xs>
-            <div className={styles.card} onClick={handleClickGoTo(`${_id}`)}>
+            <div className={styles.card} onClick={handleClickGoTo(`${_id}`, title)}>
               <Typography
                 variant="h6"
                 sx={{
@@ -175,7 +177,7 @@ const MainPage = () => {
           </Grid>
         ))}
 
-        <Grid item xs>
+        <Grid item xs className={styles.create} sx={{ padding: 0 }}>
           <BasicModal title="Create board" func={handleClickCreateButton}>
             <FormBoard bodyForBoard={bodyForBoard} setBodyForBoard={setBodyForBoard} />
           </BasicModal>

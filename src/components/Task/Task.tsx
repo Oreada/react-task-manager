@@ -1,17 +1,15 @@
 import { TaskPropsType } from './model';
 import { DraggableProvided } from 'react-beautiful-dnd';
-import { BUTTON_INNER } from './constants';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import { TaskType } from 'types/types';
+import { IconButton, Typography } from '@mui/material';
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import styles from './Task.module.scss';
 
 function getStyle(provided: DraggableProvided, style: CSSProperties) {
-  if (!style) {
-    return provided.draggableProps.style;
-  }
-
   return {
     ...provided.draggableProps.style,
     ...style,
@@ -21,6 +19,11 @@ function getStyle(provided: DraggableProvided, style: CSSProperties) {
 const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPropsType) => {
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handlePointerOver = (): void => setIsHovering(true);
+
+  const handlePointerOut = (): void => setIsHovering(false);
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -41,9 +44,30 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
       {...provider.dragHandleProps}
       ref={provider.innerRef}
       style={getStyle(provider, style)}
+      onMouseOver={handlePointerOver}
+      onMouseOut={handlePointerOut}
+      className={styles.task}
     >
-      <div>{titleTask}</div>
-      <button onClick={handleClickDeleteButton}>{BUTTON_INNER}</button>
+      <Typography
+        variant="body1"
+        sx={{
+          fontFamily: '"Noto Sans", sans-serif',
+          fontWeight: 400,
+          fontSize: '16px',
+          textAlign: 'left',
+        }}
+      >
+        {titleTask}
+      </Typography>
+      {isHovering && (
+        <IconButton
+          onClick={handleClickDeleteButton}
+          aria-label="delete"
+          sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+        >
+          <RemoveCircleOutlineOutlinedIcon fontSize="small" />
+        </IconButton>
+      )}
     </div>
   );
 };

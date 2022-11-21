@@ -1,4 +1,4 @@
-import { sortByOrder } from 'components/heplers/sortByOrder';
+import { sortByOrder } from 'components/helpers/sortByOrder';
 import { URL_BOARDS } from 'constants/constants';
 import { ColumnType } from 'types/types';
 
