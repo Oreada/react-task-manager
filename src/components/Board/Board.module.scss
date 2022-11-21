@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .wrap {
   flex-grow: 1;
@@ -25,15 +25,16 @@
   justify-content: flex-start;
   min-width: rem(200);
   // min-height: rem(10);
+  max-height: rem(330);
   padding: 0;
   margin-left: 1rem;
-  // background-color: $color-instructions-text;
-  // border: 2px dashed $color-button;
+  background-color: $color-instructions-text;
+  border: 2px dashed $color-button;
 
-  // &:hover {
-  //   background-color: white;
-  //   cursor: pointer;
-  // }
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
 }
 
 .column {
@@ -43,7 +44,7 @@
   justify-content: flex-start;
   gap: rem(10);
   width: rem(250);
-  max-height: 330px;
+  max-height: rem(330);
   padding: rem(20) rem(30) rem(20) rem(20);
   margin-left: 1rem;
   box-shadow: 0 0 20px $color-box-shadow;

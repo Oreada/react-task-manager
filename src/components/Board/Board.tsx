@@ -12,14 +12,15 @@ import {
 } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
-import { BasicModal } from 'components/Modal/Modal';
-import { useCallback, useEffect, useState } from 'react';
+import { BasicModal } from 'components/Modal/BasicModal';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { ColumnType, TaskType } from 'types/types';
 import { Typography } from '@mui/material';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { TasksByColumnsType } from './model';
 import { reorderItems } from 'components/helpers/reorderItems';
 
@@ -32,6 +33,8 @@ const Board = () => {
     (state: IRootState) => state.board
   );
   const { token } = useSelector((state: IRootState) => state.auth);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
@@ -167,9 +170,7 @@ const Board = () => {
     }
   };
 
-  const handleClickCreateColumn = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<void> => {
+  const handleClickCreateColumn = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
@@ -227,22 +228,25 @@ const Board = () => {
                   </Draggable>
                 ))}
                 {provider.placeholder}
-                <div className={styles.create}>
-                  <BasicModal title={BUTTON_INNER} func={handleClickCreateColumn}>
-                    <FormColumn
-                      titleForColumn={titleForColumn}
-                      setTitleForColumn={setTitleForColumn}
-                    />
-                  </BasicModal>
+
+                <div className={styles.create} onClick={() => setOpenModal(true)}>
+                  <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
                 </div>
+
+                <BasicModal title={BUTTON_INNER} openModal={openModal} setOpenModal={setOpenModal}>
+                  <FormColumn
+                    titleForColumn={titleForColumn}
+                    setTitleForColumn={setTitleForColumn}
+                    func={handleClickCreateColumn}
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                  />
+                </BasicModal>
               </div>
             )}
           </Droppable>
         </DragDropContext>
       ) : (
-        // <div className={styles.create} onClick={handleClickCreateColumn}>
-        //   <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
-        // </div>
         <span></span>
       )}
     </div>
