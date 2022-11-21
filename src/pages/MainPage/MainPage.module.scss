@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .main {
   display: flex;
@@ -33,13 +33,13 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  // background-color: $color-instructions-text;
-  // border: 2px dashed $color-button;
+  background-color: $color-instructions-text;
+  border: 2px dashed $color-button;
 
-  // &:hover {
-  //   background-color: white;
-  //   cursor: pointer;
-  // }
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
 }
 
 .back {
