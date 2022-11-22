@@ -28,7 +28,7 @@ export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
     autocomplete: 'nickname',
   },
   password: {
-    label: 'Password',
+    label: 'New password',
     type: 'password',
     name: 'password',
     required: true,

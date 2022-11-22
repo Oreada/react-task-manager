@@ -28,6 +28,9 @@ export const authSlice = createSlice({
       state.login = action.payload.login;
       state.token = action.payload.token;
     },
+    setUserName(state, action: PayloadAction<Pick<AuthReducer, 'name'>>) {
+      state.name = action.payload.name;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserName.fulfilled, (state, action) => {

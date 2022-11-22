@@ -18,11 +18,12 @@ const Header = () => {
   const { id } = useSelector((state: IRootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setId } = authSlice.actions;
+  const { setId, setUserName } = authSlice.actions;
 
   const outLogin = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     dispatch(setId(INITIAL_AUTH_STATE));
+    dispatch(setUserName({ name: null }));
     removeLocal(LOCAL_STORAGE_KEY);
     navigate('/');
   };

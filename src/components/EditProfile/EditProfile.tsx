@@ -1,4 +1,3 @@
-import { FORM_INPUTS } from 'components/Auth/constants';
 import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
 import { saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
@@ -12,7 +11,7 @@ import { AppDispatch, AuthReducer, IRootState } from 'store/model';
 import { IInput } from 'types/types';
 import { updateUser } from '../../api/users/updateUser';
 import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
-import { FORM_TEXT } from './constants';
+import { FORM_INPUTS, FORM_TEXT } from './constants';
 import CustomInput from 'components/CustomInput/CustomInput';
 import { ReactComponent as EditSvg } from './assets/Edit.svg';
 
@@ -22,9 +21,9 @@ const EditProfile = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { setId } = authSlice.actions;
-  const { token, id: idUser, name: nameUser } = useSelector((state: IRootState) => state.auth);
+  const { token, id: idUser, name: userName } = useSelector((state: IRootState) => state.auth);
 
-  const name: IInput = useInput('name', nameUser ? nameUser : '', VALIDATION_FORM.name);
+  const name: IInput = useInput('name', '', VALIDATION_FORM.name);
   const login: IInput = useInput('login', '', VALIDATION_FORM.login);
   const password: IInput = useInput('password', '', VALIDATION_FORM.password);
   const inputContent = FORM_INPUTS;
@@ -36,7 +35,15 @@ const EditProfile = () => {
     setCanSubmit(
       [name, login, password].reduce((acc, cur) => acc && !!cur.value && !cur.isError, true)
     );
-  }, [login, name, password, token, idUser]);
+  }, [login, name, password]);
+
+  useEffect(() => {
+    dispatch(getUserName({ token, idUser }));
+  }, [token, idUser]);
+
+  useEffect(() => {
+    name.setValue(userName ? userName : '');
+  }, [userName]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
