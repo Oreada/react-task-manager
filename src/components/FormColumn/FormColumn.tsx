@@ -34,14 +34,13 @@ export function FormColumn(props: FormColumnProps) {
     handleSubmit();
   }, [valueInput]);
 
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    props.func(event);
+    props.setOpenModal(false);
+  };
+
   return (
-    <form
-      style={{ width: '100%' }}
-      onSubmit={(event) => {
-        props.func(event);
-        props.setOpenModal(false);
-      }}
-    >
+    <form style={{ width: '100%' }} onSubmit={handleFormSubmit}>
       <Box sx={style}>
         <TextField
           variant="outlined"
