@@ -42,10 +42,12 @@ export enum ReducerNameActionTypes {
   deleteBoard = 'deleteBoard',
   editBoard = 'editBoard',
   setBoardTitle = 'setBoardTitle',
+  getUserName = 'getUserName',
 }
 
 export const INITIAL_AUTH_STATE: AuthReducer = {
   id: null,
   login: null,
   token: null,
+  name: null,
 };

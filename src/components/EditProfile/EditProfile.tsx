@@ -5,29 +5,29 @@ import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { AUTHENTICATION_PATH, ROOT_PATH } from 'router/constants';
-import { authSlice } from 'store/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { ROOT_PATH } from 'router/constants';
+import { authSlice, getUserName } from 'store/authSlice';
 import { AppDispatch, AuthReducer, IRootState } from 'store/model';
 import { IInput } from 'types/types';
 import { updateUser } from '../../api/users/updateUser';
 import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
 import { FORM_TEXT } from './constants';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { ReactComponent as HelloSvg } from './assets/Hello.svg';
+import { ReactComponent as EditSvg } from './assets/Edit.svg';
 
 const EditProfile = () => {
   const [error, setError] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
-  const name: IInput = useInput('name', '', VALIDATION_FORM.name);
+  const dispatch = useDispatch<AppDispatch>();
+  const { setId } = authSlice.actions;
+  const { token, id: idUser, name: nameUser } = useSelector((state: IRootState) => state.auth);
+
+  const name: IInput = useInput('name', nameUser ? nameUser : '', VALIDATION_FORM.name);
   const login: IInput = useInput('login', '', VALIDATION_FORM.login);
   const password: IInput = useInput('password', '', VALIDATION_FORM.password);
   const inputContent = FORM_INPUTS;
-
-  const dispatch = useDispatch<AppDispatch>();
-  const { setId } = authSlice.actions;
-  const { token, id: userId } = useSelector((state: IRootState) => state.auth);
 
   const navigate = useNavigate();
   const goHome = () => navigate(ROOT_PATH);
@@ -36,21 +36,22 @@ const EditProfile = () => {
     setCanSubmit(
       [name, login, password].reduce((acc, cur) => acc && !!cur.value && !cur.isError, true)
     );
-  }, [login, name, password]);
+  }, [login, name, password, token, idUser]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      if (token && userId) {
-        const { _id: newId, login: newLogin } = await updateUser(token, userId, {
+      if (token && idUser) {
+        const { _id: newId, login: newLogin } = await updateUser(token, idUser, {
           name: name.value,
           login: login.value,
           password: password.value,
         });
 
+        dispatch(getUserName({ token, idUser }));
         dispatch(setId({ id: newId, login: newLogin, token: token }));
-        saveToLocal<AuthReducer>(LOCAL_STORAGE_KEY, {
+        saveToLocal<Omit<AuthReducer, 'name'>>(LOCAL_STORAGE_KEY, {
           id: newId,
           login: newLogin,
           token: token,
@@ -109,8 +110,8 @@ const EditProfile = () => {
         sx={{
           padding: { xs: 2, sm: 6 },
           backgroundColor: '#fff',
-          boxShadow: '0 10px 15px rgba(0,0,0, 0.1)',
-          borderRadius: 10,
+          boxShadow: '0 0 20px #d4d4d4',
+          borderRadius: '10px',
         }}
       >
         <Stack
@@ -154,12 +155,12 @@ const EditProfile = () => {
         </Stack>
         <Stack
           direction="column"
-          justifyContent="space-between"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
           sx={{ width: '50%' }}
         >
-          <HelloSvg style={{ fill: '#F3B848', minWidth: '180px' }} />
+          <EditSvg style={{ width: 250 }} />
         </Stack>
       </Stack>
       <Snackbar

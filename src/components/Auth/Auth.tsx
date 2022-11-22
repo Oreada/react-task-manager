@@ -56,7 +56,7 @@ const Auth = () => {
       const user: UserDecoder = parseBase64(token);
 
       dispatch(setId({ id: user.id, login: user.login, token: token }));
-      saveToLocal<AuthReducer>(LOCAL_STORAGE_KEY, {
+      saveToLocal<Omit<AuthReducer, 'name'>>(LOCAL_STORAGE_KEY, {
         id: user.id,
         login: user.login,
         token: token,
@@ -129,8 +129,8 @@ const Auth = () => {
         sx={{
           padding: { xs: 2, sm: 6 },
           backgroundColor: '#fff',
-          boxShadow: '0 10px 15px rgba(0,0,0, 0.1)',
-          borderRadius: 10,
+          boxShadow: '0 0 20px #d4d4d4',
+          borderRadius: '10px',
         }}
       >
         <Stack

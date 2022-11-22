@@ -55,4 +55,10 @@ export type AuthReducer = {
   id: string | null;
   login: string | null;
   token: string | null;
+  name: string | null;
+};
+
+export type GetUserNameArgsType = {
+  token: string | null;
+  idUser: string | null;
 };
