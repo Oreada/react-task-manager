@@ -171,7 +171,7 @@ const Auth = () => {
               )
           )}
 
-          <Button component="label" variant="contained" disabled={!canSubmit}>
+          <Button component="label" variant="outlined" disabled={!canSubmit} color="substitute">
             {subPage === typeSubPage.signIn ? FORM_TEXT.buttonTextIn : FORM_TEXT.buttonTextUp}
             <input hidden type="submit" />
           </Button>
