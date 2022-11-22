@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { deleteColumn } from 'api/columns/deleteColumn';
 import { createTask } from 'api/tasks/createTask';
 import { deleteTask } from 'api/tasks/deleteTask';
@@ -26,6 +27,7 @@ import { ColumnPropsType, RenderTaskFuncType } from './model';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Button, IconButton, Typography } from '@mui/material';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -36,10 +38,20 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
   const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
     order: tasks.length,
     ...INITIAL_BODY_FOR_TASK,
   });
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
   useEffect(() => {
     if (listRef && listRef.current) {
@@ -88,11 +100,11 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const getRenderTask: RenderTaskFuncType =
     (style: CSSProperties) =>
-    (
-      provider: DraggableProvided,
-      snapshot: DraggableStateSnapshot,
-      rubric: DraggableRubric
-    ): JSX.Element =>
+      (
+        provider: DraggableProvided,
+        snapshot: DraggableStateSnapshot,
+        rubric: DraggableRubric
+      ): JSX.Element =>
       (
         <Task
           idColumn={id}
@@ -176,7 +188,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
         variant="outlined"
         endIcon={<AddCircleRoundedIcon />}
         color="success"
-        onClick={() => setOpenModal(true)}
+        onClick={handleClickOpenModal}
       >
         {BUTTON_INNER}
       </Button>
@@ -192,12 +204,19 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       </BasicModal>
 
       <IconButton
-        onClick={handleClickDeleteButton}
+        onClick={handleClickOpenDialog}
         aria-label="delete"
         sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
       >
         <DeleteOutlineOutlinedIcon />
       </IconButton>
+
+      <DialogDelete
+        title="column"
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        func={handleClickDeleteButton}
+      />
     </>
   );
 });

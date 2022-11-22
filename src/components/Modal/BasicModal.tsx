@@ -40,11 +40,15 @@ const theme = createTheme({
 });
 
 export function BasicModal(props: ModalProps) {
+  const handleClickCloseModal = () => {
+    props.setOpenModal(false);
+  };
+
   return (
     <>
       <Modal
         open={props.openModal}
-        onClose={() => props.setOpenModal(false)}
+        onClose={handleClickCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

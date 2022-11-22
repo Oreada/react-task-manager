@@ -8,6 +8,7 @@ import { TaskType } from 'types/types';
 import { IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import styles from './Task.module.scss';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 
 function getStyle(provided: DraggableProvided, style: CSSProperties) {
   return {
@@ -24,6 +25,12 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
   const handlePointerOver = (): void => setIsHovering(true);
 
   const handlePointerOut = (): void => setIsHovering(false);
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -61,13 +68,20 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
       </Typography>
       {isHovering && (
         <IconButton
-          onClick={handleClickDeleteButton}
+          onClick={handleClickOpenDialog}
           aria-label="delete"
           sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
         >
           <RemoveCircleOutlineOutlinedIcon fontSize="small" />
         </IconButton>
       )}
+
+      <DialogDelete
+        title="task"
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        func={handleClickDeleteButton}
+      />
     </div>
   );
 };
