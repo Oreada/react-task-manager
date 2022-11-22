@@ -49,7 +49,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpenDialog = () => {
     setOpenDialog(true);
   };
 
@@ -204,7 +204,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
       </BasicModal>
 
       <IconButton
-        onClick={handleClickOpen}
+        onClick={handleClickOpenDialog}
         aria-label="delete"
         sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
       >

@@ -28,7 +28,7 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpenDialog = () => {
     setOpenDialog(true);
   };
 
@@ -68,7 +68,7 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
       </Typography>
       {isHovering && (
         <IconButton
-          onClick={handleClickOpen}
+          onClick={handleClickOpenDialog}
           aria-label="delete"
           sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
         >

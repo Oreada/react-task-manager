@@ -44,7 +44,7 @@ const MainPage = () => {
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpenDialog = () => {
     setOpenDialog(true);
   };
 
@@ -178,7 +178,7 @@ const MainPage = () => {
               </Typography>
               <IconButton
                 onClick={() => {
-                  handleClickOpen();
+                  handleClickOpenDialog();
                   setIdBoardDelete(_id);
                 }}
                 aria-label="delete"
