@@ -56,7 +56,7 @@ const Auth = () => {
       const user: UserDecoder = parseBase64(token);
 
       dispatch(setId({ id: user.id, login: user.login, token: token }));
-      saveToLocal<Omit<AuthReducer, 'name'>>(LOCAL_STORAGE_KEY, {
+      saveToLocal<Omit<AuthReducer, 'user'>>(LOCAL_STORAGE_KEY, {
         id: user.id,
         login: user.login,
         token: token,

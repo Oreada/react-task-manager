@@ -1,5 +1,5 @@
 import { TasksByColumnsType } from 'components/Board/model';
-import { Board, BodyForBoard, BodyForTask, ColumnType, TaskType } from 'types/types';
+import { Board, BodyForBoard, BodyForTask, ColumnType, TaskType, UserInfo } from 'types/types';
 import { store } from './appStore';
 
 export type BoardStateType = {
@@ -55,7 +55,7 @@ export type AuthReducer = {
   id: string | null;
   login: string | null;
   token: string | null;
-  name: string | null;
+  user: UserInfo | null;
 };
 
 export type GetUserNameArgsType = {

@@ -23,7 +23,7 @@ const Header = () => {
   const outLogin = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     dispatch(setId(INITIAL_AUTH_STATE));
-    dispatch(setUserName({ name: null }));
+    dispatch(setUserName({ user: null }));
     removeLocal(LOCAL_STORAGE_KEY);
     navigate('/');
   };
