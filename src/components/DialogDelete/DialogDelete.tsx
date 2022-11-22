@@ -10,7 +10,9 @@ interface DialogProps {
   title: string;
   openDialog: boolean;
   setOpenDialog: (arg: boolean) => void;
-  func: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<TaskType | void>;
+  func: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<void> | Promise<TaskType | void>;
 }
 
 export function DialogDelete(props: DialogProps) {
@@ -20,7 +22,7 @@ export function DialogDelete(props: DialogProps) {
 
   const handleAgree = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     props.func(event);
-    handleClose;
+    handleClose();
   };
 
   return (

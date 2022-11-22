@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
@@ -19,6 +20,7 @@ import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import styles from './MainPage.module.scss';
 import { setBoardTitle } from 'store/boardSlice';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +37,14 @@ const MainPage = () => {
     title: 'no title',
     description: 'no description',
   });
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const [idBoardDelete, setIdBoardDelete] = useState<string>('');
 
   useEffect(() => {
     const getBoardsWithSighUp = (): void => {
@@ -61,48 +71,48 @@ const MainPage = () => {
 
   const handleClickGoTo =
     (to: To, title: string) =>
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-      event.preventDefault();
-      if (token && idUser) {
-        navigate(to);
-        dispatch(setBoardTitle({ titleBoard: title }));
-      }
-    };
+      (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.preventDefault();
+        if (token && idUser) {
+          navigate(to);
+          dispatch(setBoardTitle({ titleBoard: title }));
+        }
+      };
 
   const handleClickDelButton =
     (idBoard: string) =>
-    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-      event.preventDefault();
-      //todo modal
-      if (token) {
-        dispatch(deleteBoardThunk({ token, idBoard }));
-      }
-      event.stopPropagation();
-    };
+      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        event.preventDefault();
+
+        if (token) {
+          dispatch(deleteBoardThunk({ token, idBoard }));
+        }
+        event.stopPropagation();
+      };
 
   const handleClickEditButton =
     (idBoard: string) =>
-    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-      event.preventDefault();
-      //todo modal
+      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        event.preventDefault();
+        //todo modal
 
-      if (token && idUser) {
-        dispatch(
-          editBoardThunk({
-            token,
-            idBoard,
-            body: {
-              owner: idUser,
-              users: [idUser],
-              description: 'Description',
-              title: 'new title',
-            },
-          })
-        );
-      }
+        if (token && idUser) {
+          dispatch(
+            editBoardThunk({
+              token,
+              idBoard,
+              body: {
+                owner: idUser,
+                users: [idUser],
+                description: 'Description',
+                title: 'new title',
+              },
+            })
+          );
+        }
 
-      event.stopPropagation();
-    };
+        event.stopPropagation();
+      };
 
   return (
     <Container
@@ -132,7 +142,7 @@ const MainPage = () => {
       <Grid container spacing={4}>
         {boards.map(({ _id, title, description }) => (
           <Grid item key={_id} xs>
-            <div className={styles.card} onClick={handleClickGoTo(`${_id}`, title)}>
+            <div className={styles.card}>
               <Typography
                 variant="h6"
                 sx={{
@@ -144,7 +154,9 @@ const MainPage = () => {
                   color: '#1c4931',
                   textTransform: 'uppercase',
                   textAlign: 'left',
+                  cursor: 'pointer',
                 }}
+                onClick={handleClickGoTo(`${_id}`, title)}
               >
                 {title}
               </Typography>
@@ -161,12 +173,16 @@ const MainPage = () => {
                 {description ? description : NO_DESCRIPTION}
               </Typography>
               <IconButton
-                onClick={handleClickDelButton(_id)}
+                onClick={() => {
+                  handleClickOpen();
+                  setIdBoardDelete(_id);
+                }}
                 aria-label="delete"
                 sx={{ position: 'absolute', top: 30, right: 0, zIndex: 2 }}
               >
                 <DeleteOutlineOutlinedIcon />
               </IconButton>
+
               <IconButton
                 onClick={handleClickEditButton(_id)}
                 aria-label="edit"
@@ -177,6 +193,13 @@ const MainPage = () => {
             </div>
           </Grid>
         ))}
+
+        <DialogDelete
+          title="board"
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          func={handleClickDelButton(idBoardDelete)}
+        />
 
         <Grid item xs>
           <div className={styles.card + ' ' + styles.create} onClick={() => setOpenModal(true)}>
