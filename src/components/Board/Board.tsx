@@ -36,6 +36,10 @@ const Board = () => {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
   const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
   useEffect(() => {
@@ -229,7 +233,7 @@ const Board = () => {
                 ))}
                 {provider.placeholder}
 
-                <div className={styles.create} onClick={() => setOpenModal(true)}>
+                <div className={styles.create} onClick={handleClickOpenModal}>
                   <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
                 </div>
 

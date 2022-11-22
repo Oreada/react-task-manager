@@ -38,6 +38,10 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
   const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
     order: tasks.length,
     ...INITIAL_BODY_FOR_TASK,
@@ -184,7 +188,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
         variant="outlined"
         endIcon={<AddCircleRoundedIcon />}
         color="success"
-        onClick={() => setOpenModal(true)}
+        onClick={handleClickOpenModal}
       >
         {BUTTON_INNER}
       </Button>

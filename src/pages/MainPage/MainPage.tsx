@@ -31,6 +31,10 @@ const MainPage = () => {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
   const [bodyForBoard, setBodyForBoard] = useState<BodyForBoard>({
     owner: idUser ? idUser : '',
     users: [idUser ? idUser : ''],
@@ -202,7 +206,7 @@ const MainPage = () => {
         />
 
         <Grid item xs>
-          <div className={styles.card + ' ' + styles.create} onClick={() => setOpenModal(true)}>
+          <div className={styles.card + ' ' + styles.create} onClick={handleClickOpenModal}>
             <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
           </div>
         </Grid>
