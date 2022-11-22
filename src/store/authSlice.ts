@@ -29,7 +29,7 @@ export const authSlice = createSlice({
       state.login = action.payload.login;
       state.token = action.payload.token;
     },
-    setUserName(state, action: PayloadAction<Pick<AuthReducer, 'user'>>) {
+    setUserData(state, action: PayloadAction<Pick<AuthReducer, 'user'>>) {
       state.user = action.payload.user;
     },
   },

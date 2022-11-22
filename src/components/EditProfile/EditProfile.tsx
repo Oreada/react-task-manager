@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
-import { saveToLocal } from 'helpers';
+import { removeLocal, saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -15,13 +15,14 @@ import { FORM_INPUTS, FORM_TEXT } from './constants';
 import CustomInput from 'components/CustomInput/CustomInput';
 import { ReactComponent as EditSvg } from './assets/Edit.svg';
 import { deleteUser } from 'api/users/deleteUser';
+import { INITIAL_AUTH_STATE } from 'store/constants';
 
 const EditProfile = () => {
   const [error, setError] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
-  const { setId } = authSlice.actions;
+  const { setId, setUserData } = authSlice.actions;
   const { token, id: idUser, user } = useSelector((state: IRootState) => state.auth);
 
   const name: IInput = useInput('name', '', VALIDATION_FORM.name);
@@ -102,6 +103,9 @@ const EditProfile = () => {
   const handleClickDeleteUser = () => {
     if (token && idUser) {
       deleteUser(token, idUser);
+      dispatch(setId(INITIAL_AUTH_STATE));
+      dispatch(setUserData({ user: null }));
+      removeLocal(LOCAL_STORAGE_KEY);
       goHome();
     }
   };
