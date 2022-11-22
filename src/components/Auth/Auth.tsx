@@ -2,7 +2,7 @@ import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mu
 import { signIn } from 'api/auth/signIn';
 import { parseBase64 } from 'api/helpers/parseBase64';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { LOCAL_STORAGE_KEY } from 'constants/constants';
+import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
 import { saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
@@ -17,7 +17,7 @@ import { ReactComponent as BlobTwo } from './assets/Blob_2.svg';
 import { ReactComponent as BlobOne } from './assets/Blob_3.svg';
 import { ReactComponent as GroupSvg } from './assets/Group.svg';
 import { ReactComponent as HelloSvg } from './assets/Hello.svg';
-import { FORM_INPUTS, FORM_TEXT, VALIDATION_FORM } from './constants';
+import { FORM_INPUTS, FORM_TEXT } from './constants';
 
 const Auth = () => {
   const [error, setError] = useState('');
