@@ -2,7 +2,7 @@ import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mu
 import { signIn } from 'api/auth/signIn';
 import { parseBase64 } from 'api/helpers/parseBase64';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
+import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from '../../constants/constants';
 import { saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
