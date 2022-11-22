@@ -18,11 +18,10 @@ export function DialogDelete(props: DialogProps) {
     props.setOpenDialog(false);
   };
 
-  //! проблемы с типизацией
-  // const handleAgree = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //   props.func(event);
-  //   handleClose;
-  // };
+  const handleAgree = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    props.func(event);
+    handleClose;
+  };
 
   return (
     <div>
@@ -40,14 +39,7 @@ export function DialogDelete(props: DialogProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>No</Button>
-          <Button
-            onClick={(event) => {
-              props.func(event);
-              handleClose;
-            }}
-            // onClick={handleAgree}
-            autoFocus
-          >
+          <Button onClick={handleAgree} autoFocus>
             Yes
           </Button>
         </DialogActions>
