@@ -1,27 +1,27 @@
 /* eslint-disable prettier/prettier */
+import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormBoard } from 'components/FormBoard/FormBoard';
+import { FormBoardUpdate } from 'components/FormBoardUpdate/FormBoardUpdate';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
+import { setBoardTitle } from 'store/boardSlice';
 import {
   createBoardThunk,
   deleteBoardThunk,
   editBoardThunk,
-  getBoardsThunk,
+  getBoardsThunk
 } from 'store/mainSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
 import { ReactComponent as Back } from './assets/Back.svg';
 import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import styles from './MainPage.module.scss';
-import { setBoardTitle } from 'store/boardSlice';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
-import { DialogDelete } from 'components/DialogDelete/DialogDelete';
-import { FormBoardUpdate } from 'components/FormBoardUpdate/FormBoardUpdate';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -107,10 +107,18 @@ const MainPage = () => {
 
   const handleClickEditButton =
     (idBoard: string) =>
-      async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+      async (event: FormEvent<HTMLFormElement>, title: string, description: string): Promise<void> => {
         event.preventDefault();
-
+        console.log('idBoard', idBoard);
+        
         if (token && idUser) {
+          const newBody = {
+            owner: idUser,
+            users: [idUser],
+            description: description,
+            title: title,
+}
+          console.log('bodyForUpdate=', bodyForUpdate);
           console.log('bodyForUpdate=', bodyForUpdate);
           dispatch(
             editBoardThunk({
@@ -122,7 +130,7 @@ const MainPage = () => {
               //   description: 'Description',
               //   title: 'new title',
               // },
-              body: bodyForUpdate ? bodyForUpdate : {
+              body: newBody ? newBody : {
                 owner: idUser,
                 users: [idUser],
                 description: 'description',

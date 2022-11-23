@@ -1,4 +1,4 @@
-import { Box, TextField, Button } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { FormEvent, MutableRefObject, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
@@ -7,7 +7,7 @@ import { BodyForBoard } from 'types/types';
 interface FormBoardProps {
   bodyForUpdate: BodyForBoard | null;
   setBodyForUpdate: (arg: BodyForBoard) => void;
-  func: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  func: (event: FormEvent<HTMLFormElement>, title: string, description: string) => Promise<void>;
   openUpdate: boolean;
   setOpenUpdate: (arg: boolean) => void;
 }
@@ -28,25 +28,25 @@ export function FormBoardUpdate(props: FormBoardProps) {
   const descriptionBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
   const handleInputTitleChange = () => {
-    if (props.bodyForUpdate) {
-      props.setBodyForUpdate({
-        ...props.bodyForUpdate,
-        title: (titleBoard.current as HTMLInputElement).value,
-        owner: id ? id : '',
-        users: [id ? id : ''],
-      });
-    }
+    // if (props.bodyForUpdate) {
+    //   props.setBodyForUpdate({
+    //     ...props.bodyForUpdate,
+    //     title: (titleBoard.current as HTMLInputElement).value,
+    //     owner: id ? id : '',
+    //     users: [id ? id : ''],
+    //   });
+    // }
   };
 
   const handleInputDescriptionChange = () => {
-    if (props.bodyForUpdate) {
-      props.setBodyForUpdate({
-        ...props.bodyForUpdate,
-        description: (descriptionBoard.current as HTMLInputElement).value,
-        owner: id ? id : '',
-        users: [id ? id : ''],
-      });
-    }
+    // if (props.bodyForUpdate) {
+    //   props.setBodyForUpdate({
+    //     ...props.bodyForUpdate,
+    //     description: (descriptionBoard.current as HTMLInputElement).value,
+    //     owner: id ? id : '',
+    //     users: [id ? id : ''],
+    //   });
+    // }
   };
 
   useEffect(() => {
@@ -63,8 +63,10 @@ export function FormBoardUpdate(props: FormBoardProps) {
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     console.log('handleFormSubmit');
-    console.log((titleBoard.current as HTMLInputElement).value);
-    console.log((descriptionBoard.current as HTMLInputElement).value);
+    const title = (titleBoard.current as HTMLInputElement).value;
+    const description = (descriptionBoard.current as HTMLInputElement).value;
+    console.log(title);
+    console.log(description);
 
     if (props.bodyForUpdate) {
       props.setBodyForUpdate({
@@ -75,7 +77,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
       });
     }
 
-    props.func(event);
+    props.func(event, title, description);
     props.setOpenUpdate(false);
   };
 
