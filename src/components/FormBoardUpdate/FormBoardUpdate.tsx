@@ -1,7 +1,5 @@
 import { Box, Button, TextField } from '@mui/material';
 import { FormEvent, MutableRefObject, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
@@ -21,8 +19,6 @@ const style = {
 };
 
 export function FormBoardUpdate(props: FormBoardProps) {
-  const { id } = useSelector((state: IRootState) => state.auth);
-
   const titleBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
   const descriptionBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
