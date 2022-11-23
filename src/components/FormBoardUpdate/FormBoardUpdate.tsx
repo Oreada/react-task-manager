@@ -6,7 +6,6 @@ import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
   bodyForUpdate: BodyForBoard | null;
-  setBodyForUpdate: (arg: BodyForBoard) => void;
   func: (event: FormEvent<HTMLFormElement>, title: string, description: string) => Promise<void>;
   openUpdate: boolean;
   setOpenUpdate: (arg: boolean) => void;
@@ -27,31 +26,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
   const titleBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
   const descriptionBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
-  const handleInputTitleChange = () => {
-    // if (props.bodyForUpdate) {
-    //   props.setBodyForUpdate({
-    //     ...props.bodyForUpdate,
-    //     title: (titleBoard.current as HTMLInputElement).value,
-    //     owner: id ? id : '',
-    //     users: [id ? id : ''],
-    //   });
-    // }
-  };
-
-  const handleInputDescriptionChange = () => {
-    // if (props.bodyForUpdate) {
-    //   props.setBodyForUpdate({
-    //     ...props.bodyForUpdate,
-    //     description: (descriptionBoard.current as HTMLInputElement).value,
-    //     owner: id ? id : '',
-    //     users: [id ? id : ''],
-    //   });
-    // }
-  };
-
   useEffect(() => {
-    console.log(titleBoard);
-    console.log(titleBoard.current?.value);
     (titleBoard.current as HTMLInputElement).value = props.bodyForUpdate?.title
       ? props.bodyForUpdate?.title
       : '';
@@ -62,20 +37,8 @@ export function FormBoardUpdate(props: FormBoardProps) {
   }, [props.bodyForUpdate]);
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    console.log('handleFormSubmit');
     const title = (titleBoard.current as HTMLInputElement).value;
     const description = (descriptionBoard.current as HTMLInputElement).value;
-    console.log(title);
-    console.log(description);
-
-    if (props.bodyForUpdate) {
-      props.setBodyForUpdate({
-        title: (titleBoard.current as HTMLInputElement).value,
-        description: (descriptionBoard.current as HTMLInputElement).value,
-        owner: id ? id : '',
-        users: [id ? id : ''],
-      });
-    }
 
     props.func(event, title, description);
     props.setOpenUpdate(false);
@@ -89,7 +52,6 @@ export function FormBoardUpdate(props: FormBoardProps) {
           label="Board title"
           name="title"
           inputRef={titleBoard}
-          onChange={handleInputTitleChange}
           autoFocus={true}
           fullWidth
           required
@@ -99,7 +61,6 @@ export function FormBoardUpdate(props: FormBoardProps) {
           label="Board description"
           name="description"
           inputRef={descriptionBoard}
-          onChange={handleInputDescriptionChange}
           multiline={true}
           minRows={5}
           fullWidth

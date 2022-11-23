@@ -227,7 +227,6 @@ const MainPage = () => {
         <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
           <FormBoardUpdate
             bodyForUpdate={bodyForUpdate}
-            setBodyForUpdate={setBodyForUpdate}
             func={handleClickEditButton(idBoardUpdate)}
             openUpdate={openUpdate}
             setOpenUpdate={setOpenUpdate}
