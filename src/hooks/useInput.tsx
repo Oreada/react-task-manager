@@ -25,5 +25,5 @@ export const useInput = (
     setIsLeave(false);
   }, []);
 
-  return { name, value, isLeave, onChange, onBlur, onFocus, ...valid };
+  return { name, value, setValue, isLeave, onChange, onBlur, onFocus, ...valid };
 };
