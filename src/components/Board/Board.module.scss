@@ -21,19 +21,21 @@
 
 .create {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-width: rem(200);
-  // min-height: rem(10);
+  justify-content: center;
+  align-items: center;
+  min-width: rem(250);
+  max-height: rem(330);
   padding: 0;
   margin-left: 1rem;
-  // background-color: $color-instructions-text;
-  // border: 2px dashed $color-button;
+  border: 2px dashed $color-button;
+  border-radius: 10px;
+  background-color: $color-instructions-text;
+  box-shadow: 0 0 20px $color-box-shadow;
 
-  // &:hover {
-  //   background-color: white;
-  //   cursor: pointer;
-  // }
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
 }
 
 .column {
@@ -43,7 +45,7 @@
   justify-content: flex-start;
   gap: rem(10);
   width: rem(250);
-  max-height: 330px;
+  max-height: rem(330);
   padding: rem(20) rem(30) rem(20) rem(20);
   margin-left: 1rem;
   box-shadow: 0 0 20px $color-box-shadow;

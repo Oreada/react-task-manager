@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Box, TextField } from '@mui/material';
-import { BodyForTask } from 'types/types';
+import { FormEvent, useEffect, useState } from 'react';
+import { Box, TextField, Button } from '@mui/material';
+import { BodyForTask, TaskType } from 'types/types';
 import { IRootState } from 'store/model';
 import { useSelector } from 'react-redux';
 
 interface FormTaskProps {
   bodyForTask: BodyForTask;
   setBodyForTask: (arg: BodyForTask) => void;
+  func: (event: FormEvent<HTMLFormElement>) => Promise<TaskType | void>;
+  openModal: boolean;
+  setOpenModal: (arg: boolean) => void;
 }
 
 const style = {
@@ -63,8 +66,13 @@ export function FormTask(props: FormTaskProps) {
     handleSubmitDescription();
   }, [values.description]);
 
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    props.func(event);
+    props.setOpenModal(false);
+  };
+
   return (
-    <form style={{ width: '100%' }}>
+    <form style={{ width: '100%' }} onSubmit={handleFormSubmit}>
       <Box sx={style}>
         <TextField
           variant="outlined"
@@ -75,6 +83,7 @@ export function FormTask(props: FormTaskProps) {
           onSubmit={handleSubmitTitle}
           autoFocus={true}
           fullWidth
+          required
         />
         <TextField
           variant="outlined"
@@ -86,7 +95,11 @@ export function FormTask(props: FormTaskProps) {
           multiline={true}
           minRows={5}
           fullWidth
+          required
         />
+        <Button type="submit" variant="outlined" size="large" color="success">
+          Add
+        </Button>
       </Box>
     </form>
   );

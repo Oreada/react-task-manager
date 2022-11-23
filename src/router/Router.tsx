@@ -1,4 +1,5 @@
 import Board from 'components/Board/Board';
+import EditProfile from 'components/EditProfile/EditProfile';
 import RequireAuth from 'components/RequireAuth/RequireAuth';
 import AuthPage from 'pages/AuthPage';
 import BoardList from 'pages/MainPage/MainPage';
@@ -11,6 +12,7 @@ import {
   AUTHENTICATION_PATH,
   BOARDS_ID_PATH,
   BOARDS_PATH,
+  EDIT_PATH,
   ROOT_PATH,
 } from './constants';
 
@@ -31,6 +33,14 @@ const Router = () => (
         element={
           <RequireAuth>
             <Board />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path={EDIT_PATH}
+        element={
+          <RequireAuth>
+            <EditProfile />
           </RequireAuth>
         }
       />

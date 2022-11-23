@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 import { deleteColumn } from 'api/columns/deleteColumn';
 import { createTask } from 'api/tasks/createTask';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { FormTask } from 'components/FormTask/FormTask';
-import { BasicModal } from 'components/Modal/Modal';
+import { BasicModal } from 'components/Modal/BasicModal';
 import Task from 'components/Task/Task';
-import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
+import { CSSProperties, FormEvent, memo, useEffect, useRef, useState } from 'react';
 import {
   Draggable,
   DraggableProvided,
@@ -24,7 +25,9 @@ import { BodyForTask, TaskType } from 'types/types';
 import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
 import { ColumnPropsType, RenderTaskFuncType } from './model';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { IconButton, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 
 const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
@@ -33,10 +36,22 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   const { idBoard, columns } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
 
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
   const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
     order: tasks.length,
     ...INITIAL_BODY_FOR_TASK,
   });
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
   useEffect(() => {
     if (listRef && listRef.current) {
@@ -46,7 +61,7 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   }, [columns]);
 
   const handleClickCreateButton = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: FormEvent<HTMLFormElement>
   ): Promise<TaskType | void> => {
     event.preventDefault();
 
@@ -85,11 +100,11 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   const getRenderTask: RenderTaskFuncType =
     (style: CSSProperties) =>
-    (
-      provider: DraggableProvided,
-      snapshot: DraggableStateSnapshot,
-      rubric: DraggableRubric
-    ): JSX.Element =>
+      (
+        provider: DraggableProvided,
+        snapshot: DraggableStateSnapshot,
+        rubric: DraggableRubric
+      ): JSX.Element =>
       (
         <Task
           idColumn={id}
@@ -168,16 +183,40 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           );
         }}
       </Droppable>
-      <BasicModal title={BUTTON_INNER} func={handleClickCreateButton}>
-        <FormTask bodyForTask={bodyForTask} setBodyForTask={setBodyForTask} />
+
+      <Button
+        variant="outlined"
+        endIcon={<AddCircleRoundedIcon />}
+        color="success"
+        onClick={handleClickOpenModal}
+      >
+        {BUTTON_INNER}
+      </Button>
+
+      <BasicModal title={BUTTON_INNER} openModal={openModal} setOpenModal={setOpenModal}>
+        <FormTask
+          bodyForTask={bodyForTask}
+          setBodyForTask={setBodyForTask}
+          func={handleClickCreateButton}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
       </BasicModal>
+
       <IconButton
-        onClick={handleClickDeleteButton}
+        onClick={handleClickOpenDialog}
         aria-label="delete"
         sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
       >
         <DeleteOutlineOutlinedIcon />
       </IconButton>
+
+      <DialogDelete
+        title="column"
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        func={handleClickDeleteButton}
+      />
     </>
   );
 });
