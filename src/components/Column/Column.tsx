@@ -99,10 +99,8 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
   const handleClickEdit = async (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>, title: string
   ): Promise<ColumnType | void> => {
-    // event.preventDefault();
     if (token) {
       const columnUpdated = await updateColumn(token, idBoard, id, { title: title, order: order });
-      console.log(columnUpdated);
       setColumnUpdated(columnUpdated);
       return columnUpdated;
     }
