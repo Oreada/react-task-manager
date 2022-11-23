@@ -24,6 +24,10 @@ export function FormColumnUpdate(props: FormColumnProps) {
       }
     };
     titleColumn.current?.addEventListener('keypress', setBlur);
+
+    return () => {
+      titleColumn.current?.removeEventListener('keypress', setBlur);
+    };
   }, []);
 
   const handleSubmit = (
