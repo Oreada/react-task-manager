@@ -4,7 +4,11 @@ import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
   bodyForUpdate: BodyForBoard | null;
-  func: (event: FormEvent<HTMLFormElement>, title: string, description: string) => Promise<void>;
+  handleClickEditButton: (
+    event: FormEvent<HTMLFormElement>,
+    title: string,
+    description: string
+  ) => Promise<void>;
   openUpdate: boolean;
   setOpenUpdate: (arg: boolean) => void;
 }
@@ -36,7 +40,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
     const title = (titleBoard.current as HTMLInputElement).value;
     const description = (descriptionBoard.current as HTMLInputElement).value;
 
-    props.func(event, title, description);
+    props.handleClickEditButton(event, title, description);
     props.setOpenUpdate(false);
   };
 
