@@ -1,5 +1,11 @@
-import { Cicleron, Lock, Mail, VALIDATION_FORM } from '../../constants/constants';
+import { Cicleron, Lock, Mail, VALIDATION_FORM } from 'constants/constants';
 import { TypeField, TypeFormInputsContent } from 'types/types';
+
+export const FORM_TEXT = {
+  title: 'Edit profile',
+  buttonEditText: 'Edit',
+  buttonDeleteText: 'Delete',
+};
 
 export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
   name: {
@@ -23,22 +29,13 @@ export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
     autocomplete: 'nickname',
   },
   password: {
-    label: 'Password',
+    label: 'New password',
     type: 'password',
     name: 'password',
     required: true,
     icon: Lock,
     minlength: 8,
     validation: VALIDATION_FORM.password,
-    autocomplete: 'current-password',
+    autocomplete: 'new-password',
   },
-};
-
-export const FORM_TEXT = {
-  titleIn: 'SignIn',
-  titleUp: 'SignUp',
-  buttonTextIn: 'Log in',
-  buttonTextUp: 'Register',
-  linkTextToPageUp: 'Create an account',
-  linkTextToPageIn: 'I am already member',
 };

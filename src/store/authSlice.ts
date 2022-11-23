@@ -1,22 +1,42 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getUser } from 'api/users/getUser';
 import { LOCAL_STORAGE_KEY } from 'constants/constants';
 import { readFromLocal } from 'helpers';
-import { INITIAL_AUTH_STATE, SLICE_NAMES } from './constants';
-import { AuthReducer } from './model';
+import { UserInfo } from 'types/types';
+import { INITIAL_AUTH_STATE, ReducerNameActionTypes, SLICE_NAMES } from './constants';
+import { AuthReducer, GetUserNameArgsType } from './model';
 
 const stateFromLocal: AuthReducer | null = readFromLocal(LOCAL_STORAGE_KEY);
 
 export const initialAuth: AuthReducer = stateFromLocal ? stateFromLocal : INITIAL_AUTH_STATE;
 
+export const getUserData = createAsyncThunk<UserInfo | null, GetUserNameArgsType>(
+  ReducerNameActionTypes.getUserName,
+  async ({ token, idUser }: GetUserNameArgsType) => {
+    if (token && idUser) {
+      const userData = await getUser(token, idUser);
+      return userData;
+    }
+    return null;
+  }
+);
 export const authSlice = createSlice({
   name: SLICE_NAMES.auth,
   initialState: initialAuth,
   reducers: {
-    setId(state, action: PayloadAction<AuthReducer>) {
+    setId(state, action: PayloadAction<Omit<AuthReducer, 'user'>>) {
       state.id = action.payload.id;
       state.login = action.payload.login;
       state.token = action.payload.token;
     },
+    setUserData(state, action: PayloadAction<Pick<AuthReducer, 'user'>>) {
+      state.user = action.payload.user;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getUserData.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
   },
 });
 

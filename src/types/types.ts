@@ -57,6 +57,7 @@ export interface IInput {
   errorText: string;
   value: string;
   isLeave: boolean;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
   onFocus: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
