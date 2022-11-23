@@ -21,6 +21,7 @@ import styles from './MainPage.module.scss';
 import { setBoardTitle } from 'store/boardSlice';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
+import { FormBoardUpdate } from 'components/FormBoardUpdate/FormBoardUpdate';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,6 +50,16 @@ const MainPage = () => {
   };
 
   const [idBoardDelete, setIdBoardDelete] = useState<string>('');
+
+  const [openUpdate, setOpenUpdate] = useState<boolean>(false);
+
+  const handleClickOpenUpdate = () => {
+    setOpenUpdate(true);
+  };
+
+  const [idBoardUpdate, setIdBoardUpdate] = useState<string>('');
+
+  const [bodyForUpdate, setBodyForUpdate] = useState<BodyForBoard | null>(null);
 
   useEffect(() => {
     const getBoardsWithSighUp = (): void => {
@@ -96,20 +107,26 @@ const MainPage = () => {
 
   const handleClickEditButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-        //todo modal
 
         if (token && idUser) {
+          console.log('bodyForUpdate=', bodyForUpdate);
           dispatch(
             editBoardThunk({
               token,
               idBoard,
-              body: {
+              // body: {
+              //   owner: idUser,
+              //   users: [idUser],
+              //   description: 'Description',
+              //   title: 'new title',
+              // },
+              body: bodyForUpdate ? bodyForUpdate : {
                 owner: idUser,
                 users: [idUser],
-                description: 'Description',
-                title: 'new title',
+                description: 'description',
+                title: 'title',
               },
             })
           );
@@ -144,7 +161,7 @@ const MainPage = () => {
         {MAIN_PAGE_TITLE}
       </Typography>
       <Grid container spacing={4}>
-        {boards.map(({ _id, title, description }) => (
+        {boards.map(({ _id, title, description, owner, users }) => (
           <Grid item key={_id} xs>
             <div className={styles.card}>
               <Typography
@@ -188,7 +205,17 @@ const MainPage = () => {
               </IconButton>
 
               <IconButton
-                onClick={handleClickEditButton(_id)}
+                // onClick={handleClickEditButton(_id)}
+                onClick={() => {
+                  handleClickOpenUpdate();
+                  setIdBoardUpdate(_id);
+                  setBodyForUpdate({
+                    title: title,
+                    description: description,
+                    owner: owner,
+                    users: users,
+                  });
+                }}
                 aria-label="edit"
                 sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
               >
@@ -197,6 +224,16 @@ const MainPage = () => {
             </div>
           </Grid>
         ))}
+
+        <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
+          <FormBoardUpdate
+            bodyForUpdate={bodyForUpdate}
+            setBodyForUpdate={setBodyForUpdate}
+            func={handleClickEditButton(idBoardUpdate)}
+            openUpdate={openUpdate}
+            setOpenUpdate={setOpenUpdate}
+          />
+        </BasicModal>
 
         <DialogDelete
           title="board"
