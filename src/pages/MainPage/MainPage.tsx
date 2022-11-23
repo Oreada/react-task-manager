@@ -109,27 +109,19 @@ const MainPage = () => {
     (idBoard: string) =>
       async (event: FormEvent<HTMLFormElement>, title: string, description: string): Promise<void> => {
         event.preventDefault();
-        console.log('idBoard', idBoard);
-        
+
         if (token && idUser) {
           const newBody = {
             owner: idUser,
             users: [idUser],
             description: description,
             title: title,
-}
-          console.log('bodyForUpdate=', bodyForUpdate);
-          console.log('bodyForUpdate=', bodyForUpdate);
+          }
+
           dispatch(
             editBoardThunk({
               token,
               idBoard,
-              // body: {
-              //   owner: idUser,
-              //   users: [idUser],
-              //   description: 'Description',
-              //   title: 'new title',
-              // },
               body: newBody ? newBody : {
                 owner: idUser,
                 users: [idUser],
@@ -213,7 +205,6 @@ const MainPage = () => {
               </IconButton>
 
               <IconButton
-                // onClick={handleClickEditButton(_id)}
                 onClick={() => {
                   handleClickOpenUpdate();
                   setIdBoardUpdate(_id);
