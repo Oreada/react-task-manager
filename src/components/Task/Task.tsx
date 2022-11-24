@@ -70,18 +70,16 @@ const Task = ({
     event: FormEvent<HTMLFormElement>,
     title: string,
     description: string
-    // userId: string,
     // users: Array<string>
   ): Promise<TaskType | void> => {
     if (token) {
       const taskUpdated = await updateTask(token, idBoard, idColumn, idTask, {
         order: orderTask,
         columnId: idColumn,
-
-        title: title,
-        description: description,
         userId: ownerTask,
         users: usersOfTask,
+        title: title,
+        description: description,
       });
 
       setTaskUpdated(taskUpdated);

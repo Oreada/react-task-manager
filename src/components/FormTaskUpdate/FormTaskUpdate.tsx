@@ -11,7 +11,6 @@ interface FormTaskProps {
     event: FormEvent<HTMLFormElement>,
     title: string,
     description: string
-    // userId: string,
     // users: Array<string>
   ) => Promise<TaskType | void>;
   openUpdate: boolean;
