@@ -1,8 +1,11 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
-import { BodyForTask, TaskType } from 'types/types';
-import { IRootState } from 'store/model';
+import { BodyForTask, TaskType, UserDecoder } from 'types/types';
+import { AppDispatch, IRootState } from 'store/model';
 import { useSelector } from 'react-redux';
+import { parseBase64 } from 'api/helpers/parseBase64';
+import { useDispatch } from 'react-redux';
+import { getUserData } from 'store/authSlice';
 
 interface FormTaskProps {
   bodyForTask: BodyForTask;
@@ -28,8 +31,13 @@ const initialValues = {
 
 export function FormTask(props: FormTaskProps) {
   const [values, setValues] = useState(initialValues);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { id } = useSelector((state: IRootState) => state.auth);
+  const { id, token, user } = useSelector((state: IRootState) => state.auth);
+
+  useEffect(() => {
+    dispatch(getUserData({ token, idUser: id }));
+  }, [token, id, dispatch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -45,7 +53,7 @@ export function FormTask(props: FormTaskProps) {
       ...props.bodyForTask,
       title: values.title,
       userId: id ? id : '',
-      users: [id ? id : ''],
+      users: [user ? user.login : ''],
     });
   };
 
@@ -54,7 +62,7 @@ export function FormTask(props: FormTaskProps) {
       ...props.bodyForTask,
       description: values.description,
       userId: id ? id : '',
-      users: [id ? id : ''],
+      users: [user ? user.login : ''],
     });
   };
 
