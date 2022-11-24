@@ -52,7 +52,7 @@ export function FormTask(props: FormTaskProps) {
     props.setBodyForTask({
       ...props.bodyForTask,
       title: values.title,
-      userId: id ? id : '',
+      userId: user ? user.login : '',
       users: [user ? user.login : ''],
     });
   };
@@ -61,7 +61,7 @@ export function FormTask(props: FormTaskProps) {
     props.setBodyForTask({
       ...props.bodyForTask,
       description: values.description,
-      userId: id ? id : '',
+      userId: user ? user.login : '',
       users: [user ? user.login : ''],
     });
   };

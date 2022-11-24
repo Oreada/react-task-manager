@@ -3,12 +3,15 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
 import { IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import styles from './Task.module.scss';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
+import { updateTask } from 'api/tasks/updateTask';
+import { BasicModal } from 'components/Modal/BasicModal';
+import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 
 function getStyle(provided: DraggableProvided, style: CSSProperties) {
   return {
@@ -17,10 +20,28 @@ function getStyle(provided: DraggableProvided, style: CSSProperties) {
   };
 }
 
-const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPropsType) => {
+const Task = ({
+  idColumn,
+  idTask,
+  titleTask,
+  descriptionTask,
+  orderTask,
+  ownerTask,
+  usersOfTask,
+  delTask,
+  provider,
+  style,
+}: TaskPropsType) => {
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
   const [isHovering, setIsHovering] = useState(false);
+
+  const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
+  const [openUpdate, setOpenUpdate] = useState<boolean>(false);
+
+  const handleClickOpenUpdate = () => {
+    setOpenUpdate(true);
+  };
 
   const handlePointerOver = (): void => setIsHovering(true);
 
@@ -45,6 +66,27 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
     }
   };
 
+  const handleClickEditButton = async (
+    event: FormEvent<HTMLFormElement>,
+    title: string,
+    description: string
+    // users: Array<string>
+  ): Promise<TaskType | void> => {
+    if (token) {
+      const taskUpdated = await updateTask(token, idBoard, idColumn, idTask, {
+        order: orderTask,
+        columnId: idColumn,
+        userId: ownerTask,
+        users: usersOfTask,
+        title: title,
+        description: description,
+      });
+
+      setTaskUpdated(taskUpdated);
+      return taskUpdated;
+    }
+  };
+
   return (
     <div
       {...provider.draggableProps}
@@ -63,8 +105,9 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
           fontSize: '16px',
           textAlign: 'left',
         }}
+        onClick={handleClickOpenUpdate}
       >
-        {titleTask}
+        {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
       {isHovering && (
         <IconButton
@@ -75,6 +118,18 @@ const Task = ({ idColumn, idTask, titleTask, delTask, provider, style }: TaskPro
           <RemoveCircleOutlineOutlinedIcon fontSize="small" />
         </IconButton>
       )}
+
+      <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
+        <FormTaskUpdate
+          title={taskUpdated ? taskUpdated.title : titleTask}
+          description={taskUpdated ? taskUpdated.description : descriptionTask}
+          userId={ownerTask}
+          users={usersOfTask}
+          handleClickEditButton={handleClickEditButton}
+          openUpdate={openUpdate}
+          setOpenUpdate={setOpenUpdate}
+        />
+      </BasicModal>
 
       <DialogDelete
         title="task"
