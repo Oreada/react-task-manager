@@ -4,7 +4,7 @@ import { TypeField, TypeFormInputsContent } from 'types/types';
 export const FORM_TEXT = {
   title: 'Edit profile',
   buttonEditText: 'Edit',
-  buttonDeleteText: 'Delete',
+  buttonDeleteText: 'Delete user',
 };
 
 export const FORM_INPUTS: Record<TypeField, TypeFormInputsContent> = {
