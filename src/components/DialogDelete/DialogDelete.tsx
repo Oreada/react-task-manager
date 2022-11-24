@@ -4,16 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TaskType } from 'types/types';
-
-interface DialogProps {
-  title: string;
-  openDialog: boolean;
-  setOpenDialog: (arg: boolean) => void;
-  func: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => Promise<void> | Promise<TaskType | void>;
-}
+import { DialogProps } from './model';
 
 export function DialogDelete(props: DialogProps) {
   const handleClose = () => {

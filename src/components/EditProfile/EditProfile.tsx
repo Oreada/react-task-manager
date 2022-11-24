@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
 import { deleteUser } from 'api/users/deleteUser';
 import CustomInput from 'components/CustomInput/CustomInput';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
 import { removeLocal, saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
@@ -17,8 +18,9 @@ import { ReactComponent as EditSvg } from './assets/Edit.svg';
 import { FORM_INPUTS, FORM_TEXT } from './constants';
 
 const EditProfile = () => {
-  const [error, setError] = useState('');
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const { setId, setUserData } = authSlice.actions;
@@ -50,9 +52,8 @@ const EditProfile = () => {
     // eslint-disable-next-line
   }, [user]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-
     try {
       if (token && idUser) {
         const { _id: newId, login: newLogin } = await updateUser(token, idUser, {
@@ -93,14 +94,18 @@ const EditProfile = () => {
     }
   };
 
-  const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
+  const handleClose = (event?: SyntheticEvent | Event, reason?: string): void => {
     if (reason === 'clickaway') {
       return;
     }
     setError('');
   };
 
-  const handleClickDeleteUser = () => {
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClickDeleteUser = (event: React.MouseEvent): void => {
     if (token && idUser) {
       deleteUser(token, idUser);
       dispatch(setId(INITIAL_AUTH_STATE));
@@ -111,103 +116,113 @@ const EditProfile = () => {
   };
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        position: 'relative',
-        flex: '1 1 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1rem',
-        overflow: 'hidden',
-      }}
-    >
-      <Stack
-        direction={{ xs: 'column', sm: 'row-reverse' }}
-        justifyContent="space-evenly"
-        alignItems={{ xs: 'center', sm: 'stretch' }}
-        spacing={3}
-        maxWidth="md"
+    <>
+      <Container
+        maxWidth="lg"
         sx={{
-          padding: { xs: 2, sm: 6 },
-          backgroundColor: '#fff',
-          boxShadow: '0 0 20px #d4d4d4',
-          borderRadius: '10px',
+          position: 'relative',
+          flex: '1 1 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '1rem',
+          overflow: 'hidden',
         }}
       >
         <Stack
-          component="form"
-          noValidate
-          direction="column"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          spacing={2}
-          sx={{ width: { xs: '80%', sm: '50%' } }}
-          onSubmit={handleSubmit}
+          direction={{ xs: 'column', sm: 'row-reverse' }}
+          justifyContent="space-evenly"
+          alignItems={{ xs: 'center', sm: 'stretch' }}
+          spacing={3}
+          maxWidth="md"
+          sx={{
+            padding: { xs: 2, sm: 6 },
+            backgroundColor: '#fff',
+            boxShadow: '0 0 20px #d4d4d4',
+            borderRadius: '10px',
+          }}
         >
-          <Typography variant="h4" component="p" sx={{ fontWeight: 700 }}>
-            {FORM_TEXT.title}
-          </Typography>
-          {[name, login, password].map((item) => (
-            <CustomInput
-              key={item.name}
-              label={inputContent[item.name].label}
-              type={inputContent[item.name].type}
-              name={inputContent[item.name].name}
-              required={inputContent[item.name].required}
-              icon={inputContent[item.name].icon}
-              autoComplete={inputContent[item.name].autocomplete}
-              variant="standard"
-              width="100%"
-              inputProps={{ minLength: inputContent[item.name].minlength }}
-              helperText={item.isLeave ? item.errorText : ''}
-              error={item.isLeave && item.isError}
-              value={item.value}
-              onChange={item.onChange}
-              onBlur={item.onBlur}
-              onFocus={item.onFocus}
-            />
-          ))}
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '20px', width: '100%' }}>
-            <Button component="label" variant="outlined" disabled={!canSubmit} color="substitute">
-              {FORM_TEXT.buttonEditText}
-              <input hidden type="submit" />
-            </Button>
-            <Button
-              component="label"
-              variant="outlined"
-              color="basic"
-              onClick={handleClickDeleteUser}
-            >
-              {FORM_TEXT.buttonDeleteText}
-              <input hidden type="submit" />
-            </Button>
-          </Box>
+          <Stack
+            component="form"
+            noValidate
+            direction="column"
+            justifyContent="space-between"
+            alignItems="flex-start"
+            spacing={2}
+            sx={{ width: { xs: '80%', sm: '50%' } }}
+            onSubmit={handleSubmit}
+          >
+            <Typography variant="h4" component="p" sx={{ fontWeight: 700 }}>
+              {FORM_TEXT.title}
+            </Typography>
+            {[name, login, password].map((item) => (
+              <CustomInput
+                key={item.name}
+                label={inputContent[item.name].label}
+                type={inputContent[item.name].type}
+                name={inputContent[item.name].name}
+                required={inputContent[item.name].required}
+                icon={inputContent[item.name].icon}
+                autoComplete={inputContent[item.name].autocomplete}
+                variant="standard"
+                width="100%"
+                inputProps={{ minLength: inputContent[item.name].minlength }}
+                helperText={item.isLeave ? item.errorText : ''}
+                error={item.isLeave && item.isError}
+                value={item.value}
+                onChange={item.onChange}
+                onBlur={item.onBlur}
+                onFocus={item.onFocus}
+              />
+            ))}
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: '20px', width: '100%' }}>
+              <Button component="label" variant="outlined" disabled={!canSubmit} color="substitute">
+                {FORM_TEXT.buttonEditText}
+                <input hidden type="submit" />
+              </Button>
+              <Button
+                component="label"
+                variant="outlined"
+                color="basic"
+                onClick={handleClickOpenDialog}
+              >
+                {FORM_TEXT.buttonDeleteText}
+                {/* <input hidden type="submit" /> */}
+              </Button>
+            </Box>
+          </Stack>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+            sx={{ width: '50%' }}
+          >
+            <EditSvg style={{ width: 250 }} />
+          </Stack>
         </Stack>
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-          sx={{ width: '50%' }}
+        <Snackbar
+          open={!!error.length}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          TransitionComponent={Grow}
+          onClose={handleClose}
         >
-          <EditSvg style={{ width: 250 }} />
-        </Stack>
-      </Stack>
-      <Snackbar
-        open={!!error.length}
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        TransitionComponent={Grow}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%', fontSize: '2rem' }}>
-          {error}
-        </Alert>
-      </Snackbar>
-    </Container>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%', fontSize: '2rem' }}>
+            {error}
+          </Alert>
+        </Snackbar>
+      </Container>
+      {openDialog && (
+        <DialogDelete
+          title="user"
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          func={handleClickDeleteUser}
+        />
+      )}
+    </>
   );
 };
 

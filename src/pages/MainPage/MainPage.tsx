@@ -1,26 +1,27 @@
 /* eslint-disable prettier/prettier */
+import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormBoard } from 'components/FormBoard/FormBoard';
+import { FormBoardUpdate } from 'components/FormBoardUpdate/FormBoardUpdate';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
+import { setBoardTitle } from 'store/boardSlice';
 import {
   createBoardThunk,
   deleteBoardThunk,
   editBoardThunk,
-  getBoardsThunk,
+  getBoardsThunk
 } from 'store/mainSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
 import { ReactComponent as Back } from './assets/Back.svg';
 import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
 import styles from './MainPage.module.scss';
-import { setBoardTitle } from 'store/boardSlice';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
-import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,6 +50,16 @@ const MainPage = () => {
   };
 
   const [idBoardDelete, setIdBoardDelete] = useState<string>('');
+
+  const [openUpdate, setOpenUpdate] = useState<boolean>(false);
+
+  const handleClickOpenUpdate = () => {
+    setOpenUpdate(true);
+  };
+
+  const [idBoardUpdate, setIdBoardUpdate] = useState<string>('');
+
+  const [bodyForUpdate, setBodyForUpdate] = useState<BodyForBoard | null>(null);
 
   useEffect(() => {
     const getBoardsWithSighUp = (): void => {
@@ -96,20 +107,26 @@ const MainPage = () => {
 
   const handleClickEditButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      async (event: FormEvent<HTMLFormElement>, title: string, description: string): Promise<void> => {
         event.preventDefault();
-        //todo modal
 
         if (token && idUser) {
+          const newBody = {
+            owner: idUser,
+            users: [idUser],
+            description: description,
+            title: title,
+          }
+
           dispatch(
             editBoardThunk({
               token,
               idBoard,
-              body: {
+              body: newBody ? newBody : {
                 owner: idUser,
                 users: [idUser],
-                description: 'Description',
-                title: 'new title',
+                description: 'description',
+                title: 'title',
               },
             })
           );
@@ -144,7 +161,7 @@ const MainPage = () => {
         {MAIN_PAGE_TITLE}
       </Typography>
       <Grid container spacing={4}>
-        {boards.map(({ _id, title, description }) => (
+        {boards.map(({ _id, title, description, owner, users }) => (
           <Grid item key={_id} xs>
             <div className={styles.card}>
               <Typography
@@ -188,7 +205,16 @@ const MainPage = () => {
               </IconButton>
 
               <IconButton
-                onClick={handleClickEditButton(_id)}
+                onClick={() => {
+                  handleClickOpenUpdate();
+                  setIdBoardUpdate(_id);
+                  setBodyForUpdate({
+                    title: title,
+                    description: description,
+                    owner: owner,
+                    users: users,
+                  });
+                }}
                 aria-label="edit"
                 sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
               >
@@ -197,6 +223,15 @@ const MainPage = () => {
             </div>
           </Grid>
         ))}
+
+        <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
+          <FormBoardUpdate
+            bodyForUpdate={bodyForUpdate}
+            handleClickEditButton={handleClickEditButton(idBoardUpdate)}
+            openUpdate={openUpdate}
+            setOpenUpdate={setOpenUpdate}
+          />
+        </BasicModal>
 
         <DialogDelete
           title="board"

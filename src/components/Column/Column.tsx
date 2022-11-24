@@ -21,15 +21,17 @@ import {
   VariableSizeList as List,
 } from 'react-window';
 import { IRootState } from 'store/model';
-import { BodyForTask, TaskType } from 'types/types';
+import { BodyForTask, ColumnType, TaskType } from 'types/types';
 import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
 import { ColumnPropsType, RenderTaskFuncType } from './model';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Button, IconButton, Typography } from '@mui/material';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
+import { FormColumnUpdate } from 'components/FormColumnUpdate/FormColumnUpdate';
+import { updateColumn } from 'api/columns/updateColumn';
 
-const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
+const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
   const listRef = useRef<List>(null);
 
   const [scroll, setScroll] = useState<number>(0);
@@ -52,6 +54,14 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   const handleClickOpenDialog = () => {
     setOpenDialog(true);
   };
+
+  const [isInput, setIsInput] = useState<boolean>(false);
+
+  const handleClickOpenInput = () => {
+    setIsInput(true);
+  };
+
+  const [columnUpdated, setColumnUpdated] = useState<ColumnType | null>(null);
 
   useEffect(() => {
     if (listRef && listRef.current) {
@@ -87,11 +97,12 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
   };
 
   const handleClickEdit = async (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): Promise<void> => {
-    event.preventDefault();
-
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>, title: string
+  ): Promise<ColumnType | void> => {
     if (token) {
+      const columnUpdated = await updateColumn(token, idBoard, id, { title: title, order: order });
+      setColumnUpdated(columnUpdated);
+      return columnUpdated;
     }
   };
 
@@ -110,6 +121,10 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
           idColumn={id}
           idTask={tasks[rubric.source.index]._id}
           titleTask={tasks[rubric.source.index].title}
+          descriptionTask={tasks[rubric.source.index].description}
+          orderTask={tasks[rubric.source.index].order}
+          ownerTask={tasks[rubric.source.index].userId}
+          usersOfTask={tasks[rubric.source.index].users}
           delTask={delTask}
           provider={provider}
           isDragging={snapshot.isDragging}
@@ -137,22 +152,25 @@ const Column = memo(({ id, title, addTask, delColumn, delTask, tasks }: ColumnPr
 
   return (
     <>
-      <Typography
-        variant="h6"
-        sx={{
-          width: '100%',
-          fontFamily: '"Noto Sans", sans-serif',
-          letterSpacing: '0.0625rem',
-          fontWeight: 600,
-          fontSize: '18px',
-          color: '#1c4931',
-          textTransform: 'uppercase',
-          textAlign: 'left',
-        }}
-        onClick={handleClickEdit}
-      >
-        {title}
-      </Typography>
+      {isInput ? <FormColumnUpdate titleColumn={columnUpdated ? columnUpdated.title : title} setIsInput={setIsInput} handleClickEdit={handleClickEdit} /> :
+
+        <Typography
+          variant="h6"
+          sx={{
+            width: '100%',
+            fontFamily: '"Noto Sans", sans-serif',
+            letterSpacing: '0.0625rem',
+            fontWeight: 600,
+            fontSize: '18px',
+            color: '#1c4931',
+            textTransform: 'uppercase',
+            textAlign: 'left',
+          }}
+          onClick={handleClickOpenInput}
+        >
+          {columnUpdated ? columnUpdated.title : title}
+        </Typography>}
+
       <Droppable
         droppableId={id}
         type={DROPPABLE_TYPE_COLUMN}

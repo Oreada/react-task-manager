@@ -20,4 +20,8 @@ export type TaskPropsType = {
   style: CSSProperties;
   index?: number;
   titleTask: string;
+  descriptionTask: string;
+  orderTask: number;
+  ownerTask: string;
+  usersOfTask: Array<string>;
 };

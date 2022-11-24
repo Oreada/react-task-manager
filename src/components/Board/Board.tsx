@@ -210,7 +210,7 @@ const Board = () => {
           >
             {(provider) => (
               <div className={styles.board} ref={provider.innerRef} {...provider.droppableProps}>
-                {columns.map(({ _id, title }, index) => (
+                {columns.map(({ _id, title, order }, index) => (
                   <Draggable key={_id} draggableId={_id} index={index}>
                     {(provider) => (
                       <div
@@ -222,6 +222,7 @@ const Board = () => {
                         <Column
                           id={_id}
                           title={title}
+                          order={order}
                           addTask={addTaskMemo}
                           delColumn={delColumnMemo}
                           delTask={delTaskMemo}
