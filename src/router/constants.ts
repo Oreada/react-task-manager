@@ -33,4 +33,5 @@ export const BOARDS_PATH = '/boards';
 export const BOARDS_ID_PATH = '/boards/:id';
 export const EDIT_PATH = '/edit';
 export const AUTHENTICATION_PATH = '/authentication';
+export const SEARCH_PATH = '/search';
 export const ANYTHING_PATH = '/*';

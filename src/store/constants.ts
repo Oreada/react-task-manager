@@ -12,6 +12,7 @@ export const INITIAL_BOARD_STATE: BoardStateType = {
   idBoard: '',
   titleBoard: '',
   isLoading: false,
+  searchValue: '',
 };
 
 export enum BoardStateKeys {
@@ -21,6 +22,7 @@ export enum BoardStateKeys {
   isLoading = 'isLoading',
   idBoard = 'idBoard',
   titleBoard = 'titleBoard',
+  searchValue = 'searchValue',
 }
 
 export enum MainStateKeys {

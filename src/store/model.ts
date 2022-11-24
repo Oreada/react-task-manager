@@ -9,6 +9,7 @@ export type BoardStateType = {
   idBoard: string;
   titleBoard: string;
   isLoading: boolean;
+  searchValue: string;
 };
 
 export type MainStateType = {

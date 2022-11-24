@@ -45,6 +45,9 @@ const boardSlice = createSlice({
     ) {
       state.taskByColumns = action.payload.taskByColumns;
     },
+    setSearchValue(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.searchValue>>) {
+      state.searchValue = action.payload.searchValue;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -62,7 +65,7 @@ const boardSlice = createSlice({
   },
 });
 
-export const { setColumns, setBoardId, setTasks, setBoardTitle, setTasksByColumn } =
+export const { setColumns, setBoardId, setTasks, setBoardTitle, setTasksByColumn, setSearchValue } =
   boardSlice.actions;
 
 export default boardSlice.reducer;

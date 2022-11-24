@@ -3,6 +3,7 @@ import EditProfile from 'components/EditProfile/EditProfile';
 import RequireAuth from 'components/RequireAuth/RequireAuth';
 import AuthPage from 'pages/AuthPage';
 import BoardList from 'pages/MainPage/MainPage';
+import SearchPage from 'pages/SearchPage/SearchPage';
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../components/Layout';
 import NoFoundPage from '../pages/NoFoundPage/NoFoundPage';
@@ -14,6 +15,7 @@ import {
   BOARDS_PATH,
   EDIT_PATH,
   ROOT_PATH,
+  SEARCH_PATH,
 } from './constants';
 
 const Router = () => (
@@ -49,6 +51,14 @@ const Router = () => (
         element={
           <RequireAuth>
             <AuthPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path={SEARCH_PATH}
+        element={
+          <RequireAuth>
+            <SearchPage />
           </RequireAuth>
         }
       />
