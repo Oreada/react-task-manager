@@ -48,3 +48,5 @@ export const VALIDATION_FORM = {
     isRegularMatchText: REGULAR_PASSWORD_TEXT,
   },
 };
+
+export const TIME_LIFE_TOKEN = 43200;

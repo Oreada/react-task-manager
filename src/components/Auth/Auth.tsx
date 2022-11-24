@@ -2,7 +2,6 @@ import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mu
 import { signIn } from 'api/auth/signIn';
 import { parseBase64 } from 'api/helpers/parseBase64';
 import CustomInput from 'components/CustomInput/CustomInput';
-import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from '../../constants/constants';
 import { saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
@@ -13,6 +12,7 @@ import { authSlice } from 'store/authSlice';
 import { AppDispatch, AuthReducer } from 'store/model';
 import { IInput, typeSubPage, UserDecoder } from 'types/types';
 import { signUp } from '../../api/auth/signUp';
+import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from '../../constants/constants';
 import { ReactComponent as BlobTwo } from './assets/Blob_2.svg';
 import { ReactComponent as BlobOne } from './assets/Blob_3.svg';
 import { ReactComponent as GroupSvg } from './assets/Group.svg';
@@ -54,12 +54,14 @@ const Auth = () => {
       }
       const token = await signIn({ login: login.value, password: password.value });
       const user: UserDecoder = parseBase64(token);
+      const currentDate = Date.now();
 
-      dispatch(setId({ id: user.id, login: user.login, token: token }));
+      dispatch(setId({ id: user.id, login: user.login, token: token, date: currentDate }));
       saveToLocal<Omit<AuthReducer, 'user'>>(LOCAL_STORAGE_KEY, {
         id: user.id,
         login: user.login,
         token: token,
+        date: currentDate,
       });
       goHome();
     } catch (err: unknown) {

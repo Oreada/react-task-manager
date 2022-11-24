@@ -1,21 +1,20 @@
+import { Alert, Box, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
+import { deleteUser } from 'api/users/deleteUser';
+import CustomInput from 'components/CustomInput/CustomInput';
 import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
 import { removeLocal, saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ROOT_PATH } from 'router/constants';
 import { authSlice, getUserData } from 'store/authSlice';
+import { INITIAL_AUTH_STATE } from 'store/constants';
 import { AppDispatch, AuthReducer, IRootState } from 'store/model';
 import { IInput } from 'types/types';
 import { updateUser } from '../../api/users/updateUser';
-import { Alert, Box, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
-import { FORM_INPUTS, FORM_TEXT } from './constants';
-import CustomInput from 'components/CustomInput/CustomInput';
 import { ReactComponent as EditSvg } from './assets/Edit.svg';
-import { deleteUser } from 'api/users/deleteUser';
-import { INITIAL_AUTH_STATE } from 'store/constants';
+import { FORM_INPUTS, FORM_TEXT } from './constants';
 
 const EditProfile = () => {
   const [error, setError] = useState('');
@@ -23,7 +22,7 @@ const EditProfile = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { setId, setUserData } = authSlice.actions;
-  const { token, id: idUser, user } = useSelector((state: IRootState) => state.auth);
+  const { token, id: idUser, user, date } = useSelector((state: IRootState) => state.auth);
 
   const name: IInput = useInput('name', '', VALIDATION_FORM.name);
   const login: IInput = useInput('login', '', VALIDATION_FORM.login);
@@ -63,11 +62,12 @@ const EditProfile = () => {
         });
 
         dispatch(getUserData({ token, idUser }));
-        dispatch(setId({ id: newId, login: newLogin, token: token }));
+        dispatch(setId({ id: newId, login: newLogin, token: token, date: date }));
         saveToLocal<Omit<AuthReducer, 'user'>>(LOCAL_STORAGE_KEY, {
           id: newId,
           login: newLogin,
           token: token,
+          date: date,
         });
         goHome();
       }
