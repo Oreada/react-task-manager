@@ -1,31 +1,104 @@
-import { Component, ReactNode } from 'react';
+import { Button, Stack, Typography } from '@mui/material';
+import {
+  Component,
+  Dispatch,
+  ErrorInfo,
+  FC,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ROOT_PATH } from 'router/constants';
 
-interface Props {
+import { ReactComponent as ErrorSvg } from './assets/back-for-error.svg';
+import { BUTTON_TEXT, TITLE } from './constants';
+
+interface IErrorInnerProps {
   children: ReactNode;
+  hasError: boolean;
+  setHasError: Dispatch<SetStateAction<boolean>>;
+  goHome: () => void;
 }
 
-interface State {
+interface IErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
+interface IErrorBoundaryProps {
+  children: ReactNode;
+}
+
+const ErrorBoundary: FC<IErrorBoundaryProps> = ({ children }) => {
+  const [hasError, setHasError] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const goHome = () => navigate(ROOT_PATH);
+
+  useEffect(() => {
+    if (hasError) {
+      setHasError(false);
+    }
+  }, [location.key]);
+  return (
+    <ErrorBoundaryInner hasError={hasError} setHasError={setHasError} goHome={goHome}>
+      {children}
+    </ErrorBoundaryInner>
+  );
+};
+
+class ErrorBoundaryInner extends Component<IErrorInnerProps, IErrorBoundaryState> {
+  constructor(props: IErrorInnerProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(_: Error) {
-    // Update state so the next render will show the fallback UI.
+  static getDerivedStateFromError(_error: Error) {
     return { hasError: true };
   }
 
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
+  componentDidUpdate(prevProps: IErrorInnerProps, _previousState: IErrorBoundaryState) {
+    if (!this.props.hasError && prevProps.hasError) {
+      this.setState({ hasError: false });
     }
+  }
 
-    return this.props.children;
+  componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
+    this.props.setHasError(true);
+  }
+
+  render() {
+    return this.state.hasError ? (
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+        height="100%"
+        maxWidth="lg"
+        spacing={4}
+        padding={4}
+      >
+        <Typography variant="h2" component="p" align="center">
+          {TITLE}
+        </Typography>
+        <ErrorSvg
+          style={{
+            width: '100%',
+            height: '100%',
+            fill: '#D85841',
+          }}
+        />
+        <Button variant="outlined" color="substitute" size="large" onClick={this.props.goHome}>
+          <Typography variant="h4" component="p">
+            {BUTTON_TEXT}
+          </Typography>
+        </Button>
+      </Stack>
+    ) : (
+      this.props.children
+    );
   }
 }
 
