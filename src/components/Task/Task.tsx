@@ -3,7 +3,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
 import { IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
@@ -67,11 +67,11 @@ const Task = ({
   };
 
   const handleClickEditButton = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: FormEvent<HTMLFormElement>,
     title: string,
-    description: string,
-    userId: string,
-    users: Array<string>
+    description: string
+    // userId: string,
+    // users: Array<string>
   ): Promise<TaskType | void> => {
     if (token) {
       const taskUpdated = await updateTask(token, idBoard, idColumn, idTask, {
@@ -80,8 +80,8 @@ const Task = ({
 
         title: title,
         description: description,
-        userId: userId,
-        users: users,
+        userId: ownerTask,
+        users: usersOfTask,
       });
 
       setTaskUpdated(taskUpdated);
@@ -107,8 +107,9 @@ const Task = ({
           fontSize: '16px',
           textAlign: 'left',
         }}
+        onClick={handleClickOpenUpdate}
       >
-        {titleTask}
+        {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
       {isHovering && (
         <IconButton
@@ -122,8 +123,8 @@ const Task = ({
 
       <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
         <FormTaskUpdate
-          title={titleTask}
-          description={descriptionTask}
+          title={taskUpdated ? taskUpdated.title : titleTask}
+          description={taskUpdated ? taskUpdated.description : descriptionTask}
           userId={ownerTask}
           users={usersOfTask}
           handleClickEditButton={handleClickEditButton}
