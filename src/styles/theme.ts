@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-export const theme = createTheme({
+export let theme = createTheme({
   palette: {
     basic: {
       main: '#F3B848',
@@ -39,6 +39,8 @@ export const theme = createTheme({
   },
 });
 
+theme = responsiveFontSizes(theme);
+
 declare module '@mui/material/styles' {
   interface Palette {
     basic: Palette['primary'];
@@ -71,6 +73,11 @@ declare module '@mui/material/Button' {
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
     mobile: true; // adds the `mobile` breakpoint
     tablet: true;
     laptop: true;

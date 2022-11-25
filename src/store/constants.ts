@@ -50,4 +50,5 @@ export const INITIAL_AUTH_STATE: AuthReducer = {
   login: null,
   token: null,
   user: null,
+  date: null,
 };
