@@ -28,14 +28,30 @@ i18n
             sighUp: 'Sign Up',
           },
 
-          // main: {
-
-          // },
+          main: {
+            heroTitle: '',
+            heroText: '',
+            advantagesTitle: '',
+            advantagesSubtitle: '',
+            advAimTitle: '',
+            advClockTitle: '',
+            advGlobeTitle: '',
+            advAimText: '',
+            advClockText: '',
+            advGlobeText: '',
+            videoTitle: '',
+            videoSubtitle: '',
+            teamTitle: '',
+            teamSubtitles: '',
+            teamKatya: '',
+            teamSergey: '',
+            teamOlya: '',
+          },
 
           footer: {
             nameKatya: 'Katya',
-            nameOlya: 'Olya',
             nameSergey: 'Sergey',
+            nameOlya: 'Olya',
           },
         },
       },
@@ -50,9 +66,33 @@ i18n
             sighUp: 'Регистрация',
           },
 
-          // main: {
-
-          // },
+          main: {
+            heroTitle: 'Управление задачами',
+            heroText:
+              'TEAMWORK - это удобный визуальный инструмент для отслеживания текущих задач и организации рабочего процесса. Приложение помогает эффективно управлять проектами, планировать и согласовывать работу в команде.',
+            advantagesTitle: 'Преимущества',
+            advantagesSubtitle: 'Почему вас стоит попробовать наше приложение',
+            advAimTitle: 'Эффективность',
+            advClockTitle: 'Продуктивность',
+            advGlobeTitle: 'Взаимодействие',
+            advAimText:
+              'Вместе с TEAMWORK вы сможете визуализировать и сгруппировать намеченные цели, что позволит оптимально распределить ресурсы для их достижения',
+            advClockText:
+              'Планирование повышает вашу продуктивность и позволяет рационально использовать своё время, поэтому вы успеете выполнить больше задач, чем раньше',
+            advGlobeText:
+              'TEAMWORK помогает равномерно распределять нагрузку в команде, а также обеспечивает слаженное взаимодействие всех её участников',
+            videoTitle: 'Как пользоваться приложением',
+            videoSubtitle:
+              'Посмотрите этот небольшой видеоролик, и использование нашего приложения станет ещё более простым и понятным',
+            teamTitle: 'Наша команда',
+            teamSubtitles: 'Познакомьтесь с разработчиками',
+            teamKatya:
+              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+            teamSergey:
+              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+            teamOlya:
+              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+          },
 
           footer: {
             nameKatya: 'Катя',
