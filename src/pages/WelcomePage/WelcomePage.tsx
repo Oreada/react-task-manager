@@ -1,20 +1,23 @@
+import { useTranslation } from 'react-i18next';
 import PhotoKatya from './photo_katya.jpeg';
 import PhotoOlya from './photo_olya.jpg';
 import PhotoSergey from './photo_sergey.png';
 import styles from './WelcomePage.module.scss';
 
 const WelcomePage = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <article className={styles.hero}>
         <div className={styles.hero__container}>
           <div className={styles.hero__body}>
             <div className={styles.hero__article}>
-              <h2 className={styles.article__title}>Some title will be here soon</h2>
+              <h2 className={styles.article__title}>Управление задачами</h2>
               <div className={styles.article__text}>
-                There is a brief description of our application. Something like this: Manage your
-                workflow and team cooperation. Join now to organize your tasks and change the way
-                your team works.
+                TEAMWORK - это удобный визуальный инструмент для отслеживания текущих задач и
+                организации рабочего процесса. Приложение помогает эффективно управлять проектами,
+                планировать и согласовывать работу в команде.
               </div>
               {/* <button className={styles.article__button}>Get started</button> */}
             </div>
@@ -35,24 +38,24 @@ const WelcomePage = () => {
                 <div className={styles.item__picture_first}></div>
                 <h5 className={styles.item__title}>Efficiency</h5>
                 <div className={styles.item__text}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                  voluptas totam odio animi perspiciatis numquam magnam
+                  Вместе с TEAMWORK вы сможете визуализировать и сгруппировать намеченные цели, что
+                  позволит оптимально распределить ресурсы для их достижения
                 </div>
               </div>
               <div className={styles.advantages__item}>
                 <div className={styles.item__picture_second}></div>
                 <h5 className={styles.item__title}>Productivity</h5>
                 <div className={styles.item__text}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                  voluptas totam odio animi perspiciatis numquam magnam
+                  Планирование повышает вашу продуктивность и позволяет рационально использовать
+                  своё время, поэтому вы успеете выполнить больше задач, чем раньше
                 </div>
               </div>
               <div className={styles.advantages__item}>
                 <div className={styles.item__picture_third}></div>
                 <h5 className={styles.item__title}>Interaction</h5>
                 <div className={styles.item__text}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                  voluptas totam odio animi perspiciatis numquam magnam
+                  TEAMWORK помогает равномерно распределять нагрузку в команде, а также обеспечивает
+                  слаженное взаимодействие всех её участников.
                 </div>
               </div>
             </div>
@@ -66,8 +69,8 @@ const WelcomePage = () => {
             <div className={styles.instructions__note}>
               <h5 className={styles.instructions__title}>How to use the app</h5>
               <div className={styles.instructions__text}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                voluptas totam odio animi perspiciatis numquam magnam
+                Посмотрите этот небольшой видеоролик, и использование нашего приложения станет ещё
+                более простым и понятным
               </div>
             </div>
             <div className={styles.instructions__video}>
