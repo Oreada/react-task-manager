@@ -57,6 +57,7 @@ export type AuthReducer = {
   login: string | null;
   token: string | null;
   user: UserInfo | null;
+  date: number | null;
 };
 
 export type GetUserNameArgsType = {
