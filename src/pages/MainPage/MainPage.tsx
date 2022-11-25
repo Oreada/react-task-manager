@@ -168,102 +168,106 @@ const MainPage = () => {
       >
         {MAIN_PAGE_TITLE}
       </Typography>
-      <Grid container spacing={4}>
-        {boards.map(({ _id, title, description, owner, users }) => (
-          <Grid item key={_id} xs>
-            <div className={styles.card}>
-              <Typography
-                variant="h6"
-                sx={{
-                  width: '100%',
-                  fontFamily: '"Noto Sans", sans-serif',
-                  letterSpacing: '0.0625rem',
-                  fontWeight: 600,
-                  fontSize: '18px',
-                  color: '#1c4931',
-                  textTransform: 'uppercase',
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                }}
-                onClick={handleClickGoTo(`${_id}`, title)}
-              >
-                {title}
-              </Typography>
-              <Divider sx={{ width: '100%', color: '#d4d4d4' }} />
-              <Typography
-                variant="body1"
-                sx={{
-                  fontFamily: '"Noto Sans", sans-serif',
-                  fontWeight: 400,
-                  fontSize: '20px',
-                  textAlign: 'left',
-                }}
-              >
-                {description ? description : NO_DESCRIPTION}
-              </Typography>
-              <IconButton
-                onClick={() => {
-                  handleClickOpenDialog();
-                  setIdBoardDelete(_id);
-                }}
-                aria-label="delete"
-                sx={{ position: 'absolute', top: 30, right: 0, zIndex: 2 }}
-              >
-                <DeleteOutlineOutlinedIcon />
-              </IconButton>
+      {isLoading ? (
+        <span>Loading....</span>
+      ) : (
+        <Grid container spacing={4}>
+          {boards.map(({ _id, title, description, owner, users }) => (
+            <Grid item key={_id} xs>
+              <div className={styles.card}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    width: '100%',
+                    fontFamily: '"Noto Sans", sans-serif',
+                    letterSpacing: '0.0625rem',
+                    fontWeight: 600,
+                    fontSize: '18px',
+                    color: '#1c4931',
+                    textTransform: 'uppercase',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                  }}
+                  onClick={handleClickGoTo(`${_id}`, title)}
+                >
+                  {title}
+                </Typography>
+                <Divider sx={{ width: '100%', color: '#d4d4d4' }} />
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontFamily: '"Noto Sans", sans-serif',
+                    fontWeight: 400,
+                    fontSize: '20px',
+                    textAlign: 'left',
+                  }}
+                >
+                  {description ? description : NO_DESCRIPTION}
+                </Typography>
+                <IconButton
+                  onClick={() => {
+                    handleClickOpenDialog();
+                    setIdBoardDelete(_id);
+                  }}
+                  aria-label="delete"
+                  sx={{ position: 'absolute', top: 30, right: 0, zIndex: 2 }}
+                >
+                  <DeleteOutlineOutlinedIcon />
+                </IconButton>
 
-              <IconButton
-                onClick={() => {
-                  handleClickOpenUpdate();
-                  setIdBoardUpdate(_id);
-                  setBodyForUpdate({
-                    title: title,
-                    description: description,
-                    owner: owner,
-                    users: users,
-                  });
-                }}
-                aria-label="edit"
-                sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
-              >
-                <EditOutlinedIcon />
-              </IconButton>
+                <IconButton
+                  onClick={() => {
+                    handleClickOpenUpdate();
+                    setIdBoardUpdate(_id);
+                    setBodyForUpdate({
+                      title: title,
+                      description: description,
+                      owner: owner,
+                      users: users,
+                    });
+                  }}
+                  aria-label="edit"
+                  sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+                >
+                  <EditOutlinedIcon />
+                </IconButton>
+              </div>
+            </Grid>
+          ))}
+
+          <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
+            <FormBoardUpdate
+              bodyForUpdate={bodyForUpdate}
+              handleClickEditButton={handleClickEditButton(idBoardUpdate)}
+              openUpdate={openUpdate}
+              setOpenUpdate={setOpenUpdate}
+            />
+          </BasicModal>
+
+          <DialogDelete
+            title="board"
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            func={handleClickDelButton(idBoardDelete)}
+          />
+
+          <Grid item xs>
+            <div className={styles.card + ' ' + styles.create} onClick={handleClickOpenModal}>
+              <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
             </div>
           </Grid>
-        ))}
 
-        <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
-          <FormBoardUpdate
-            bodyForUpdate={bodyForUpdate}
-            handleClickEditButton={handleClickEditButton(idBoardUpdate)}
-            openUpdate={openUpdate}
-            setOpenUpdate={setOpenUpdate}
-          />
-        </BasicModal>
-
-        <DialogDelete
-          title="board"
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-          func={handleClickDelButton(idBoardDelete)}
-        />
-
-        <Grid item xs>
-          <div className={styles.card + ' ' + styles.create} onClick={handleClickOpenModal}>
-            <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
-          </div>
+          <BasicModal title="Create board" openModal={openModal} setOpenModal={setOpenModal}>
+            <FormBoard
+              bodyForBoard={bodyForBoard}
+              setBodyForBoard={setBodyForBoard}
+              func={handleClickCreateButton}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          </BasicModal>
         </Grid>
-
-        <BasicModal title="Create board" openModal={openModal} setOpenModal={setOpenModal}>
-          <FormBoard
-            bodyForBoard={bodyForBoard}
-            setBodyForBoard={setBodyForBoard}
-            func={handleClickCreateButton}
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          />
-        </BasicModal>
-      </Grid>
+      )}
       <Back className={styles.back} />
     </Container>
   );

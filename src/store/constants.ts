@@ -13,6 +13,7 @@ export const INITIAL_BOARD_STATE: BoardStateType = {
   titleBoard: '',
   isLoading: false,
   searchValue: '',
+  foundedTasks: [],
 };
 
 export enum BoardStateKeys {
@@ -23,6 +24,7 @@ export enum BoardStateKeys {
   idBoard = 'idBoard',
   titleBoard = 'titleBoard',
   searchValue = 'searchValue',
+  foundedTasks = 'foundedTasks',
 }
 
 export enum MainStateKeys {
@@ -45,6 +47,7 @@ export enum ReducerNameActionTypes {
   editBoard = 'editBoard',
   setBoardTitle = 'setBoardTitle',
   getUserName = 'getUserName',
+  getSearchingTasks = 'getSearchingTasks',
 }
 
 export const INITIAL_AUTH_STATE: AuthReducer = {

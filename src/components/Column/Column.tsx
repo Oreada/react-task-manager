@@ -97,7 +97,8 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
   };
 
   const handleClickEdit = async (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>, title: string
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
+    title: string
   ): Promise<ColumnType | void> => {
     if (token) {
       const columnUpdated = await updateColumn(token, idBoard, id, { title: title, order: order });
@@ -111,20 +112,21 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
 
   const getRenderTask: RenderTaskFuncType =
     (style: CSSProperties) =>
-      (
-        provider: DraggableProvided,
-        snapshot: DraggableStateSnapshot,
-        rubric: DraggableRubric
-      ): JSX.Element =>
+    (
+      provider: DraggableProvided,
+      snapshot: DraggableStateSnapshot,
+      rubric: DraggableRubric
+    ): JSX.Element =>
       (
         <Task
           idColumn={id}
-          idTask={tasks[rubric.source.index]._id}
-          titleTask={tasks[rubric.source.index].title}
-          descriptionTask={tasks[rubric.source.index].description}
-          orderTask={tasks[rubric.source.index].order}
-          ownerTask={tasks[rubric.source.index].userId}
-          usersOfTask={tasks[rubric.source.index].users}
+          task={tasks[rubric.source.index]}
+          // idTask={tasks[rubric.source.index]._id}
+          // titleTask={tasks[rubric.source.index].title}
+          // descriptionTask={tasks[rubric.source.index].description}
+          // orderTask={tasks[rubric.source.index].order}
+          // ownerTask={tasks[rubric.source.index].userId}
+          // usersOfTask={tasks[rubric.source.index].users}
           delTask={delTask}
           provider={provider}
           isDragging={snapshot.isDragging}
@@ -152,8 +154,13 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
 
   return (
     <>
-      {isInput ? <FormColumnUpdate titleColumn={columnUpdated ? columnUpdated.title : title} setIsInput={setIsInput} handleClickEdit={handleClickEdit} /> :
-
+      {isInput ? (
+        <FormColumnUpdate
+          titleColumn={columnUpdated ? columnUpdated.title : title}
+          setIsInput={setIsInput}
+          handleClickEdit={handleClickEdit}
+        />
+      ) : (
         <Typography
           variant="h6"
           sx={{
@@ -169,7 +176,8 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
           onClick={handleClickOpenInput}
         >
           {columnUpdated ? columnUpdated.title : title}
-        </Typography>}
+        </Typography>
+      )}
 
       <Droppable
         droppableId={id}

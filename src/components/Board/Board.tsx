@@ -201,7 +201,9 @@ const Board = () => {
       >
         {titleBoard}
       </Typography>
-      {!isLoading ? (
+      {isLoading ? (
+        <span>Loading....</span>
+      ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable
             droppableId={DROPPABLE_ID_BOARD}
@@ -251,8 +253,6 @@ const Board = () => {
             )}
           </Droppable>
         </DragDropContext>
-      ) : (
-        <span></span>
       )}
     </div>
   );

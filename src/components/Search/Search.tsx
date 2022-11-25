@@ -21,11 +21,7 @@ const Search = () => {
     if (e.code === KEY_CODE) {
       if (value) {
         dispatch(setSearchValue({ searchValue: value }));
-        // navigate(SEARCH_PATH);
-        if (token) {
-          const data = await getTasksBySearching(token, value);
-          console.log(data);
-        }
+        navigate(SEARCH_PATH);
       }
     }
   };
