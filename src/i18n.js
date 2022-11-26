@@ -61,6 +61,25 @@ i18n
             nameSergey: 'Sergey',
             nameOlya: 'Olya',
           },
+
+          profile: {
+            create: 'Create an account',
+            already: 'I already have an account',
+            signIn: 'SignIn',
+            signUp: 'SignUp',
+            logIn: 'Log in',
+            register: 'Register',
+            Name: 'Name',
+            Login: 'Login',
+            Password: 'Password',
+          },
+
+          errors: {
+            something: "Something's wrong!..",
+            request: 'Error in the request',
+            loginOrPassword: 'Incorrect login or password',
+            exists: 'User already exists',
+          },
         },
       },
       ru: {
@@ -106,6 +125,25 @@ i18n
             nameKatya: 'Катя',
             nameOlya: 'Оля',
             nameSergey: 'Сергей',
+          },
+
+          profile: {
+            create: 'Создать аккаунт',
+            already: 'У меня уже есть аккаунт',
+            signIn: 'Вход',
+            signUp: 'Регистрация',
+            logIn: 'Войти',
+            register: 'Создать',
+            Name: 'Имя',
+            Login: 'Логин',
+            Password: 'Пароль',
+          },
+
+          errors: {
+            something: 'Что-то не так!..',
+            request: 'Ошибка в запросе',
+            loginOrPassword: 'Неверный логин или пароль',
+            exists: 'Пользователь уже существует',
           },
         },
       },
