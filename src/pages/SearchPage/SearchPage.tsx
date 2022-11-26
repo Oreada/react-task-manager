@@ -9,7 +9,6 @@ import { BOARDS_PATH } from 'router/constants';
 import { getSearchingTasks, setFoundedTasks } from 'store/boardSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { TaskType } from 'types/types';
-import { SEARCH_PAGE_TITLE } from './constants';
 
 const SearchPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -57,7 +56,7 @@ const SearchPage = () => {
       />
     ))
   ) : (
-    <span>There is nothing</span>
+    <span>{t('boards.nothingFounded')}</span>
   );
 
   return (
@@ -91,7 +90,7 @@ const SearchPage = () => {
           fontWeight: 800,
         }}
       >
-        {SEARCH_PAGE_TITLE}
+        {t('boards.foundedTasks')}
       </Typography>
       {isLoading ? <span>Loading....</span> : FoundedTaskComponent}
     </Container>

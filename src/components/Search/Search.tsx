@@ -1,17 +1,20 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import classes from './Search.module.scss';
-import { INPUT_PLACEHOLDER, INPUT_TYPE, KEY_CODE } from './Search.constants';
+import { INPUT_TYPE, KEY_CODE } from './Search.constants';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH_PATH } from 'router/constants';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from 'store/boardSlice';
-import { getTasksBySearching } from 'api/tasks/getTasksBySearching';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
+import { useTranslation } from 'react-i18next';
 
 const Search = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+
   const [value, setValue] = useState<string>('');
+
   const dispatch = useDispatch();
   const { token } = useSelector((state: IRootState) => state.auth);
 
@@ -34,7 +37,7 @@ const Search = () => {
         onChange={handlerChange}
         onKeyPress={searchPhoto}
         value={value}
-        placeholder={INPUT_PLACEHOLDER}
+        placeholder={t('boards.searchTasks')}
         autoFocus
       />
     </div>
