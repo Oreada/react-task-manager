@@ -33,7 +33,12 @@ export const getSearchingTasks = createAsyncThunk<TaskType[], GetSearchingTasksA
       getTasksByIdUser(token, searchValue),
     ]);
 
-    return [...matchTitle, ...matchUser];
+    return [
+      ...matchTitle,
+      ...matchUser.filter(
+        (taskByUser) => !matchTitle.find((taskByTitle) => taskByTitle._id === taskByUser._id)
+      ),
+    ];
   }
 );
 

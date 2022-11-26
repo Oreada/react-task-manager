@@ -108,6 +108,7 @@ const Task = ({
       <Typography
         variant="body1"
         sx={{
+          flex: 'auto',
           fontFamily: '"Noto Sans", sans-serif',
           fontWeight: 400,
           fontSize: '16px',
