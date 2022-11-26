@@ -1,5 +1,8 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { FormEvent, MutableRefObject, useEffect, useRef } from 'react';
+import { getUser } from 'api/users/getUser';
+import { FormEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IRootState } from 'store/model';
 import { useTranslation } from 'react-i18next';
 import { TaskType } from 'types/types';
 
@@ -33,10 +36,24 @@ export function FormTaskUpdate(props: FormTaskProps) {
   const titleTask: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
   const descriptionTask: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
+  const [ownerLogin, setOwnerLogin] = useState<string | null>(null);
+  const { token } = useSelector((state: IRootState) => state.auth);
+
   useEffect(() => {
     (titleTask.current as HTMLInputElement).value = props.title;
     (descriptionTask.current as HTMLInputElement).value = props.description;
   }, []);
+
+  useEffect(() => {
+    const getOwnerLogin = async () => {
+      if (token) {
+        const userData = await getUser(token, props.userId);
+        setOwnerLogin(userData.login);
+      }
+    };
+
+    getOwnerLogin();
+  }, [props.userId, token]);
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const titleUpdated = (titleTask.current as HTMLInputElement).value;
@@ -68,10 +85,11 @@ export function FormTaskUpdate(props: FormTaskProps) {
           fullWidth
           required
         />
-        <Typography>
-          {t('boards.taskOwner')}: {props.userId}
-        </Typography>
-        {/* <Typography>Users: {props.users}</Typography> */}
+        {!!ownerLogin && (
+          <Typography>
+            {t('boards.taskOwner')}: {ownerLogin}
+          </Typography>
+        )}
         <Button type="submit" variant="outlined" size="large" color="success">
           {t('boards.updateButton')}
         </Button>

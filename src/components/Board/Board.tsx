@@ -4,25 +4,21 @@ import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
 import styles from './Board.module.scss';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import {
-  BUTTON_INNER,
-  DROPPABLE_DIRECTION_BOARD,
-  DROPPABLE_ID_BOARD,
-  DROPPABLE_TYPE_BOARD,
-} from './constants';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { ColumnType, TaskType } from 'types/types';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { TasksByColumnsType } from './model';
 import { reorderItems } from 'components/helpers/reorderItems';
+import { BOARDS_PATH } from 'router/constants';
 import { useTranslation } from 'react-i18next';
 
 const Board = () => {
@@ -31,6 +27,7 @@ const Board = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
@@ -191,8 +188,24 @@ const Board = () => {
     }
   };
 
+  const goBoards = () => navigate(BOARDS_PATH);
+
+  const handleClickBack = () => {
+    goBoards();
+  };
+
   return (
     <div className={styles.wrap}>
+      <Button
+        component="label"
+        variant="outlined"
+        color="basic"
+        onClick={handleClickBack}
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        {t('boards.backBoards')}
+      </Button>
+
       <Typography
         variant="h3"
         sx={{
@@ -204,7 +217,9 @@ const Board = () => {
       >
         {titleBoard}
       </Typography>
-      {!isLoading ? (
+      {isLoading ? (
+        <span>Loading....</span>
+      ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable
             droppableId={DROPPABLE_ID_BOARD}
@@ -258,8 +273,6 @@ const Board = () => {
             )}
           </Droppable>
         </DragDropContext>
-      ) : (
-        <span></span>
       )}
     </div>
   );

@@ -9,6 +9,8 @@ export type BoardStateType = {
   idBoard: string;
   titleBoard: string;
   isLoading: boolean;
+  searchValue: string;
+  foundedTasks: TaskType[];
 };
 
 export type MainStateType = {
@@ -23,6 +25,11 @@ export type GetBoardArgsType = {
 export type GetBoardDataArgsType = {
   token: string;
   idBoard: string;
+};
+
+export type GetSearchingTasksArgsType = {
+  token: string;
+  searchValue: string;
 };
 
 export type CreateBoardArgsType = {

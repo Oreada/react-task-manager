@@ -22,6 +22,7 @@ export async function getTasksBySearching(
     }
 
     const tasksList = await response.json();
+
     return tasksList;
   } catch (e: unknown) {
     const err = e as Error;

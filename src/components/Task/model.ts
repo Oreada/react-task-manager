@@ -10,18 +10,18 @@ import { TaskType } from 'types/types';
 // };
 
 export type TaskPropsType = {
-  idTask: string;
+  task: TaskType;
+  // idTask: string;
   idColumn: string;
   delTask: (task: TaskType) => void;
-  isDragging: boolean;
-  provider: DraggableProvided;
+  isDragging?: boolean;
+  provider?: DraggableProvided;
   isClone?: boolean;
-  isGroupedOver?: boolean;
   style: CSSProperties;
   index?: number;
-  titleTask: string;
-  descriptionTask: string;
-  orderTask: number;
-  ownerTask: string;
-  usersOfTask: Array<string>;
+  // titleTask: string;
+  // descriptionTask: string;
+  // orderTask: number;
+  // ownerTask: string;
+  // usersOfTask: Array<string>;
 };

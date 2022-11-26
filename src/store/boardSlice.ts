@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
 import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
+import { getTasksByIdUser } from 'api/tasks/getTasksByIdUser';
+import { getTasksBySearching } from 'api/tasks/getTasksBySearching';
 import { getTaskByColumn } from 'helpers/getTaskByColumn';
 import { ColumnType, TaskType } from 'types/types';
 import {
@@ -9,7 +11,7 @@ import {
   ReducerNameActionTypes,
   SLICE_NAMES,
 } from './constants';
-import { BoardStateType, GetBoardDataArgsType } from './model';
+import { BoardStateType, GetBoardDataArgsType, GetSearchingTasksArgsType } from './model';
 
 export const getBoardData = createAsyncThunk<[ColumnType[], TaskType[]], GetBoardDataArgsType>(
   ReducerNameActionTypes.getBoardData,
@@ -20,6 +22,23 @@ export const getBoardData = createAsyncThunk<[ColumnType[], TaskType[]], GetBoar
     ]);
 
     return [columns, tasks];
+  }
+);
+
+export const getSearchingTasks = createAsyncThunk<TaskType[], GetSearchingTasksArgsType>(
+  ReducerNameActionTypes.getSearchingTasks,
+  async ({ token, searchValue }: GetSearchingTasksArgsType) => {
+    const [matchTitle, matchUser] = await Promise.all([
+      getTasksBySearching(token, searchValue),
+      getTasksByIdUser(token, searchValue),
+    ]);
+
+    return [
+      ...matchTitle,
+      ...matchUser.filter(
+        (taskByUser) => !matchTitle.find((taskByTitle) => taskByTitle._id === taskByUser._id)
+      ),
+    ];
   }
 );
 
@@ -45,6 +64,15 @@ const boardSlice = createSlice({
     ) {
       state.taskByColumns = action.payload.taskByColumns;
     },
+    setSearchValue(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.searchValue>>) {
+      state.searchValue = action.payload.searchValue;
+    },
+    setFoundedTasks(
+      state,
+      action: PayloadAction<Pick<BoardStateType, BoardStateKeys.foundedTasks>>
+    ) {
+      state.foundedTasks = action.payload.foundedTasks;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,11 +86,26 @@ const boardSlice = createSlice({
         const [columns, tasks] = action.payload;
         state.columns = columns;
         state.taskByColumns = getTaskByColumn(tasks, columns);
+      })
+      .addCase(getSearchingTasks.pending, (state) => {
+        state.isLoading = true;
+        state.foundedTasks = [];
+      })
+      .addCase(getSearchingTasks.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.foundedTasks = action.payload;
       });
   },
 });
 
-export const { setColumns, setBoardId, setTasks, setBoardTitle, setTasksByColumn } =
-  boardSlice.actions;
+export const {
+  setColumns,
+  setBoardId,
+  setTasks,
+  setBoardTitle,
+  setTasksByColumn,
+  setSearchValue,
+  setFoundedTasks,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;

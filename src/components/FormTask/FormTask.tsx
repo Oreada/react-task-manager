@@ -1,9 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
-import { BodyForTask, TaskType, UserDecoder } from 'types/types';
+import { BodyForTask, TaskType } from 'types/types';
 import { AppDispatch, IRootState } from 'store/model';
 import { useSelector } from 'react-redux';
-import { parseBase64 } from 'api/helpers/parseBase64';
 import { useDispatch } from 'react-redux';
 import { getUserData } from 'store/authSlice';
 import { useTranslation } from 'react-i18next';
@@ -36,7 +35,7 @@ export function FormTask(props: FormTaskProps) {
   const [values, setValues] = useState(initialValues);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { id, token, user } = useSelector((state: IRootState) => state.auth);
+  const { id, token } = useSelector((state: IRootState) => state.auth);
 
   useEffect(() => {
     dispatch(getUserData({ token, idUser: id }));

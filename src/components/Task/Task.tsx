@@ -14,21 +14,16 @@ import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 
-function getStyle(provided: DraggableProvided, style: CSSProperties) {
-  return {
-    ...provided.draggableProps.style,
-    ...style,
-  };
-}
-
 const Task = ({
   idColumn,
-  idTask,
-  titleTask,
-  descriptionTask,
-  orderTask,
-  ownerTask,
-  usersOfTask,
+  task: {
+    _id: idTask,
+    title: titleTask,
+    description: descriptionTask,
+    order: orderTask,
+    userId: ownerTask,
+    users: usersOfTask,
+  },
   delTask,
   provider,
   style,
@@ -42,6 +37,11 @@ const Task = ({
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
 
+  const getStyle = (style: CSSProperties) => ({
+    ...provider?.draggableProps.style,
+    ...style,
+  });
+
   const handleClickOpenUpdate = () => {
     setOpenUpdate(true);
   };
@@ -52,7 +52,7 @@ const Task = ({
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpenDialog = () => {
+  const handleClickOpenDialog = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOpenDialog(true);
   };
 
@@ -92,10 +92,10 @@ const Task = ({
 
   return (
     <div
-      {...provider.draggableProps}
-      {...provider.dragHandleProps}
-      ref={provider.innerRef}
-      style={getStyle(provider, style)}
+      {...provider?.draggableProps}
+      {...provider?.dragHandleProps}
+      ref={provider?.innerRef}
+      style={getStyle(style)}
       onMouseOver={handlePointerOver}
       onMouseOut={handlePointerOut}
       className={styles.task}
@@ -103,6 +103,7 @@ const Task = ({
       <Typography
         variant="body1"
         sx={{
+          flex: 'auto',
           fontFamily: '"Noto Sans", sans-serif',
           fontWeight: 400,
           fontSize: '16px',
@@ -116,7 +117,13 @@ const Task = ({
         <IconButton
           onClick={handleClickOpenDialog}
           aria-label="delete"
-          sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            right: 0,
+            zIndex: 2,
+            transform: 'translateY(-50%)',
+          }}
         >
           <RemoveCircleOutlineOutlinedIcon fontSize="small" />
         </IconButton>
