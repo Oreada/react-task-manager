@@ -29,23 +29,31 @@ i18n
           },
 
           main: {
-            heroTitle: '',
-            heroText: '',
-            advantagesTitle: '',
-            advantagesSubtitle: '',
-            advAimTitle: '',
-            advClockTitle: '',
-            advGlobeTitle: '',
-            advAimText: '',
-            advClockText: '',
-            advGlobeText: '',
-            videoTitle: '',
-            videoSubtitle: '',
-            teamTitle: '',
-            teamSubtitles: '',
-            teamKatya: '',
-            teamSergey: '',
-            teamOlya: '',
+            heroTitle: 'Task Management',
+            heroText:
+              'TEAMWORK is a handy visual tool for keeping track of your current tasks and organizing your workflow. The app helps you effectively manage projects, plan and coordinate work in your team.',
+            advantagesTitle: 'Advantages',
+            advantagesSubtitle: 'Why you should try our application',
+            advAimTitle: 'EFFICIENCY',
+            advClockTitle: 'PRODUCTIVITY',
+            advGlobeTitle: 'INTERACTION',
+            advAimText:
+              'Together with TEAMWORK, you can visualize and group your goals, allowing you to optimally allocate resources to achieve them',
+            advClockText:
+              'Scheduling increases your productivity and allows you to manage your time so you get more tasks done in time than before',
+            advGlobeText:
+              'TEAMWORK helps to evenly distribute the workload of your team and ensures that all team members work together smoothly',
+            videoTitle: 'How to use the app',
+            videoSubtitle:
+              'Watch this short video and it will make using our application even easier and clearer',
+            teamTitle: 'Our team',
+            teamSubtitles: 'Meet the developers',
+            teamKatya:
+              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+            teamSergey:
+              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+            teamOlya:
+              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
           },
 
           footer: {
@@ -85,7 +93,7 @@ i18n
             videoSubtitle:
               'Посмотрите этот небольшой видеоролик, и использование нашего приложения станет ещё более простым и понятным',
             teamTitle: 'Наша команда',
-            teamSubtitles: 'Познакомьтесь с разработчиками',
+            teamSubtitles: 'Знакомьтесь с разработчиками',
             teamKatya:
               'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
             teamSergey:
