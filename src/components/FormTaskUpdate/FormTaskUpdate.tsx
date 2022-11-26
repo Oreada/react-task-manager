@@ -50,7 +50,7 @@ export function FormTaskUpdate(props: FormTaskProps) {
     };
 
     getOwnerLogin();
-  }, [props.userId]);
+  }, [props.userId, token]);
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const titleUpdated = (titleTask.current as HTMLInputElement).value;

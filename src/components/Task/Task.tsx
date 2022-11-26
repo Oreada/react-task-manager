@@ -13,13 +13,6 @@ import { updateTask } from 'api/tasks/updateTask';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 
-function getStyle(provided: DraggableProvided, style: CSSProperties) {
-  return {
-    ...provided.draggableProps.style,
-    ...style,
-  };
-}
-
 const Task = ({
   idColumn,
   task: {
@@ -57,7 +50,6 @@ const Task = ({
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleClickOpenDialog = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    // event.stopPropagation();
     setOpenDialog(true);
   };
 

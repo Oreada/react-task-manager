@@ -23,14 +23,16 @@ const SearchPage = () => {
   const delTaskMemo = useCallback(
     (deletedTask: TaskType): void => {
       const delTask = ({ _id: idDeletedTask }: TaskType): void => {
-        setFoundedTasks({
-          foundedTasks: foundedTasks.filter((task) => task._id !== idDeletedTask),
-        });
+        dispatch(
+          setFoundedTasks({
+            foundedTasks: foundedTasks.filter(({ _id }) => _id !== idDeletedTask),
+          })
+        );
       };
 
       delTask(deletedTask);
     },
-    [foundedTasks]
+    [foundedTasks, dispatch]
   );
 
   const FoundedTaskComponent = foundedTasks.length ? (
