@@ -1,5 +1,6 @@
 import { Box, TextField, Button } from '@mui/material';
 import { FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
@@ -27,6 +28,8 @@ const initialValues = {
 };
 
 export function FormBoard(props: FormBoardProps) {
+  const { t } = useTranslation();
+
   const [values, setValues] = useState(initialValues);
 
   const { id } = useSelector((state: IRootState) => state.auth);
@@ -76,7 +79,7 @@ export function FormBoard(props: FormBoardProps) {
       <Box sx={style}>
         <TextField
           variant="outlined"
-          label="Board title"
+          label={t('boards.formBoardTitle')}
           name="title"
           value={values.title}
           onChange={handleInputChange}
@@ -87,7 +90,7 @@ export function FormBoard(props: FormBoardProps) {
         />
         <TextField
           variant="outlined"
-          label="Board description"
+          label={t('boards.formBoardDesc')}
           name="description"
           value={values.description}
           onChange={handleInputChange}
@@ -98,7 +101,7 @@ export function FormBoard(props: FormBoardProps) {
           required
         />
         <Button type="submit" variant="outlined" size="large" color="success">
-          Add
+          {t('boards.addButton')}
         </Button>
       </Box>
     </form>

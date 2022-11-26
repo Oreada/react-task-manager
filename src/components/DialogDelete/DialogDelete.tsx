@@ -4,9 +4,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useTranslation } from 'react-i18next';
 import { DialogProps } from './model';
 
 export function DialogDelete(props: DialogProps) {
+  const { t } = useTranslation();
+
   const handleClose = () => {
     props.setOpenDialog(false);
   };
@@ -24,16 +27,16 @@ export function DialogDelete(props: DialogProps) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Do you want to delete this {props.title}?</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            The {props.title} will be deleted permanently
+            {t('boards.dialogWarning')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>No</Button>
+          <Button onClick={handleClose}>{t('boards.dialogNo')}</Button>
           <Button onClick={handleAgree} autoFocus>
-            Yes
+            {t('boards.dialogYes')}
           </Button>
         </DialogActions>
       </Dialog>

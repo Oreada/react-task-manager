@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface FormColumnProps {
   titleForColumn: string;
@@ -19,6 +20,8 @@ const style = {
 };
 
 export function FormColumn(props: FormColumnProps) {
+  const { t } = useTranslation();
+
   const [valueInput, setValueInput] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +47,7 @@ export function FormColumn(props: FormColumnProps) {
       <Box sx={style}>
         <TextField
           variant="outlined"
-          label="Column title"
+          label={t('boards.formColumnTitle')}
           name="title"
           value={valueInput}
           onChange={handleInputChange}
@@ -54,7 +57,7 @@ export function FormColumn(props: FormColumnProps) {
           required
         />
         <Button type="submit" variant="outlined" size="large" color="success">
-          Add
+          {t('boards.addButton')}
         </Button>
       </Box>
     </form>

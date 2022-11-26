@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import styles from './Footer.module.scss';
 import GitHubLogo from './git-hub-logo.svg';
 import LogoRSS from './rs_school_js.svg';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footer__container}>
@@ -16,7 +19,7 @@ const Footer = () => {
                 rel="noreferrer"
               >
                 <img src={GitHubLogo} alt="Logo GitHub" width="30px" />
-                <span className={styles.footer__name}>Katya</span>
+                <span className={styles.footer__name}>{t('footer.nameKatya')}</span>
               </a>
             </p>
 
@@ -28,7 +31,7 @@ const Footer = () => {
                 rel="noreferrer"
               >
                 <img src={GitHubLogo} alt="Logo GitHub" width="30px" />
-                <span className={styles.footer__name}>Sergey</span>
+                <span className={styles.footer__name}>{t('footer.nameSergey')}</span>
               </a>
             </p>
 
@@ -40,7 +43,7 @@ const Footer = () => {
                 rel="noreferrer"
               >
                 <img src={GitHubLogo} alt="Logo GitHub" width="30px" />
-                <span className={styles.footer__name}>Olya</span>
+                <span className={styles.footer__name}>{t('footer.nameOlya')}</span>
               </a>
             </p>
           </div>

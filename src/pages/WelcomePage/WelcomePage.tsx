@@ -1,21 +1,20 @@
+import { useTranslation } from 'react-i18next';
 import PhotoKatya from './photo_katya.jpeg';
 import PhotoOlya from './photo_olya.jpg';
 import PhotoSergey from './photo_sergey.png';
 import styles from './WelcomePage.module.scss';
 
 const WelcomePage = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <article className={styles.hero}>
         <div className={styles.hero__container}>
           <div className={styles.hero__body}>
             <div className={styles.hero__article}>
-              <h2 className={styles.article__title}>Some title will be here soon</h2>
-              <div className={styles.article__text}>
-                There is a brief description of our application. Something like this: Manage your
-                workflow and team cooperation. Join now to organize your tasks and change the way
-                your team works.
-              </div>
+              <h2 className={styles.article__title}>{t('main.heroTitle')}</h2>
+              <div className={styles.article__text}>{t('main.heroText')}</div>
               {/* <button className={styles.article__button}>Get started</button> */}
             </div>
             <div className={styles.hero__picture}></div>
@@ -27,33 +26,24 @@ const WelcomePage = () => {
         <div className={styles.advantages__container}>
           <div className={styles.advantages__body}>
             <div className={styles['advantages__title-wrapper']}>
-              <h3 className={styles.advantages__title}>Advantages</h3>
-              <h4 className={styles.advantages__subtitle}>Why you should try our application</h4>
+              <h3 className={styles.advantages__title}>{t('main.advantagesTitle')}</h3>
+              <h4 className={styles.advantages__subtitle}>{t('main.advantagesSubtitle')}</h4>
             </div>
             <div className={styles.advantages__box}>
               <div className={styles.advantages__item}>
                 <div className={styles.item__picture_first}></div>
-                <h5 className={styles.item__title}>Efficiency</h5>
-                <div className={styles.item__text}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                  voluptas totam odio animi perspiciatis numquam magnam
-                </div>
+                <h5 className={styles.item__title}>{t('main.advAimTitle')}</h5>
+                <div className={styles.item__text}>{t('main.advAimText')}</div>
               </div>
               <div className={styles.advantages__item}>
                 <div className={styles.item__picture_second}></div>
-                <h5 className={styles.item__title}>Productivity</h5>
-                <div className={styles.item__text}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                  voluptas totam odio animi perspiciatis numquam magnam
-                </div>
+                <h5 className={styles.item__title}>{t('main.advClockTitle')}</h5>
+                <div className={styles.item__text}>{t('main.advClockText')}</div>
               </div>
               <div className={styles.advantages__item}>
                 <div className={styles.item__picture_third}></div>
-                <h5 className={styles.item__title}>Interaction</h5>
-                <div className={styles.item__text}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                  voluptas totam odio animi perspiciatis numquam magnam
-                </div>
+                <h5 className={styles.item__title}>{t('main.advGlobeTitle')}</h5>
+                <div className={styles.item__text}>{t('main.advGlobeText')}</div>
               </div>
             </div>
           </div>
@@ -64,11 +54,8 @@ const WelcomePage = () => {
         <div className={styles.instructions__container}>
           <div className={styles.instructions__box}>
             <div className={styles.instructions__note}>
-              <h5 className={styles.instructions__title}>How to use the app</h5>
-              <div className={styles.instructions__text}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere culpa provident
-                voluptas totam odio animi perspiciatis numquam magnam
-              </div>
+              <h5 className={styles.instructions__title}>{t('main.videoTitle')}</h5>
+              <div className={styles.instructions__text}>{t('main.videoSubtitle')}</div>
             </div>
             <div className={styles.instructions__video}>
               <div className={styles.instructions__screensaver}>
@@ -83,8 +70,8 @@ const WelcomePage = () => {
         <div className={styles.team__container}>
           <div className={styles.team__body}>
             <div className={styles['team__title-wrapper']}>
-              <h3 className={styles.team__title}>Our team</h3>
-              <h4 className={styles.team__subtitle}>Meet the developers</h4>
+              <h3 className={styles.team__title}>{t('main.teamTitle')}</h3>
+              <h4 className={styles.team__subtitle}>{t('main.teamSubtitles')}</h4>
             </div>
             <div className={styles.team__box}>
               <div className={styles.team__item}>
@@ -100,10 +87,7 @@ const WelcomePage = () => {
                       />
                     </a>
                   </div>
-                  <div className={styles.developer__description}>
-                    A description of each developer&apos;s contribution to the joint work. A
-                    description of each developer&apos;s contribution to the joint work.
-                  </div>
+                  <div className={styles.developer__description}>{t('main.teamKatya')}</div>
                 </div>
               </div>
               <div className={styles.team__item}>
@@ -119,10 +103,7 @@ const WelcomePage = () => {
                       />
                     </a>
                   </div>
-                  <div className={styles.developer__description}>
-                    A description of each developer&apos;s contribution to the joint work. A
-                    description of each developer&apos;s contribution to the joint work.
-                  </div>
+                  <div className={styles.developer__description}>{t('main.teamSergey')}</div>
                 </div>
               </div>
               <div className={styles.team__item}>
@@ -138,10 +119,7 @@ const WelcomePage = () => {
                       />
                     </a>
                   </div>
-                  <div className={styles.developer__description}>
-                    A description of each developer&apos;s contribution to the joint work. A
-                    description of each developer&apos;s contribution to the joint work.
-                  </div>
+                  <div className={styles.developer__description}>{t('main.teamOlya')}</div>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { FormEvent, MutableRefObject, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TaskType } from 'types/types';
 
 interface FormTaskProps {
@@ -27,6 +28,8 @@ const style = {
 };
 
 export function FormTaskUpdate(props: FormTaskProps) {
+  const { t } = useTranslation();
+
   const titleTask: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
   const descriptionTask: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
@@ -48,7 +51,7 @@ export function FormTaskUpdate(props: FormTaskProps) {
       <Box sx={style}>
         <TextField
           variant="outlined"
-          label="Task title"
+          label={t('boards.formTaskTitle')}
           name="title"
           inputRef={titleTask}
           autoFocus={true}
@@ -57,7 +60,7 @@ export function FormTaskUpdate(props: FormTaskProps) {
         />
         <TextField
           variant="outlined"
-          label="Task description"
+          label={t('boards.formTaskDesc')}
           name="description"
           inputRef={descriptionTask}
           multiline={true}
@@ -65,10 +68,12 @@ export function FormTaskUpdate(props: FormTaskProps) {
           fullWidth
           required
         />
-        <Typography>Task owner: {props.userId}</Typography>
+        <Typography>
+          {t('boards.taskOwner')}: {props.userId}
+        </Typography>
         {/* <Typography>Users: {props.users}</Typography> */}
         <Button type="submit" variant="outlined" size="large" color="success">
-          Update
+          {t('boards.updateButton')}
         </Button>
       </Box>
     </form>

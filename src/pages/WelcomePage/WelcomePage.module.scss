@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .hero {
   background-image: url(./hero-back-orange.svg);
@@ -22,10 +22,10 @@
 .hero__article {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   gap: rem(40);
 
-  font-family: 'Nunito Sans';
+  font-family: "Nunito Sans";
 }
 
 .article__title {
@@ -85,13 +85,13 @@
 }
 
 .advantages__title {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: rem(40);
   font-weight: 800;
 }
 
 .advantages__subtitle {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .advantages__box {
@@ -101,6 +101,7 @@
 
 .advantages__item {
   position: relative;
+  flex: 0 0 33%;
 
   display: flex;
   flex-direction: column;
@@ -163,7 +164,7 @@
 /* -------------------------------------------------- */
 
 .instructions {
-  font-family: 'Nunito Sans';
+  font-family: "Nunito Sans";
 
   background-color: $color-green-main;
   color: $color-instructions-text;
@@ -256,13 +257,13 @@
 }
 
 .team__title {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: rem(40);
   font-weight: 800;
 }
 
 .team__subtitle {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .team__box {
