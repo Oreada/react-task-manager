@@ -219,7 +219,7 @@ const EditProfile = () => {
       </Container>
       {openDialog && (
         <DialogDelete
-          title="user"
+          title={t('boards.dialogUser')}
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
           func={handleClickDeleteUser}

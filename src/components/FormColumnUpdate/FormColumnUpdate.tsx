@@ -1,5 +1,6 @@
 import { Box, TextField } from '@mui/material';
 import { MutableRefObject, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ColumnType } from 'types/types';
 
 interface FormColumnProps {
@@ -12,6 +13,8 @@ interface FormColumnProps {
 }
 
 export function FormColumnUpdate(props: FormColumnProps) {
+  const { t } = useTranslation();
+
   const titleColumn: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export function FormColumnUpdate(props: FormColumnProps) {
       <Box>
         <TextField
           variant="outlined"
-          label="Board title"
+          label={t('boards.formColumnTitle')}
           name="title"
           inputRef={titleColumn}
           autoFocus={true}

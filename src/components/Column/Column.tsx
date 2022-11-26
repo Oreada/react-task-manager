@@ -30,8 +30,11 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormColumnUpdate } from 'components/FormColumnUpdate/FormColumnUpdate';
 import { updateColumn } from 'api/columns/updateColumn';
+import { useTranslation } from 'react-i18next';
 
 const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
+  const { t } = useTranslation();
+
   const listRef = useRef<List>(null);
 
   const [scroll, setScroll] = useState<number>(0);
@@ -208,10 +211,10 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
         color="success"
         onClick={handleClickOpenModal}
       >
-        {BUTTON_INNER}
+        {t('boards.formTaskCreate')}
       </Button>
 
-      <BasicModal title={BUTTON_INNER} openModal={openModal} setOpenModal={setOpenModal}>
+      <BasicModal title={t('boards.formTaskCreate')} openModal={openModal} setOpenModal={setOpenModal}>
         <FormTask
           bodyForTask={bodyForTask}
           setBodyForTask={setBodyForTask}
@@ -230,7 +233,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
       </IconButton>
 
       <DialogDelete
-        title="column"
+        title={t('boards.dialogColumn')}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         func={handleClickDeleteButton}

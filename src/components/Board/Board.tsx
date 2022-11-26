@@ -23,8 +23,11 @@ import { Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { TasksByColumnsType } from './model';
 import { reorderItems } from 'components/helpers/reorderItems';
+import { useTranslation } from 'react-i18next';
 
 const Board = () => {
+  const { t } = useTranslation();
+
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -238,7 +241,11 @@ const Board = () => {
                   <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
                 </div>
 
-                <BasicModal title={BUTTON_INNER} openModal={openModal} setOpenModal={setOpenModal}>
+                <BasicModal
+                  title={t('boards.formColumnCreate')}
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                >
                   <FormColumn
                     titleForColumn={titleForColumn}
                     setTitleForColumn={setTitleForColumn}
