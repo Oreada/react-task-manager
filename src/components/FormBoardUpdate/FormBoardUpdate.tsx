@@ -1,5 +1,6 @@
 import { Box, Button, TextField } from '@mui/material';
 import { FormEvent, MutableRefObject, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
@@ -23,6 +24,8 @@ const style = {
 };
 
 export function FormBoardUpdate(props: FormBoardProps) {
+  const { t } = useTranslation();
+
   const titleBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
   const descriptionBoard: MutableRefObject<HTMLInputElement | null | undefined> = useRef();
 
@@ -49,7 +52,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
       <Box sx={style}>
         <TextField
           variant="outlined"
-          label="Board title"
+          label={t('boards.formBoardTitle')}
           name="title"
           inputRef={titleBoard}
           autoFocus={true}
@@ -58,7 +61,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
         />
         <TextField
           variant="outlined"
-          label="Board description"
+          label={t('boards.formBoardDesc')}
           name="description"
           inputRef={descriptionBoard}
           multiline={true}
@@ -67,7 +70,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
           required
         />
         <Button type="submit" variant="outlined" size="large" color="success">
-          Update
+          {t('boards.updateButton')}
         </Button>
       </Box>
     </form>

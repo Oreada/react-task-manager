@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { useTranslation } from 'react-i18next';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -21,10 +22,12 @@ import {
 import { AppDispatch, IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
 import { ReactComponent as Back } from './assets/Back.svg';
-import { MAIN_PAGE_TITLE, NO_DESCRIPTION } from './constants';
+import { NO_DESCRIPTION } from './constants';
 import styles from './MainPage.module.scss';
 
 const MainPage = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -166,7 +169,7 @@ const MainPage = () => {
           fontWeight: 800,
         }}
       >
-        {MAIN_PAGE_TITLE}
+        {t('boards.title')}
       </Typography>
       {isLoading ? (
         <span>Loading....</span>
@@ -235,7 +238,11 @@ const MainPage = () => {
             </Grid>
           ))}
 
-          <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
+          <BasicModal
+            title={t('boards.formBoardUpdate')}
+            openModal={openUpdate}
+            setOpenModal={setOpenUpdate}
+          >
             <FormBoardUpdate
               bodyForUpdate={bodyForUpdate}
               handleClickEditButton={handleClickEditButton(idBoardUpdate)}
@@ -245,7 +252,7 @@ const MainPage = () => {
           </BasicModal>
 
           <DialogDelete
-            title="board"
+            title={t('boards.dialogBoard')}
             openDialog={openDialog}
             setOpenDialog={setOpenDialog}
             func={handleClickDelButton(idBoardDelete)}
@@ -257,7 +264,11 @@ const MainPage = () => {
             </div>
           </Grid>
 
-          <BasicModal title="Create board" openModal={openModal} setOpenModal={setOpenModal}>
+          <BasicModal
+            title={t('boards.formBoardCreate')}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          >
             <FormBoard
               bodyForBoard={bodyForBoard}
               setBodyForBoard={setBodyForBoard}

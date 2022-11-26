@@ -5,6 +5,7 @@ import { AppDispatch, IRootState } from 'store/model';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getUserData } from 'store/authSlice';
+import { useTranslation } from 'react-i18next';
 
 interface FormTaskProps {
   bodyForTask: BodyForTask;
@@ -29,6 +30,8 @@ const initialValues = {
 };
 
 export function FormTask(props: FormTaskProps) {
+  const { t } = useTranslation();
+
   const [values, setValues] = useState(initialValues);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -83,7 +86,7 @@ export function FormTask(props: FormTaskProps) {
       <Box sx={style}>
         <TextField
           variant="outlined"
-          label="Task title"
+          label={t('boards.formTaskTitle')}
           name="title"
           value={values.title}
           onChange={handleInputChange}
@@ -94,7 +97,7 @@ export function FormTask(props: FormTaskProps) {
         />
         <TextField
           variant="outlined"
-          label="Task description"
+          label={t('boards.formTaskDesc')}
           name="description"
           value={values.description}
           onChange={handleInputChange}
@@ -105,7 +108,7 @@ export function FormTask(props: FormTaskProps) {
           required
         />
         <Button type="submit" variant="outlined" size="large" color="success">
-          Add
+          {t('boards.addButton')}
         </Button>
       </Box>
     </form>

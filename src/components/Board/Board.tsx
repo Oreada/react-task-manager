@@ -4,12 +4,7 @@ import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
 import styles from './Board.module.scss';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import {
-  BUTTON_INNER,
-  DROPPABLE_DIRECTION_BOARD,
-  DROPPABLE_ID_BOARD,
-  DROPPABLE_TYPE_BOARD,
-} from './constants';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
 import { BasicModal } from 'components/Modal/BasicModal';
@@ -24,8 +19,11 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { TasksByColumnsType } from './model';
 import { reorderItems } from 'components/helpers/reorderItems';
 import { BOARDS_PATH } from 'router/constants';
+import { useTranslation } from 'react-i18next';
 
 const Board = () => {
+  const { t } = useTranslation();
+
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -205,7 +203,7 @@ const Board = () => {
         onClick={handleClickBack}
         sx={{ alignSelf: 'flex-start' }}
       >
-        Back to Boards
+        {t('boards.backBoards')}
       </Button>
 
       <Typography
@@ -258,7 +256,11 @@ const Board = () => {
                   <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
                 </div>
 
-                <BasicModal title={BUTTON_INNER} openModal={openModal} setOpenModal={setOpenModal}>
+                <BasicModal
+                  title={t('boards.formColumnCreate')}
+                  openModal={openModal}
+                  setOpenModal={setOpenModal}
+                >
                   <FormColumn
                     titleForColumn={titleForColumn}
                     setTitleForColumn={setTitleForColumn}

@@ -22,7 +22,7 @@
 .hero__article {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   gap: rem(40);
 
   font-family: 'Nunito Sans';
@@ -101,12 +101,14 @@
 
 .advantages__item {
   position: relative;
+  flex: 0 0 33%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: rem(20);
 
+  text-align: center;
   line-height: rem(25);
   padding: rem(50);
   box-shadow: 0 0 rem(20) $color-box-shadow;

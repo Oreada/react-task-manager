@@ -1,6 +1,7 @@
 import { Button, Container, Typography } from '@mui/material';
 import Task from 'components/Task/Task';
 import { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ import { SEARCH_PAGE_TITLE } from './constants';
 const SearchPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { searchValue, foundedTasks, isLoading } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
@@ -79,7 +81,7 @@ const SearchPage = () => {
         onClick={handleClickBack}
         sx={{ alignSelf: 'flex-start' }}
       >
-        Back to Boards
+        {t('boards.backBoards')}
       </Button>
       <Typography
         variant="h3"

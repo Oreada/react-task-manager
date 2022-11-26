@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Alert, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
 import { signIn } from 'api/auth/signIn';
 import { parseBase64 } from 'api/helpers/parseBase64';
@@ -20,6 +21,8 @@ import { ReactComponent as HelloSvg } from './assets/Hello.svg';
 import { FORM_INPUTS, FORM_TEXT } from './constants';
 
 const Auth = () => {
+  const { t } = useTranslation();
+
   const [error, setError] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -67,18 +70,18 @@ const Auth = () => {
     } catch (err: unknown) {
       const error = err as Error;
       if (typeof error.cause !== 'number') {
-        setError('Something wrong!...');
+        setError(t('errors.something') as string);
       }
 
       switch (error.cause) {
         case 400:
-          setError('Error in the request');
+          setError(t('errors.request') as string);
           break;
         case 401:
-          setError('Incorrect login or password');
+          setError(t('errors.loginOrPassword') as string);
           break;
         case 409:
-          setError('User already exists');
+          setError(t('errors.exists') as string);
           break;
         default:
           break;
@@ -146,7 +149,7 @@ const Auth = () => {
           onSubmit={handleSubmit}
         >
           <Typography variant="h4" component="p" sx={{ fontWeight: 700 }}>
-            {subPage === typeSubPage.signIn ? FORM_TEXT.titleIn : FORM_TEXT.titleUp}
+            {subPage === typeSubPage.signIn ? t('profile.signIn') : t('profile.signUp')}
           </Typography>
 
           {[name, login, password].map(
@@ -154,7 +157,7 @@ const Auth = () => {
               (subPage !== typeSubPage.signIn || item.name !== 'name') && (
                 <CustomInput
                   key={item.name}
-                  label={inputContent[item.name].label}
+                  label={t(`profile.${inputContent[item.name].label}`)}
                   type={inputContent[item.name].type}
                   name={inputContent[item.name].name}
                   required={inputContent[item.name].required}
@@ -174,7 +177,7 @@ const Auth = () => {
           )}
 
           <Button component="label" variant="outlined" disabled={!canSubmit} color="substitute">
-            {subPage === typeSubPage.signIn ? FORM_TEXT.buttonTextIn : FORM_TEXT.buttonTextUp}
+            {subPage === typeSubPage.signIn ? t('profile.logIn') : t('profile.register')}
             <input hidden type="submit" />
           </Button>
         </Stack>
@@ -195,9 +198,7 @@ const Auth = () => {
             state={subPage === typeSubPage.signIn ? typeSubPage.signUp : typeSubPage.signIn}
             style={{ color: 'inherit' }}
           >
-            {subPage === typeSubPage.signIn
-              ? FORM_TEXT.linkTextToPageUp
-              : FORM_TEXT.linkTextToPageIn}
+            {subPage === typeSubPage.signIn ? t('profile.create') : t('profile.already')}
           </NavLink>
         </Stack>
       </Stack>

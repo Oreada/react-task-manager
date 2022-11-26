@@ -12,6 +12,7 @@ import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { updateTask } from 'api/tasks/updateTask';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
+import { useTranslation } from 'react-i18next';
 
 const Task = ({
   idColumn,
@@ -27,6 +28,8 @@ const Task = ({
   provider,
   style,
 }: TaskPropsType) => {
+  const { t } = useTranslation();
+
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
   const [isHovering, setIsHovering] = useState(false);
@@ -126,7 +129,11 @@ const Task = ({
         </IconButton>
       )}
 
-      <BasicModal title="Update board" openModal={openUpdate} setOpenModal={setOpenUpdate}>
+      <BasicModal
+        title={t('boards.formTaskUpdate')}
+        openModal={openUpdate}
+        setOpenModal={setOpenUpdate}
+      >
         <FormTaskUpdate
           title={taskUpdated ? taskUpdated.title : titleTask}
           description={taskUpdated ? taskUpdated.description : descriptionTask}
@@ -139,7 +146,7 @@ const Task = ({
       </BasicModal>
 
       <DialogDelete
-        title="task"
+        title={t('boards.dialogTask')}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         func={handleClickDeleteButton}
