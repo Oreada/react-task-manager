@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Alert, Box, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
 import { deleteUser } from 'api/users/deleteUser';
 import CustomInput from 'components/CustomInput/CustomInput';
@@ -18,6 +19,8 @@ import { ReactComponent as EditSvg } from './assets/Edit.svg';
 import { FORM_INPUTS, FORM_TEXT } from './constants';
 
 const EditProfile = () => {
+  const { t } = useTranslation();
+
   const [error, setError] = useState<string>('');
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -75,18 +78,18 @@ const EditProfile = () => {
     } catch (err: unknown) {
       const error = err as Error;
       if (typeof error.cause !== 'number') {
-        setError('Something wrong!...');
+        setError(t('errors.something') as string);
       }
 
       switch (error.cause) {
         case 400:
-          setError('Error in the request');
+          setError(t('errors.request') as string);
           break;
         case 401:
-          setError('Incorrect login or password');
+          setError(t('errors.loginOrPassword') as string);
           break;
         case 409:
-          setError('User already exists');
+          setError(t('errors.exists') as string);
           break;
         default:
           break;
@@ -154,12 +157,12 @@ const EditProfile = () => {
             onSubmit={handleSubmit}
           >
             <Typography variant="h4" component="p" sx={{ fontWeight: 700 }}>
-              {FORM_TEXT.title}
+              {t('profile.editTitle')}
             </Typography>
             {[name, login, password].map((item) => (
               <CustomInput
                 key={item.name}
-                label={inputContent[item.name].label}
+                label={t(`profile.${inputContent[item.name].label}`)}
                 type={inputContent[item.name].type}
                 name={inputContent[item.name].name}
                 required={inputContent[item.name].required}
@@ -178,7 +181,7 @@ const EditProfile = () => {
             ))}
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: '20px', width: '100%' }}>
               <Button component="label" variant="outlined" disabled={!canSubmit} color="substitute">
-                {FORM_TEXT.buttonEditText}
+                {t('profile.buttonEditText')}
                 <input hidden type="submit" />
               </Button>
               <Button
@@ -187,7 +190,7 @@ const EditProfile = () => {
                 color="basic"
                 onClick={handleClickOpenDialog}
               >
-                {FORM_TEXT.buttonDeleteText}
+                {t('profile.buttonDeleteText')}
                 {/* <input hidden type="submit" /> */}
               </Button>
             </Box>

@@ -72,6 +72,10 @@ i18n
             Name: 'Name',
             Login: 'Login',
             Password: 'Password',
+            editTitle: 'Edit profile',
+            NewPassword: 'New Password',
+            buttonEditText: 'Edit',
+            buttonDeleteText: 'Delete user',
           },
 
           errors: {
@@ -137,6 +141,10 @@ i18n
             Name: 'Имя',
             Login: 'Логин',
             Password: 'Пароль',
+            editTitle: 'Редактировать',
+            NewPassword: 'Новый Пароль',
+            buttonEditText: 'Изменить',
+            buttonDeleteText: 'Удалить',
           },
 
           errors: {
