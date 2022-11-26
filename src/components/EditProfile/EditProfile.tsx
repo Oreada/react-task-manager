@@ -188,7 +188,6 @@ const EditProfile = () => {
                 onClick={handleClickOpenDialog}
               >
                 {FORM_TEXT.buttonDeleteText}
-                {/* <input hidden type="submit" /> */}
               </Button>
             </Box>
           </Stack>

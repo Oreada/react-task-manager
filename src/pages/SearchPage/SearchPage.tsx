@@ -1,8 +1,10 @@
-import { Container, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import Task from 'components/Task/Task';
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { BOARDS_PATH } from 'router/constants';
 import { getSearchingTasks, setFoundedTasks } from 'store/boardSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { TaskType } from 'types/types';
@@ -10,6 +12,7 @@ import { SEARCH_PAGE_TITLE } from './constants';
 
 const SearchPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const { searchValue, foundedTasks, isLoading } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
@@ -34,6 +37,12 @@ const SearchPage = () => {
     },
     [foundedTasks, dispatch]
   );
+
+  const goBoards = () => navigate(BOARDS_PATH);
+
+  const handleClickBack = () => {
+    goBoards();
+  };
 
   const FoundedTaskComponent = foundedTasks.length ? (
     foundedTasks.map((item) => (
@@ -63,6 +72,15 @@ const SearchPage = () => {
         overflow: 'hidden',
       }}
     >
+      <Button
+        component="label"
+        variant="outlined"
+        color="basic"
+        onClick={handleClickBack}
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        Back to Boards
+      </Button>
       <Typography
         variant="h3"
         sx={{

@@ -15,19 +15,21 @@ import { FormColumn } from 'components/FormColumn/FormColumn';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
 import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { ColumnType, TaskType } from 'types/types';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { TasksByColumnsType } from './model';
 import { reorderItems } from 'components/helpers/reorderItems';
+import { BOARDS_PATH } from 'router/constants';
 
 const Board = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
@@ -188,8 +190,24 @@ const Board = () => {
     }
   };
 
+  const goBoards = () => navigate(BOARDS_PATH);
+
+  const handleClickBack = () => {
+    goBoards();
+  };
+
   return (
     <div className={styles.wrap}>
+      <Button
+        component="label"
+        variant="outlined"
+        color="basic"
+        onClick={handleClickBack}
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        Back to Boards
+      </Button>
+
       <Typography
         variant="h3"
         sx={{
