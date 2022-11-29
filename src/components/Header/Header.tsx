@@ -1,7 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import { LOCAL_STORAGE_KEY } from 'constants/constants';
 import { removeLocal } from 'helpers';
-import { MouseEvent, useEffect, useState } from 'react';
+import { FormEvent, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AUTHENTICATION_PATH, BOARDS_PATH, EDIT_PATH, ROOT_PATH } from 'router/constants';
@@ -12,6 +12,9 @@ import { typeSubPage } from 'types/types';
 import { APP_NAME, LINK_NAMES } from './constants';
 import { useTranslation, Trans } from 'react-i18next';
 import styles from './Header.module.scss';
+import { BasicModal } from 'components/Modal/BasicModal';
+import { FormBoard } from 'components/FormBoard/FormBoard';
+import { createBoardThunk } from 'store/mainSlice';
 
 export type LangsType = {
   en: {
@@ -29,6 +32,12 @@ const lngs: LangsType = {
 
 const Header = () => {
   const { t, i18n } = useTranslation();
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
 
   const [scroll, setScroll] = useState(false);
 
@@ -75,6 +84,9 @@ const Header = () => {
                 <NavLink to={BOARDS_PATH} className={styles.navigation__item}>
                   {t('header.linkBoards')}
                 </NavLink>
+                <div className={styles.navigation__item} onClick={handleClickOpenModal}>
+                  {t('boards.formBoardCreate')}
+                </div>
                 <NavLink to={EDIT_PATH} className={styles.navigation__item}>
                   {t('header.linkProfile')}
                 </NavLink>
@@ -134,6 +146,14 @@ const Header = () => {
             </div>
           </nav>
         </div>
+
+        <BasicModal
+          title={t('boards.formBoardCreate')}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
+        </BasicModal>
       </header>
     </>
   );
