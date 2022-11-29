@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import { setBoardTitle } from 'store/boardSlice';
 import {
-  createBoardThunk,
   deleteBoardThunk,
   editBoardThunk,
   getBoardsThunk,
@@ -67,25 +66,6 @@ const MainPage = () => {
 
     getBoardsWithSighUp();
   }, [token, dispatch]);
-
-  const handleClickCreateBoard = (event: FormEvent<HTMLFormElement>, title: string, description: string): void => {
-    event.preventDefault();
-
-    if (token && idUser) {
-      const boardBody = {
-        owner: idUser,
-        users: [idUser],
-        description: description,
-        title: title,
-      };
-      dispatch(
-        createBoardThunk({
-          token,
-          body: boardBody,
-        })
-      );
-    }
-  };
 
   const handleClickGoTo =
     (to: To, title: string) =>
@@ -164,7 +144,7 @@ const MainPage = () => {
         {t('boards.title')}
       </Typography>
       {isLoading ? (
-        <span>Loading....</span>
+        <span>{t('boards.loading')}</span>
       ) : (
         <Grid container spacing={4}>
           {boards.map(({ _id, title, description, owner, users }) => (
@@ -262,7 +242,6 @@ const MainPage = () => {
             setOpenModal={setOpenModal}
           >
             <FormBoard
-              handleClickCreateBoard={handleClickCreateBoard}
               openModal={openModal}
               setOpenModal={setOpenModal}
             />
