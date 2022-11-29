@@ -40,13 +40,6 @@ const MainPage = () => {
     setOpenModal(true);
   };
 
-  const [bodyForBoard, setBodyForBoard] = useState<BodyForBoard>({
-    owner: idUser ? idUser : '',
-    users: [idUser ? idUser : ''],
-    title: 'no title',
-    description: 'no description',
-  });
-
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleClickOpenDialog = () => {
@@ -75,14 +68,20 @@ const MainPage = () => {
     getBoardsWithSighUp();
   }, [token, dispatch]);
 
-  const handleClickCreateButton = (event: FormEvent<HTMLFormElement>): void => {
+  const handleClickCreateBoard = (event: FormEvent<HTMLFormElement>, title: string, description: string): void => {
     event.preventDefault();
 
     if (token && idUser) {
+      const boardBody = {
+        owner: idUser,
+        users: [idUser],
+        description: description,
+        title: title,
+      };
       dispatch(
         createBoardThunk({
           token,
-          body: bodyForBoard,
+          body: boardBody,
         })
       );
     }
@@ -263,9 +262,7 @@ const MainPage = () => {
             setOpenModal={setOpenModal}
           >
             <FormBoard
-              bodyForBoard={bodyForBoard}
-              setBodyForBoard={setBodyForBoard}
-              func={handleClickCreateButton}
+              handleClickCreateBoard={handleClickCreateBoard}
               openModal={openModal}
               setOpenModal={setOpenModal}
             />
