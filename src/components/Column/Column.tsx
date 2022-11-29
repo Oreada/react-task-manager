@@ -33,6 +33,7 @@ import { updateColumn } from 'api/columns/updateColumn';
 import { useTranslation } from 'react-i18next';
 import { createSelector } from '@reduxjs/toolkit';
 import { useParams } from 'react-router-dom';
+import styles from './Column.module.scss';
 
 const makeTasksSelector = () =>
   createSelector(
@@ -43,7 +44,7 @@ const makeTasksSelector = () =>
 const tokenSelector = createSelector([(state: IRootState) => state.auth], (a) => a.token);
 const columnsSelector = createSelector([(state: IRootState) => state.board], (a) => a.columns);
 
-const Column = memo(({ id, title, order, addTask, delColumn, delTask }: ColumnPropsType) => {
+const Column = memo(({ id, title, index, order, addTask, delColumn, delTask }: ColumnPropsType) => {
   const { t } = useTranslation();
   const { id: idBoard } = useParams();
   const listRef = useRef<List>(null);
@@ -162,101 +163,112 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask }: ColumnPr
   }, areEqual);
 
   return (
-    <>
-      {isInput ? (
-        <FormColumnUpdate
-          titleColumn={columnUpdated ? columnUpdated.title : title}
-          setIsInput={setIsInput}
-          handleClickEdit={handleClickEdit}
-        />
-      ) : (
-        <Typography
-          variant="h6"
-          sx={{
-            width: '100%',
-            fontFamily: '"Noto Sans", sans-serif',
-            letterSpacing: '0.0625rem',
-            fontWeight: 600,
-            fontSize: '18px',
-            color: '#1c4931',
-            textTransform: 'uppercase',
-            textAlign: 'left',
-          }}
-          onClick={handleClickOpenInput}
+    <Draggable draggableId={id} index={index}>
+      {(provider) => (
+        <div
+          {...provider.draggableProps}
+          {...provider.dragHandleProps}
+          ref={provider.innerRef}
+          className={styles.column}
         >
-          {columnUpdated ? columnUpdated.title : title}
-        </Typography>
-      )}
-
-      <Droppable
-        droppableId={id}
-        type={DROPPABLE_TYPE_COLUMN}
-        mode="virtual"
-        renderClone={getRenderTask({ margin: 0, width: 200 })}
-      >
-        {(provider, snapshot) => {
-          const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;
-          return (
-            <List
-              height={200}
-              itemCount={itemCount}
-              itemSize={() => 40}
-              width={200}
-              ref={listRef}
-              outerRef={provider.innerRef}
-              itemData={tasks}
-              style={{
-                transition: 'background-color 0.2s ease',
-                paddingBottom: '10px',
-                touchAction: 'none',
+          {isInput ? (
+            <FormColumnUpdate
+              titleColumn={columnUpdated ? columnUpdated.title : title}
+              setIsInput={setIsInput}
+              handleClickEdit={handleClickEdit}
+            />
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                width: '100%',
+                fontFamily: '"Noto Sans", sans-serif',
+                letterSpacing: '0.0625rem',
+                fontWeight: 600,
+                fontSize: '18px',
+                color: '#1c4931',
+                textTransform: 'uppercase',
+                textAlign: 'left',
               }}
-              overscanCount={10}
-              onItemsRendered={handleRender}
+              onClick={handleClickOpenInput}
             >
-              {Row}
-            </List>
-          );
-        }}
-      </Droppable>
+              {columnUpdated ? columnUpdated.title : title}
+            </Typography>
+          )}
 
-      <Button
-        variant="outlined"
-        endIcon={<AddCircleRoundedIcon />}
-        color="success"
-        onClick={handleClickOpenModal}
-      >
-        {t('boards.formTaskCreate')}
-      </Button>
+          <Droppable
+            droppableId={id}
+            type={DROPPABLE_TYPE_COLUMN}
+            mode="virtual"
+            renderClone={getRenderTask({ margin: 0, width: 200 })}
+          >
+            {(provider, snapshot) => {
+              const itemCount: number = snapshot.isUsingPlaceholder
+                ? tasks.length + 1
+                : tasks.length;
+              return (
+                <List
+                  height={200}
+                  itemCount={itemCount}
+                  itemSize={() => 40}
+                  width={200}
+                  ref={listRef}
+                  outerRef={provider.innerRef}
+                  itemData={tasks}
+                  style={{
+                    transition: 'background-color 0.2s ease',
+                    paddingBottom: '10px',
+                    touchAction: 'none',
+                  }}
+                  overscanCount={10}
+                  onItemsRendered={handleRender}
+                >
+                  {Row}
+                </List>
+              );
+            }}
+          </Droppable>
 
-      <BasicModal
-        title={t('boards.formTaskCreate')}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      >
-        <FormTask
-          bodyForTask={bodyForTask}
-          setBodyForTask={setBodyForTask}
-          func={handleClickCreateButton}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
-      </BasicModal>
+          <Button
+            variant="outlined"
+            endIcon={<AddCircleRoundedIcon />}
+            color="success"
+            onClick={handleClickOpenModal}
+          >
+            {t('boards.formTaskCreate')}
+          </Button>
 
-      <IconButton
-        onClick={handleClickOpenDialog}
-        aria-label="delete"
-        sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
-      >
-        <DeleteOutlineOutlinedIcon />
-      </IconButton>
+          <BasicModal
+            title={t('boards.formTaskCreate')}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          >
+            <FormTask
+              bodyForTask={bodyForTask}
+              setBodyForTask={setBodyForTask}
+              func={handleClickCreateButton}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          </BasicModal>
 
-      <DialogDelete
-        title={t('boards.dialogColumn')}
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        func={handleClickDeleteButton}
-      />
-    </>
+          <IconButton
+            onClick={handleClickOpenDialog}
+            aria-label="delete"
+            sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+          >
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
+
+          <DialogDelete
+            title={t('boards.dialogColumn')}
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            func={handleClickDeleteButton}
+          />
+        </div>
+      )}
+    </Draggable>
   );
 });
 

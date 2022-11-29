@@ -29,7 +29,6 @@
   min-width: rem(250);
   max-height: rem(330);
   padding: 0;
-  margin-left: 1rem;
   border: 2px dashed $color-button;
   border-radius: 10px;
   background-color: $color-instructions-text;
@@ -39,19 +38,4 @@
     background-color: white;
     cursor: pointer;
   }
-}
-
-.column {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: rem(10);
-  width: rem(250);
-  max-height: rem(330);
-  padding: rem(20) rem(30) rem(20) rem(20);
-  margin-left: 1rem;
-  box-shadow: 0 0 20px $color-box-shadow;
-  border-radius: 10px;
-  background-color: white;
 }
