@@ -198,7 +198,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask }: ColumnPr
           const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;
           return (
             <List
-              height={itemCount > 0 ? 200 : 10}
+              height={200}
               itemCount={itemCount}
               itemSize={() => 40}
               width={200}

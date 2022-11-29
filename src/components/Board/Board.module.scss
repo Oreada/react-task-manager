@@ -13,7 +13,7 @@
 
   display: flex;
   width: 100vw;
-  height: calc((100vh - 123px - 90px) - 20px - 47px);
+  height: calc((100vh - 123px - 90px) - 20px - 47px - 37px);
   padding: rem(20);
 }
 
@@ -45,7 +45,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: rem(10);
   width: rem(250);
   max-height: rem(330);
