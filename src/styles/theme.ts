@@ -40,6 +40,36 @@ export let theme = createTheme({
       textTransform: 'none',
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          scrollbarColor: '#f8f8f8 #f8f8f8',
+          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+            width: '10px',
+            backgroundColor: '#f8f8f8',
+          },
+          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+            borderRadius: 8,
+            backgroundColor: '#d4d4d4',
+            minHeight: 24,
+          },
+          '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
+            backgroundColor: '#F3B848',
+          },
+          '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
+            backgroundColor: '#F3B848',
+          },
+          '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#F3B848',
+          },
+          '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+            backgroundColor: '#f8f8f8',
+          },
+        },
+      },
+    },
+  },
 });
 
 theme = responsiveFontSizes(theme);
