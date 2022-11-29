@@ -23,11 +23,9 @@ import { useTranslation } from 'react-i18next';
 
 const Board = () => {
   const { t } = useTranslation();
-
   const { id } = useParams();
-
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
@@ -230,26 +228,16 @@ const Board = () => {
             {(provider) => (
               <div className={styles.board} ref={provider.innerRef} {...provider.droppableProps}>
                 {columns.map(({ _id, title, order }, index) => (
-                  <Draggable key={_id} draggableId={_id} index={index}>
-                    {(provider) => (
-                      <div
-                        {...provider.draggableProps}
-                        {...provider.dragHandleProps}
-                        ref={provider.innerRef}
-                        className={styles.column}
-                      >
-                        <Column
-                          id={_id}
-                          title={title}
-                          order={order}
-                          addTask={addTaskMemo}
-                          delColumn={delColumnMemo}
-                          delTask={delTaskMemo}
-                          tasks={taskByColumns ? taskByColumns[_id] : []}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
+                  <Column
+                    key={_id}
+                    id={_id}
+                    index={index}
+                    title={title}
+                    order={order}
+                    addTask={addTaskMemo}
+                    delColumn={delColumnMemo}
+                    delTask={delTaskMemo}
+                  />
                 ))}
                 {provider.placeholder}
 

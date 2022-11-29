@@ -13,11 +13,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import { setBoardTitle } from 'store/boardSlice';
-import {
-  deleteBoardThunk,
-  editBoardThunk,
-  getBoardsThunk,
-} from 'store/mainSlice';
+import { deleteBoardThunk, editBoardThunk, getBoardsThunk } from 'store/mainSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
 import { ReactComponent as Back } from './assets/Back.svg';
@@ -41,7 +37,7 @@ const MainPage = () => {
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpenDialog = () => {
+  const handleClickOpenDialog = (): void => {
     setOpenDialog(true);
   };
 
@@ -69,53 +65,53 @@ const MainPage = () => {
 
   const handleClickGoTo =
     (to: To, title: string) =>
-      (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        event.preventDefault();
-        if (token && idUser) {
-          navigate(to);
-          dispatch(setBoardTitle({ titleBoard: title }));
-        }
-      };
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+      event.preventDefault();
+      if (token && idUser) {
+        navigate(to);
+        dispatch(setBoardTitle({ titleBoard: title }));
+      }
+    };
 
   const handleClickDelButton =
     (idBoard: string) =>
-      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-        event.preventDefault();
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+      event.preventDefault();
 
-        if (token) {
-          dispatch(deleteBoardThunk({ token, idBoard }));
-        }
-        event.stopPropagation();
-      };
+      if (token) {
+        dispatch(deleteBoardThunk({ token, idBoard }));
+      }
+      event.stopPropagation();
+    };
 
   const handleClickEditButton =
     (idBoard: string) =>
-      async (
-        event: FormEvent<HTMLFormElement>,
-        title: string,
-        description: string
-      ): Promise<void> => {
-        event.preventDefault();
+    async (
+      event: FormEvent<HTMLFormElement>,
+      title: string,
+      description: string
+    ): Promise<void> => {
+      event.preventDefault();
 
-        if (token && idUser) {
-          const newBody = {
-            owner: idUser,
-            users: [idUser],
-            description: description,
-            title: title,
-          };
+      if (token && idUser) {
+        const newBody = {
+          owner: idUser,
+          users: [idUser],
+          description: description,
+          title: title,
+        };
 
-          dispatch(
-            editBoardThunk({
-              token,
-              idBoard,
-              body: newBody,
-            })
-          );
-        }
+        dispatch(
+          editBoardThunk({
+            token,
+            idBoard,
+            body: newBody,
+          })
+        );
+      }
 
-        event.stopPropagation();
-      };
+      event.stopPropagation();
+    };
 
   return (
     <Container
@@ -241,10 +237,7 @@ const MainPage = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
           >
-            <FormBoard
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
+            <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
           </BasicModal>
         </Grid>
       )}

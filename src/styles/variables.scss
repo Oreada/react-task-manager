@@ -1,16 +1,12 @@
-$color-column-bg: rgb(128, 240, 234);
-$color-task-bg: rgb(231, 249, 126);
 $color-box-shadow: #d4d4d4;
 $color-green-main: #1c4931;
+$color-yellow-main: #f3b848;
 $color-instructions-text: #f8f8f8;
 $color-button: #e1e4e5;
 
 $html-font-size: 16;
 
 @function rem($value) {
-    $remValue: calc($value / $html-font-size) + rem; 
-    @return $remValue;
+  $remValue: calc($value / $html-font-size) + rem;
+  @return $remValue;
 }
-
-
-
