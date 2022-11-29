@@ -5,7 +5,7 @@ import { DraggableProvided, DraggableStateSnapshot, DraggableRubric } from 'reac
 export type ColumnPropsType = {
   id: string;
   title: string;
-  tasks: TaskType[];
+  // tasks: TaskType[];
   order: number;
   addTask: (newTask: TaskType) => void;
   delColumn: (idColumn: string) => void;

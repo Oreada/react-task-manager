@@ -36,10 +36,6 @@ const MainPage = () => {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const handleClickOpenModal = () => {
-    setOpenModal(true);
-  };
-
   const [bodyForBoard, setBodyForBoard] = useState<BodyForBoard>({
     owner: idUser ? idUser : '',
     users: [idUser ? idUser : ''],
@@ -49,7 +45,11 @@ const MainPage = () => {
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpenDialog = () => {
+  const handleClickOpenModal = (): void => {
+    setOpenModal(true);
+  };
+
+  const handleClickOpenDialog = (): void => {
     setOpenDialog(true);
   };
 

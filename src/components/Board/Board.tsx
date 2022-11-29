@@ -23,11 +23,9 @@ import { useTranslation } from 'react-i18next';
 
 const Board = () => {
   const { t } = useTranslation();
-
   const { id } = useParams();
-
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
@@ -35,11 +33,6 @@ const Board = () => {
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-
-  const handleClickOpenModal = () => {
-    setOpenModal(true);
-  };
-
   const [titleForColumn, setTitleForColumn] = useState<string>('no title');
 
   useEffect(() => {
@@ -118,6 +111,10 @@ const Board = () => {
     },
     [taskByColumns, dispatch]
   );
+
+  const handleClickOpenModal = (): void => {
+    setOpenModal(true);
+  };
 
   const handleDragEnd = ({
     destination,
@@ -244,7 +241,6 @@ const Board = () => {
                           addTask={addTaskMemo}
                           delColumn={delColumnMemo}
                           delTask={delTaskMemo}
-                          tasks={taskByColumns ? taskByColumns[_id] : []}
                         />
                       </div>
                     )}

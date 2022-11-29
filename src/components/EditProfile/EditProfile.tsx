@@ -16,7 +16,7 @@ import { AppDispatch, AuthReducer, IRootState } from 'store/model';
 import { IInput } from 'types/types';
 import { updateUser } from '../../api/users/updateUser';
 import { ReactComponent as EditSvg } from './assets/Edit.svg';
-import { FORM_INPUTS, FORM_TEXT } from './constants';
+import { FORM_INPUTS } from './constants';
 
 const EditProfile = () => {
   const { t } = useTranslation();

@@ -36,13 +36,14 @@ const Task = ({
 
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const getStyle = (style: CSSProperties) => ({
     ...provider?.draggableProps.style,
     ...style,
   });
 
-  const handleClickOpenUpdate = () => {
+  const handleClickOpenUpdate = (): void => {
     setOpenUpdate(true);
   };
 
@@ -50,9 +51,7 @@ const Task = ({
 
   const handlePointerOut = (): void => setIsHovering(false);
 
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-
-  const handleClickOpenDialog = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClickOpenDialog = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     setOpenDialog(true);
   };
 
@@ -73,7 +72,6 @@ const Task = ({
     event: FormEvent<HTMLFormElement>,
     title: string,
     description: string
-    // users: Array<string>
   ): Promise<TaskType | void> => {
     if (token) {
       const taskUpdated = await updateTask(token, idBoard, idColumn, idTask, {

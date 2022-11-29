@@ -5,7 +5,7 @@ import { deleteTask } from 'api/tasks/deleteTask';
 import { FormTask } from 'components/FormTask/FormTask';
 import { BasicModal } from 'components/Modal/BasicModal';
 import Task from 'components/Task/Task';
-import { CSSProperties, FormEvent, memo, useEffect, useRef, useState } from 'react';
+import { CSSProperties, FormEvent, memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Draggable,
   DraggableProvided,
@@ -22,7 +22,7 @@ import {
 } from 'react-window';
 import { IRootState } from 'store/model';
 import { BodyForTask, ColumnType, TaskType } from 'types/types';
-import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
+import { DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
 import { ColumnPropsType, RenderTaskFuncType } from './model';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Button, IconButton, Typography } from '@mui/material';
@@ -31,34 +31,46 @@ import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormColumnUpdate } from 'components/FormColumnUpdate/FormColumnUpdate';
 import { updateColumn } from 'api/columns/updateColumn';
 import { useTranslation } from 'react-i18next';
+import { createSelector } from '@reduxjs/toolkit';
+import { useParams } from 'react-router-dom';
 
-const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
+const makeTasksSelector = () =>
+  createSelector(
+    [(state: IRootState) => state.board.taskByColumns, (_, id: string) => id],
+    (a, id) => (a ? a[id] : [])
+  );
+
+const tokenSelector = createSelector([(state: IRootState) => state.auth], (a) => a.token);
+const columnsSelector = createSelector([(state: IRootState) => state.board], (a) => a.columns);
+
+const Column = memo(({ id, title, order, addTask, delColumn, delTask }: ColumnPropsType) => {
   const { t } = useTranslation();
-
+  const { id: idBoard } = useParams();
   const listRef = useRef<List>(null);
 
   const [scroll, setScroll] = useState<number>(0);
-  const { idBoard, columns } = useSelector((state: IRootState) => state.board);
-  const { token } = useSelector((state: IRootState) => state.auth);
 
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const token = useSelector((state: IRootState) => tokenSelector(state));
+  const columns = useSelector((state: IRootState) => columnsSelector(state));
 
-  const handleClickOpenModal = () => {
-    setOpenModal(true);
-  };
+  const tasksSelector = useMemo(makeTasksSelector, []);
+  const tasks = useSelector((state: IRootState) => tasksSelector(state, id));
 
   const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
     order: tasks.length,
     ...INITIAL_BODY_FOR_TASK,
   });
-
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [isInput, setIsInput] = useState<boolean>(false);
 
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
+  const handleClickOpenModal = (): void => {
+    setOpenModal(true);
   };
 
-  const [isInput, setIsInput] = useState<boolean>(false);
+  const handleClickOpenDialog = (): void => {
+    setOpenDialog(true);
+  };
 
   const handleClickOpenInput = () => {
     setIsInput(true);
@@ -78,7 +90,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
   ): Promise<TaskType | void> => {
     event.preventDefault();
 
-    if (token) {
+    if (token && idBoard) {
       const newTask = await createTask(token, idBoard, id, bodyForTask);
 
       addTask(newTask);
@@ -91,7 +103,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
   ): Promise<void> => {
     event.preventDefault();
 
-    if (token) {
+    if (token && idBoard) {
       delColumn(id);
 
       Promise.all(tasks.map(async ({ _id }) => await deleteTask(token, idBoard, id, _id)));
@@ -103,7 +115,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
     title: string
   ): Promise<ColumnType | void> => {
-    if (token) {
+    if (token && idBoard) {
       const columnUpdated = await updateColumn(token, idBoard, id, { title: title, order: order });
       setColumnUpdated(columnUpdated);
       return columnUpdated;
@@ -124,12 +136,6 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
         <Task
           idColumn={id}
           task={tasks[rubric.source.index]}
-          // idTask={tasks[rubric.source.index]._id}
-          // titleTask={tasks[rubric.source.index].title}
-          // descriptionTask={tasks[rubric.source.index].description}
-          // orderTask={tasks[rubric.source.index].order}
-          // ownerTask={tasks[rubric.source.index].userId}
-          // usersOfTask={tasks[rubric.source.index].users}
           delTask={delTask}
           provider={provider}
           isDragging={snapshot.isDragging}
@@ -222,7 +228,11 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
         {t('boards.formTaskCreate')}
       </Button>
 
-      <BasicModal title={t('boards.formTaskCreate')} openModal={openModal} setOpenModal={setOpenModal}>
+      <BasicModal
+        title={t('boards.formTaskCreate')}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      >
         <FormTask
           bodyForTask={bodyForTask}
           setBodyForTask={setBodyForTask}

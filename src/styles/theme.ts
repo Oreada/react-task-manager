@@ -17,6 +17,9 @@ export let theme = createTheme({
     blond: {
       main: '#f8f8f8',
     },
+    shadow: {
+      main: '#d4d4d4',
+    },
   },
   breakpoints: {
     values: {
@@ -48,6 +51,7 @@ declare module '@mui/material/styles' {
     colorful: Palette['primary'];
     neutral: Palette['primary'];
     blond: Palette['primary'];
+    shadow: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
@@ -57,6 +61,7 @@ declare module '@mui/material/styles' {
     colorful?: PaletteOptions['primary'];
     neutral?: PaletteOptions['primary'];
     blond?: PaletteOptions['primary'];
+    shadow?: PaletteOptions['primary'];
   }
 }
 
@@ -68,6 +73,18 @@ declare module '@mui/material/Button' {
     colorful: true;
     neutral: true;
     blond: true;
+    shadow: true;
+  }
+}
+
+declare module '@mui/icons-material/AddCircleRounded' {
+  interface AddCircleRoundedPropsColorOverrides {
+    basic: true;
+    substitute: true;
+    colorful: true;
+    neutral: true;
+    blond: true;
+    shadow: true;
   }
 }
 
