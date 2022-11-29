@@ -1,14 +1,13 @@
 import { Box, TextField, Button } from '@mui/material';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
-import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
-  bodyForBoard: BodyForBoard;
-  setBodyForBoard: (arg: BodyForBoard) => void;
-  func: (event: FormEvent<HTMLFormElement>) => void;
+  handleClickCreateBoard: (
+    event: FormEvent<HTMLFormElement>,
+    title: string,
+    description: string
+  ) => void;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
 }
@@ -32,8 +31,6 @@ export function FormBoard(props: FormBoardProps) {
 
   const [values, setValues] = useState(initialValues);
 
-  const { id } = useSelector((state: IRootState) => state.auth);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -43,34 +40,8 @@ export function FormBoard(props: FormBoardProps) {
     });
   };
 
-  const handleSubmitTitle = () => {
-    props.setBodyForBoard({
-      ...props.bodyForBoard,
-      title: values.title,
-      owner: id ? id : '',
-      users: [id ? id : ''],
-    });
-  };
-
-  const handleSubmitDescription = () => {
-    props.setBodyForBoard({
-      ...props.bodyForBoard,
-      description: values.description,
-      owner: id ? id : '',
-      users: [id ? id : ''],
-    });
-  };
-
-  useEffect(() => {
-    handleSubmitTitle();
-  }, [values.title]);
-
-  useEffect(() => {
-    handleSubmitDescription();
-  }, [values.description]);
-
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    props.func(event);
+    props.handleClickCreateBoard(event, values.title, values.description);
     props.setOpenModal(false);
   };
 
@@ -83,7 +54,6 @@ export function FormBoard(props: FormBoardProps) {
           name="title"
           value={values.title}
           onChange={handleInputChange}
-          onSubmit={handleSubmitTitle}
           autoFocus={true}
           fullWidth
           required
@@ -94,7 +64,6 @@ export function FormBoard(props: FormBoardProps) {
           name="description"
           value={values.description}
           onChange={handleInputChange}
-          onSubmit={handleSubmitDescription}
           multiline={true}
           minRows={5}
           fullWidth

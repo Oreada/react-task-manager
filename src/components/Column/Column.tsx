@@ -47,11 +47,6 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
     setOpenModal(true);
   };
 
-  const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
-    order: tasks.length,
-    ...INITIAL_BODY_FOR_TASK,
-  });
-
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleClickOpenDialog = () => {
@@ -73,13 +68,21 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
     // eslint-disable-next-line
   }, [columns]);
 
-  const handleClickCreateButton = async (
-    event: FormEvent<HTMLFormElement>
+  const handleClickCreateTask = async (
+    event: FormEvent<HTMLFormElement>, title: string, description: string, idUser: string
   ): Promise<TaskType | void> => {
     event.preventDefault();
 
     if (token) {
-      const newTask = await createTask(token, idBoard, id, bodyForTask);
+      const bodyTask = {
+        order: tasks.length,
+        userId: idUser,
+        users: [idUser],
+        title: title,
+        description: description,
+      };
+
+      const newTask = await createTask(token, idBoard, id, bodyTask);
 
       addTask(newTask);
       return newTask;
@@ -115,11 +118,11 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
 
   const getRenderTask: RenderTaskFuncType =
     (style: CSSProperties) =>
-    (
-      provider: DraggableProvided,
-      snapshot: DraggableStateSnapshot,
-      rubric: DraggableRubric
-    ): JSX.Element =>
+      (
+        provider: DraggableProvided,
+        snapshot: DraggableStateSnapshot,
+        rubric: DraggableRubric
+      ): JSX.Element =>
       (
         <Task
           idColumn={id}
@@ -224,9 +227,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
 
       <BasicModal title={t('boards.formTaskCreate')} openModal={openModal} setOpenModal={setOpenModal}>
         <FormTask
-          bodyForTask={bodyForTask}
-          setBodyForTask={setBodyForTask}
-          func={handleClickCreateButton}
+          handleClickCreateTask={handleClickCreateTask}
           openModal={openModal}
           setOpenModal={setOpenModal}
         />

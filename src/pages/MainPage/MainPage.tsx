@@ -40,13 +40,6 @@ const MainPage = () => {
     setOpenModal(true);
   };
 
-  const [bodyForBoard, setBodyForBoard] = useState<BodyForBoard>({
-    owner: idUser ? idUser : '',
-    users: [idUser ? idUser : ''],
-    title: 'no title',
-    description: 'no description',
-  });
-
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleClickOpenDialog = () => {
@@ -75,14 +68,20 @@ const MainPage = () => {
     getBoardsWithSighUp();
   }, [token, dispatch]);
 
-  const handleClickCreateButton = (event: FormEvent<HTMLFormElement>): void => {
+  const handleClickCreateBoard = (event: FormEvent<HTMLFormElement>, title: string, description: string): void => {
     event.preventDefault();
 
     if (token && idUser) {
+      const boardBody = {
+        owner: idUser,
+        users: [idUser],
+        description: description,
+        title: title,
+      };
       dispatch(
         createBoardThunk({
           token,
-          body: bodyForBoard,
+          body: boardBody,
         })
       );
     }
@@ -90,60 +89,53 @@ const MainPage = () => {
 
   const handleClickGoTo =
     (to: To, title: string) =>
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-      event.preventDefault();
-      if (token && idUser) {
-        navigate(to);
-        dispatch(setBoardTitle({ titleBoard: title }));
-      }
-    };
+      (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.preventDefault();
+        if (token && idUser) {
+          navigate(to);
+          dispatch(setBoardTitle({ titleBoard: title }));
+        }
+      };
 
   const handleClickDelButton =
     (idBoard: string) =>
-    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-      event.preventDefault();
+      async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        event.preventDefault();
 
-      if (token) {
-        dispatch(deleteBoardThunk({ token, idBoard }));
-      }
-      event.stopPropagation();
-    };
+        if (token) {
+          dispatch(deleteBoardThunk({ token, idBoard }));
+        }
+        event.stopPropagation();
+      };
 
   const handleClickEditButton =
     (idBoard: string) =>
-    async (
-      event: FormEvent<HTMLFormElement>,
-      title: string,
-      description: string
-    ): Promise<void> => {
-      event.preventDefault();
+      async (
+        event: FormEvent<HTMLFormElement>,
+        title: string,
+        description: string
+      ): Promise<void> => {
+        event.preventDefault();
 
-      if (token && idUser) {
-        const newBody = {
-          owner: idUser,
-          users: [idUser],
-          description: description,
-          title: title,
-        };
+        if (token && idUser) {
+          const newBody = {
+            owner: idUser,
+            users: [idUser],
+            description: description,
+            title: title,
+          };
 
-        dispatch(
-          editBoardThunk({
-            token,
-            idBoard,
-            body: newBody
-              ? newBody
-              : {
-                  owner: idUser,
-                  users: [idUser],
-                  description: 'description',
-                  title: 'title',
-                },
-          })
-        );
-      }
+          dispatch(
+            editBoardThunk({
+              token,
+              idBoard,
+              body: newBody,
+            })
+          );
+        }
 
-      event.stopPropagation();
-    };
+        event.stopPropagation();
+      };
 
   return (
     <Container
@@ -270,9 +262,7 @@ const MainPage = () => {
             setOpenModal={setOpenModal}
           >
             <FormBoard
-              bodyForBoard={bodyForBoard}
-              setBodyForBoard={setBodyForBoard}
-              func={handleClickCreateButton}
+              handleClickCreateBoard={handleClickCreateBoard}
               openModal={openModal}
               setOpenModal={setOpenModal}
             />

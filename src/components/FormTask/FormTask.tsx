@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
-import { BodyForTask, TaskType } from 'types/types';
+import { TaskType } from 'types/types';
 import { AppDispatch, IRootState } from 'store/model';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -8,9 +8,12 @@ import { getUserData } from 'store/authSlice';
 import { useTranslation } from 'react-i18next';
 
 interface FormTaskProps {
-  bodyForTask: BodyForTask;
-  setBodyForTask: (arg: BodyForTask) => void;
-  func: (event: FormEvent<HTMLFormElement>) => Promise<TaskType | void>;
+  handleClickCreateTask: (
+    event: FormEvent<HTMLFormElement>,
+    title: string,
+    description: string,
+    id: string
+  ) => Promise<TaskType | void>;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
 }
@@ -50,34 +53,8 @@ export function FormTask(props: FormTaskProps) {
     });
   };
 
-  const handleSubmitTitle = () => {
-    props.setBodyForTask({
-      ...props.bodyForTask,
-      title: values.title,
-      userId: id ? id : '',
-      users: [id ? id : ''],
-    });
-  };
-
-  const handleSubmitDescription = () => {
-    props.setBodyForTask({
-      ...props.bodyForTask,
-      description: values.description,
-      userId: id ? id : '',
-      users: [id ? id : ''],
-    });
-  };
-
-  useEffect(() => {
-    handleSubmitTitle();
-  }, [values.title]);
-
-  useEffect(() => {
-    handleSubmitDescription();
-  }, [values.description]);
-
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    props.func(event);
+    props.handleClickCreateTask(event, values.title, values.description, id ? id : '');
     props.setOpenModal(false);
   };
 
@@ -90,7 +67,6 @@ export function FormTask(props: FormTaskProps) {
           name="title"
           value={values.title}
           onChange={handleInputChange}
-          onSubmit={handleSubmitTitle}
           autoFocus={true}
           fullWidth
           required
@@ -101,7 +77,6 @@ export function FormTask(props: FormTaskProps) {
           name="description"
           value={values.description}
           onChange={handleInputChange}
-          onSubmit={handleSubmitDescription}
           multiline={true}
           minRows={5}
           fullWidth

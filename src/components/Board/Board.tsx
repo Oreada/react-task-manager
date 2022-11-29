@@ -40,8 +40,6 @@ const Board = () => {
     setOpenModal(true);
   };
 
-  const [titleForColumn, setTitleForColumn] = useState<string>('no title');
-
   useEffect(() => {
     if (id && token) {
       const getResult = async (): Promise<void> => {
@@ -174,11 +172,14 @@ const Board = () => {
     }
   };
 
-  const handleClickCreateColumn = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleClickCreateColumn = async (
+    event: FormEvent<HTMLFormElement>,
+    title: string
+  ): Promise<void> => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
-        title: titleForColumn,
+        title: title,
         order: columns.length,
       });
 
@@ -262,9 +263,7 @@ const Board = () => {
                   setOpenModal={setOpenModal}
                 >
                   <FormColumn
-                    titleForColumn={titleForColumn}
-                    setTitleForColumn={setTitleForColumn}
-                    func={handleClickCreateColumn}
+                    handleClickCreateColumn={handleClickCreateColumn}
                     openModal={openModal}
                     setOpenModal={setOpenModal}
                   />
