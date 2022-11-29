@@ -144,7 +144,7 @@ const MainPage = () => {
         {t('boards.title')}
       </Typography>
       {isLoading ? (
-        <span>Loading....</span>
+        <span>{t('boards.loading')}</span>
       ) : (
         <Grid container spacing={4}>
           {boards.map(({ _id, title, description, owner, users }) => (
