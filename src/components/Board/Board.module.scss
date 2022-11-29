@@ -1,11 +1,13 @@
 @import '../../styles/variables.scss';
 
 .wrap {
+  flex: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: space-between;
   width: 100%;
-  padding: rem(24);
+  padding: rem(24) rem(24) 0 rem(24);
 }
 
 .board {
@@ -13,7 +15,7 @@
 
   display: flex;
   width: 100vw;
-  height: calc((100vh - 123px - 90px) - 20px - 47px - 37px);
+  height: calc((100vh - 123px - 90px) - 48px - 48px - 37px);
   padding: rem(20);
 }
 
