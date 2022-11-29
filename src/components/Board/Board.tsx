@@ -33,7 +33,10 @@ const Board = () => {
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [titleForColumn, setTitleForColumn] = useState<string>('no title');
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     if (id && token) {
@@ -112,10 +115,6 @@ const Board = () => {
     [taskByColumns, dispatch]
   );
 
-  const handleClickOpenModal = (): void => {
-    setOpenModal(true);
-  };
-
   const handleDragEnd = ({
     destination,
     source: { index: sourceIndex, droppableId: sourceColumnId },
@@ -171,11 +170,14 @@ const Board = () => {
     }
   };
 
-  const handleClickCreateColumn = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleClickCreateColumn = async (
+    event: FormEvent<HTMLFormElement>,
+    title: string
+  ): Promise<void> => {
     event.preventDefault();
     if (token) {
       const newColumn = await createColumn(token, idBoard, {
-        title: titleForColumn,
+        title: title,
         order: columns.length,
       });
 
@@ -249,9 +251,7 @@ const Board = () => {
                   setOpenModal={setOpenModal}
                 >
                   <FormColumn
-                    titleForColumn={titleForColumn}
-                    setTitleForColumn={setTitleForColumn}
-                    func={handleClickCreateColumn}
+                    handleClickCreateColumn={handleClickCreateColumn}
                     openModal={openModal}
                     setOpenModal={setOpenModal}
                   />

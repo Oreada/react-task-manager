@@ -50,6 +50,7 @@ const Column = memo(({ id, title, index, order, addTask, delColumn, delTask }: C
   const listRef = useRef<List>(null);
 
   const [scroll, setScroll] = useState<number>(0);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const token = useSelector((state: IRootState) => tokenSelector(state));
   const columns = useSelector((state: IRootState) => columnsSelector(state));
@@ -57,11 +58,6 @@ const Column = memo(({ id, title, index, order, addTask, delColumn, delTask }: C
   const tasksSelector = useMemo(makeTasksSelector, []);
   const tasks = useSelector((state: IRootState) => tasksSelector(state, id));
 
-  const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
-    order: tasks.length,
-    ...INITIAL_BODY_FOR_TASK,
-  });
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [isInput, setIsInput] = useState<boolean>(false);
 
@@ -86,13 +82,24 @@ const Column = memo(({ id, title, index, order, addTask, delColumn, delTask }: C
     // eslint-disable-next-line
   }, [columns]);
 
-  const handleClickCreateButton = async (
-    event: FormEvent<HTMLFormElement>
+  const handleClickCreateTask = async (
+    event: FormEvent<HTMLFormElement>,
+    title: string,
+    description: string,
+    idUser: string
   ): Promise<TaskType | void> => {
     event.preventDefault();
 
     if (token && idBoard) {
-      const newTask = await createTask(token, idBoard, id, bodyForTask);
+      const bodyTask = {
+        order: tasks.length,
+        userId: idUser,
+        users: [idUser],
+        title: title,
+        description: description,
+      };
+
+      const newTask = await createTask(token, idBoard, id, bodyTask);
 
       addTask(newTask);
       return newTask;
@@ -244,9 +251,7 @@ const Column = memo(({ id, title, index, order, addTask, delColumn, delTask }: C
             setOpenModal={setOpenModal}
           >
             <FormTask
-              bodyForTask={bodyForTask}
-              setBodyForTask={setBodyForTask}
-              func={handleClickCreateButton}
+              handleClickCreateTask={handleClickCreateTask}
               openModal={openModal}
               setOpenModal={setOpenModal}
             />
