@@ -9,9 +9,10 @@ import { authSlice } from 'store/authSlice';
 import { INITIAL_AUTH_STATE } from 'store/constants';
 import { AppDispatch, IRootState } from 'store/model';
 import { typeSubPage } from 'types/types';
-import { APP_NAME, LINK_NAMES } from './constants';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import styles from './Header.module.scss';
+import { BasicModal } from 'components/Modal/BasicModal';
+import { FormBoard } from 'components/FormBoard/FormBoard';
 
 export type LangsType = {
   en: {
@@ -29,6 +30,12 @@ const lngs: LangsType = {
 
 const Header = () => {
   const { t, i18n } = useTranslation();
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
 
   const [scroll, setScroll] = useState(false);
 
@@ -75,6 +82,9 @@ const Header = () => {
                 <NavLink to={BOARDS_PATH} className={styles.navigation__item}>
                   {t('header.linkBoards')}
                 </NavLink>
+                <div className={styles.navigation__item} onClick={handleClickOpenModal}>
+                  {t('boards.formBoardCreate')}
+                </div>
                 <NavLink to={EDIT_PATH} className={styles.navigation__item}>
                   {t('header.linkProfile')}
                 </NavLink>
@@ -134,6 +144,14 @@ const Header = () => {
             </div>
           </nav>
         </div>
+
+        <BasicModal
+          title={t('boards.formBoardCreate')}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
+        </BasicModal>
       </header>
     </>
   );

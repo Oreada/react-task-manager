@@ -13,12 +13,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import { setBoardTitle } from 'store/boardSlice';
-import {
-  createBoardThunk,
-  deleteBoardThunk,
-  editBoardThunk,
-  getBoardsThunk,
-} from 'store/mainSlice';
+import { deleteBoardThunk, editBoardThunk, getBoardsThunk } from 'store/mainSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { BodyForBoard } from 'types/types';
 import { ReactComponent as Back } from './assets/Back.svg';
@@ -67,29 +62,6 @@ const MainPage = () => {
 
     getBoardsWithSighUp();
   }, [token, dispatch]);
-
-  const handleClickCreateBoard = (
-    event: FormEvent<HTMLFormElement>,
-    title: string,
-    description: string
-  ): void => {
-    event.preventDefault();
-
-    if (token && idUser) {
-      const boardBody = {
-        owner: idUser,
-        users: [idUser],
-        description: description,
-        title: title,
-      };
-      dispatch(
-        createBoardThunk({
-          token,
-          body: boardBody,
-        })
-      );
-    }
-  };
 
   const handleClickGoTo =
     (to: To, title: string) =>
@@ -168,7 +140,7 @@ const MainPage = () => {
         {t('boards.title')}
       </Typography>
       {isLoading ? (
-        <span>Loading....</span>
+        <span>{t('boards.loading')}</span>
       ) : (
         <Grid container spacing={4}>
           {boards.map(({ _id, title, description, owner, users }) => (
@@ -265,11 +237,7 @@ const MainPage = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
           >
-            <FormBoard
-              handleClickCreateBoard={handleClickCreateBoard}
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
+            <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
           </BasicModal>
         </Grid>
       )}
