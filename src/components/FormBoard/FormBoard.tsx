@@ -1,13 +1,9 @@
 import { Box, TextField, Button } from '@mui/material';
+import { useHandleClickCreateBoard } from 'hooks/useHandleClickCreateBoard';
 import { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface FormBoardProps {
-  handleClickCreateBoard: (
-    event: FormEvent<HTMLFormElement>,
-    title: string,
-    description: string
-  ) => void;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
 }
@@ -29,6 +25,8 @@ const initialValues = {
 export function FormBoard(props: FormBoardProps) {
   const { t } = useTranslation();
 
+  const createBord = useHandleClickCreateBoard();
+
   const [values, setValues] = useState(initialValues);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +38,13 @@ export function FormBoard(props: FormBoardProps) {
     });
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    props.handleClickCreateBoard(event, values.title, values.description);
+  const HandleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    createBord(event, values.title, values.description);
     props.setOpenModal(false);
   };
 
   return (
-    <form style={{ width: '100%' }} onSubmit={handleFormSubmit}>
+    <form style={{ width: '100%' }} onSubmit={HandleFormSubmit}>
       <Box sx={style}>
         <TextField
           variant="outlined"
