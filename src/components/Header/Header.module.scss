@@ -1,72 +1,62 @@
 @import "../../styles/variables.scss";
 
 .header {
-    position: sticky;
-    z-index: 100;
-    top: 0;
-    left: 0;
-
-    font-weight: 600;
-
-    background-color: #f3b848;
-
-    transition: background 0.5s ease 0s;
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  font-weight: 600;
+  background-color: #f3b848;
+  transition: background 0.5s ease 0s;
 }
 
 .header-scroll {
-    position: sticky;
-    z-index: 10;
-    top: 0;
-    left: 0;
-
-    font-weight: 600;
-
-    background-color: #e1e4e5;
-    box-shadow: 0 0 rem(20) #e1e4e5;
-
-    transition: background 0.5s ease 0s;
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  font-weight: 600;
+  background-color: #e1e4e5;
+  box-shadow: 0 0 rem(20) #e1e4e5;
+  transition: background 0.5s ease 0s;
 }
 
 .header__container {
-    max-width: rem(1200);
-    padding-top: rem(20);
-    padding-bottom: rem(20);
-    padding-left: rem(20);
-    padding-right: rem(20);
-    margin: 0px auto;
+  max-width: rem(1200);
+  padding-top: rem(20);
+  padding-bottom: rem(20);
+  padding-left: rem(20);
+  padding-right: rem(20);
+  margin: 0px auto;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: rem(30);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: rem(30);
 }
 
 .logo-box {
-    height: rem(83);
-    width: rem(208);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-image: url(./logo-green.svg);
-    background-repeat: no-repeat;
-    background-position: center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url(./assets/logo-green.svg) no-repeat center center/cover;
 }
 
 .logo-text {
-    font-weight: 600;
-    letter-spacing: rem(2);
-    color: #f8f8f8;
+  font-weight: 600;
+  letter-spacing: rem(2);
+  color: #f8f8f8;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .navigation {
-    display: flex;
-    align-items: center;
-    gap: rem(50);
+  display: flex;
+  align-items: center;
+  gap: rem(22);
 }
 
 .navigation__item {
-    color: inherit;
+  color: inherit;
+  white-space: nowrap;
 }

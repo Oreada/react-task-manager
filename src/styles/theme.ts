@@ -71,6 +71,16 @@ declare module '@mui/material/Button' {
   }
 }
 
+declare module '@mui/material/IconButton' {
+  interface IconButtonPropsColorOverrides {
+    basic: true;
+    substitute: true;
+    colorful: true;
+    neutral: true;
+    blond: true;
+  }
+}
+
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
     xs: true;
