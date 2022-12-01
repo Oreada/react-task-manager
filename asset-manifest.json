@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/project-management-app/static/css/main.763943f9.css",
-    "main.js": "/project-management-app/static/js/main.f98ac5df.js",
+    "main.css": "/project-management-app/static/css/main.28a9a7c7.css",
+    "main.js": "/project-management-app/static/js/main.6dfa3119.js",
     "static/media/photo_sergey.png": "/project-management-app/static/media/photo_sergey.18f39040cdf906e9b6d2.png",
     "static/media/Hello.svg": "/project-management-app/static/media/Hello.8e38f9af113917ee04ac7a4988ae9f04.svg",
     "static/media/Group.svg": "/project-management-app/static/media/Group.dda92694f185918033816b25df8c935a.svg",
@@ -29,11 +29,13 @@
     "static/media/noto-sans-v27-latin_cyrillic-900.woff2": "/project-management-app/static/media/noto-sans-v27-latin_cyrillic-900.89326b73293a114138a8.woff2",
     "static/media/noto-sans-v27-latin_cyrillic-regular.woff2": "/project-management-app/static/media/noto-sans-v27-latin_cyrillic-regular.4f212fcfbdbc2767696b.woff2",
     "static/media/noto-sans-v27-latin_cyrillic-700.woff2": "/project-management-app/static/media/noto-sans-v27-latin_cyrillic-700.203420a6cf36375292ab.woff2",
+    "static/media/back-for-error.svg": "/project-management-app/static/media/back-for-error.342009657432333275363af2741202d0.svg",
     "static/media/clock-rust.svg": "/project-management-app/static/media/clock-rust.0f4837a22dec01f35af8.svg",
     "static/media/puzzles-green.svg": "/project-management-app/static/media/puzzles-green.4fa60f5071711e3feda9.svg",
     "static/media/global-rust.svg": "/project-management-app/static/media/global-rust.dde620a80b53437505bd.svg",
     "static/media/rs_school_js.svg": "/project-management-app/static/media/rs_school_js.ad178c0df28bc133be34b982d62f431d.svg",
     "static/media/not-found-404-1-rust.svg": "/project-management-app/static/media/not-found-404-1-rust.f2fe746b7aaf376df5826e865b13f536.svg",
+    "static/media/Edit.svg": "/project-management-app/static/media/Edit.41630627ce40f763350d2fb9fdbf6cee.svg",
     "static/media/youtube-music-2-rust.svg": "/project-management-app/static/media/youtube-music-2-rust.2381f3a307681a3f68e3.svg",
     "static/media/aim-rust.svg": "/project-management-app/static/media/aim-rust.441f83c9ce4a2d497c64.svg",
     "static/media/git-hub-logo.svg": "/project-management-app/static/media/git-hub-logo.5d79a812313b50cf1ce639bfbaabad76.svg",
@@ -44,11 +46,11 @@
     "static/media/team-back-circles-2.svg": "/project-management-app/static/media/team-back-circles-2.5290d1e4899b02d43c7a.svg",
     "static/media/Blob_2.svg": "/project-management-app/static/media/Blob_2.2276e354ce433ae735142ea730d1d9e8.svg",
     "static/media/hero-back-orange.svg": "/project-management-app/static/media/hero-back-orange.c16aee8a485e6e178d9d.svg",
-    "main.763943f9.css.map": "/project-management-app/static/css/main.763943f9.css.map",
-    "main.f98ac5df.js.map": "/project-management-app/static/js/main.f98ac5df.js.map"
+    "main.28a9a7c7.css.map": "/project-management-app/static/css/main.28a9a7c7.css.map",
+    "main.6dfa3119.js.map": "/project-management-app/static/js/main.6dfa3119.js.map"
   },
   "entrypoints": [
-    "static/css/main.763943f9.css",
-    "static/js/main.f98ac5df.js"
+    "static/css/main.28a9a7c7.css",
+    "static/js/main.6dfa3119.js"
   ]
 }

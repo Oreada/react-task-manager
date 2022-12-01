@@ -145,7 +145,15 @@
 
 //! Delete Task
 
+//! Delete User
+
+//! Find User
+
 //! Get Columns in board
+
+//! Get Tasks by UserID, where user is owner or one of invited
+
+//! Get Tasks by search request (In title, description)
 
 //! Get Tasks in selected Board
 
@@ -154,3 +162,11 @@
 //! Get token
 
 //! Update Board
+
+//! Update Column
+
+//! Update Task
+
+//! Update User
+
+//! Поиск регистронезависимый
