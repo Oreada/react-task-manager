@@ -1,7 +1,8 @@
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Container, styled, Switch, Typography } from '@mui/material';
 import { LOCAL_STORAGE_KEY } from 'constants/constants';
 import { removeLocal } from 'helpers';
-import { MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AUTHENTICATION_PATH, BOARDS_PATH, EDIT_PATH, ROOT_PATH } from 'router/constants';
@@ -9,28 +10,47 @@ import { authSlice } from 'store/authSlice';
 import { INITIAL_AUTH_STATE } from 'store/constants';
 import { AppDispatch, IRootState } from 'store/model';
 import { typeSubPage } from 'types/types';
-import { APP_NAME, LINK_NAMES } from './constants';
-import { useTranslation, Trans } from 'react-i18next';
+import { ReactComponent as EngSvg } from './en.svg';
 import styles from './Header.module.scss';
+import { ReactComponent as RuSvg } from './ru.svg';
 
-export type LangsType = {
-  en: {
-    nativeName: string;
-  };
-  ru: {
-    nativeName: string;
-  };
-};
+export enum Lang {
+  en = 'en',
+  ru = 'ru',
+}
 
-const lngs: LangsType = {
-  en: { nativeName: 'English' },
-  ru: { nativeName: 'Русский' },
-};
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: 62,
+  height: 34,
+  padding: 7,
+  '& .MuiSwitch-switchBase': {
+    margin: 1,
+    padding: 0,
+    '&.Mui-checked': {
+      color: '#fff',
+      '& + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: theme.palette.colorful.main,
+      },
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    width: 30,
+    height: 30,
+  },
+  '& .MuiSwitch-track': {
+    opacity: 1,
+    backgroundColor: theme.palette.colorful.main,
+    borderRadius: 20 / 2,
+  },
+}));
 
 const Header = () => {
   const { t, i18n } = useTranslation();
+  const InitialLanguage = i18n.resolvedLanguage === Lang.en ? Lang.en : Lang.ru;
 
   const [scroll, setScroll] = useState(false);
+  const [lang, setLang] = useState<Lang>(InitialLanguage);
 
   const { id } = useSelector((state: IRootState) => state.auth);
   const navigate = useNavigate();
@@ -43,6 +63,11 @@ const Header = () => {
     dispatch(setUserData({ user: null }));
     removeLocal(LOCAL_STORAGE_KEY);
     navigate('/');
+  };
+
+  const changeLang = (event: ChangeEvent<HTMLInputElement>) => {
+    setLang(event.target.checked ? Lang.ru : Lang.en);
+    i18n.changeLanguage(event.target.checked ? Lang.ru : Lang.en);
   };
 
   const changeHeaderStyles = () => {
@@ -63,12 +88,29 @@ const Header = () => {
   return (
     <>
       <header className={scroll ? styles['header-scroll'] : styles.header}>
-        <div className={styles.header__container}>
-          <div className={styles['logo-box']}>
+        <Container
+          sx={{
+            p: 2.5,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 2.75,
+          }}
+        >
+          <Box className={styles['logo-box']}>
             <NavLink to={ROOT_PATH} end>
-              <div className={styles['logo-text']}>{t('header.appName')}</div>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  letterSpacing: 2,
+                  color: 'blond.main',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {t('header.appName')}
+              </Typography>
             </NavLink>
-          </div>
+          </Box>
           <nav className={styles.navigation}>
             {id ? (
               <>
@@ -113,27 +155,14 @@ const Header = () => {
               </>
             )}
 
-            <div>
-              {Object.keys(lngs).map((lng) => (
-                <Button
-                  key={lng}
-                  type="submit"
-                  variant="outlined"
-                  color="substitute"
-                  size="small"
-                  onClick={() => i18n.changeLanguage(lng)}
-                >
-                  <Typography
-                    component="p"
-                    fontWeight={i18n.resolvedLanguage === lng ? 'bold' : 'normal'}
-                  >
-                    {lngs[lng as keyof LangsType].nativeName}
-                  </Typography>
-                </Button>
-              ))}
-            </div>
+            <MaterialUISwitch
+              icon={<EngSvg />}
+              checkedIcon={<RuSvg />}
+              onChange={changeLang}
+              checked={lang === Lang.ru}
+            />
           </nav>
-        </div>
+        </Container>
       </header>
     </>
   );
