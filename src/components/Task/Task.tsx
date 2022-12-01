@@ -26,7 +26,6 @@ const Task = ({
   },
   delTask,
   provider,
-  style,
 }: TaskPropsType) => {
   const { t } = useTranslation();
 
@@ -37,11 +36,6 @@ const Task = ({
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-
-  const getStyle = (style: CSSProperties) => ({
-    ...provider?.draggableProps.style,
-    ...style,
-  });
 
   const handleClickOpenUpdate = (): void => {
     setOpenUpdate(true);
@@ -93,7 +87,6 @@ const Task = ({
       {...provider?.draggableProps}
       {...provider?.dragHandleProps}
       ref={provider?.innerRef}
-      style={getStyle(style)}
       onMouseOver={handlePointerOver}
       onMouseOut={handlePointerOut}
       className={styles.task}

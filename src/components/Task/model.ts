@@ -17,7 +17,6 @@ export type TaskPropsType = {
   isDragging?: boolean;
   provider?: DraggableProvided;
   isClone?: boolean;
-  style: CSSProperties;
   index?: number;
   // titleTask: string;
   // descriptionTask: string;

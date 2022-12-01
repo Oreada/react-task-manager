@@ -1,11 +1,9 @@
 .task {
-  display: flex;
-  align-items: center;
+  position: relative;
+  width: 200px;
   border: 1px solid #d4d4d4;
   border-radius: 4px;
   padding: 10px;
-  transition: 0.5s transform;
-  touch-action: none;
 
   &:hover {
     background-color: #d4d4d4;
