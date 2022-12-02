@@ -3,7 +3,7 @@ import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
 import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
 import styles from './Board.module.scss';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
@@ -33,10 +33,6 @@ const Board = () => {
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-
-  const handleClickOpenModal = () => {
-    setOpenModal(true);
-  };
 
   useEffect(() => {
     if (id && token) {
@@ -115,6 +111,8 @@ const Board = () => {
     [taskByColumns, dispatch]
   );
 
+  const handleClickOpenModal = (): void => setOpenModal(true);
+
   const handleDragEnd = ({
     destination,
     source: { index: sourceIndex, droppableId: sourceColumnId },
@@ -187,11 +185,8 @@ const Board = () => {
     }
   };
 
-  const goBoards = () => navigate(BOARDS_PATH);
-
-  const handleClickBack = () => {
-    goBoards();
-  };
+  const goBoards = (): void => navigate(BOARDS_PATH);
+  const handleClickBack = (): void => goBoards();
 
   return (
     <div className={styles.wrap}>
@@ -245,17 +240,19 @@ const Board = () => {
                   <AddBoxOutlinedIcon fontSize="large" sx={{ color: '#d4d4d4' }} />
                 </div>
 
-                <BasicModal
-                  title={t('boards.formColumnCreate')}
-                  openModal={openModal}
-                  setOpenModal={setOpenModal}
-                >
-                  <FormColumn
-                    handleClickCreateColumn={handleClickCreateColumn}
+                {openModal && (
+                  <BasicModal
+                    title={t('boards.formColumnCreate')}
                     openModal={openModal}
                     setOpenModal={setOpenModal}
-                  />
-                </BasicModal>
+                  >
+                    <FormColumn
+                      handleClickCreateColumn={handleClickCreateColumn}
+                      openModal={openModal}
+                      setOpenModal={setOpenModal}
+                    />
+                  </BasicModal>
+                )}
               </div>
             )}
           </Droppable>

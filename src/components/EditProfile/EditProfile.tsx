@@ -35,7 +35,7 @@ const EditProfile = () => {
   const inputContent = FORM_INPUTS;
 
   const navigate = useNavigate();
-  const goHome = () => navigate(ROOT_PATH);
+  const goHome = (): void => navigate(ROOT_PATH);
 
   useEffect(() => {
     setCanSubmit(
@@ -104,9 +104,7 @@ const EditProfile = () => {
     setError('');
   };
 
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true);
-  };
+  const handleClickOpenDialog = () => setOpenDialog(true);
 
   const handleClickDeleteUser = (event: React.MouseEvent): void => {
     if (token && idUser) {

@@ -46,17 +46,11 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
   const [isInput, setIsInput] = useState<boolean>(false);
   const [columnUpdated, setColumnUpdated] = useState<ColumnType | null>(null);
 
-  const handleClickOpenModal = (): void => {
-    setOpenModal(true);
-  };
+  const handleClickOpenModal = (): void => setOpenModal(true);
 
-  const handleClickOpenDialog = (): void => {
-    setOpenDialog(true);
-  };
+  const handleClickOpenDialog = (): void => setOpenDialog(true);
 
-  const handleClickOpenInput = (): void => {
-    setIsInput(true);
-  };
+  const handleClickOpenInput = (): void => setIsInput(true);
 
   const handleClickCreateTask = async (
     event: FormEvent<HTMLFormElement>,
