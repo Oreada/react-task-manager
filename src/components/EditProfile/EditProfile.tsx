@@ -3,7 +3,7 @@ import { Alert, Box, Button, Container, Grow, Snackbar, Stack, Typography } from
 import { deleteUser } from 'api/users/deleteUser';
 import CustomInput from 'components/CustomInput/CustomInput';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
-import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from 'constants/constants';
+import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from '../../constants/constants';
 import { removeLocal, saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-import { URL_COLUMNS_SET } from 'constants/constants';
+import { URL_COLUMNS_SET } from '../../constants/constants';
 import { ColumnType, BodyForColumnsSetOrder } from 'types/types';
 
 //! Change order of list of columns

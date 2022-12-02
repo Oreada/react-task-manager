@@ -1,9 +1,8 @@
 import { TaskPropsType } from './model';
-import { DraggableProvided } from 'react-beautiful-dnd';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
-import { CSSProperties, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
 import { IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
@@ -25,6 +24,7 @@ const Task = ({
     users: usersOfTask,
   },
   delTask,
+  isDragging,
   provider,
 }: TaskPropsType) => {
   const { t } = useTranslation();
@@ -45,9 +45,7 @@ const Task = ({
 
   const handlePointerOut = (): void => setIsHovering(false);
 
-  const handleClickOpenDialog = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    setOpenDialog(true);
-  };
+  const handleClickOpenDialog = (): void => setOpenDialog(true);
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -81,11 +79,15 @@ const Task = ({
       return taskUpdated;
     }
   };
-
+  console.log(isDragging);
   return (
     <div
       {...provider?.draggableProps}
       {...provider?.dragHandleProps}
+      style={{
+        backgroundColor: isDragging ? '#d4d4d4' : 'transparent',
+        ...provider?.draggableProps.style,
+      }}
       ref={provider?.innerRef}
       onMouseOver={handlePointerOver}
       onMouseOut={handlePointerOut}
@@ -120,28 +122,32 @@ const Task = ({
         </IconButton>
       )}
 
-      <BasicModal
-        title={t('boards.formTaskUpdate')}
-        openModal={openUpdate}
-        setOpenModal={setOpenUpdate}
-      >
-        <FormTaskUpdate
-          title={taskUpdated ? taskUpdated.title : titleTask}
-          description={taskUpdated ? taskUpdated.description : descriptionTask}
-          userId={ownerTask}
-          users={usersOfTask}
-          handleClickEditButton={handleClickEditButton}
-          openUpdate={openUpdate}
-          setOpenUpdate={setOpenUpdate}
-        />
-      </BasicModal>
+      {openUpdate && (
+        <BasicModal
+          title={t('boards.formTaskUpdate')}
+          openModal={openUpdate}
+          setOpenModal={setOpenUpdate}
+        >
+          <FormTaskUpdate
+            title={taskUpdated ? taskUpdated.title : titleTask}
+            description={taskUpdated ? taskUpdated.description : descriptionTask}
+            userId={ownerTask}
+            users={usersOfTask}
+            handleClickEditButton={handleClickEditButton}
+            openUpdate={openUpdate}
+            setOpenUpdate={setOpenUpdate}
+          />
+        </BasicModal>
+      )}
 
-      <DialogDelete
-        title={t('boards.dialogTask')}
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        func={handleClickDeleteButton}
-      />
+      {openDialog && (
+        <DialogDelete
+          title={t('boards.dialogTask')}
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          func={handleClickDeleteButton}
+        />
+      )}
     </div>
   );
 };

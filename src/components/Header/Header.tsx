@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material';
-import { LOCAL_STORAGE_KEY } from 'constants/constants';
+import { LOCAL_STORAGE_KEY } from '../../constants/constants';
 import { removeLocal } from 'helpers';
 import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

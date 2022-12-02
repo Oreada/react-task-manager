@@ -1,4 +1,4 @@
-import { URL_BOARDS_SET } from 'constants/constants';
+import { URL_BOARDS_SET } from '../../constants/constants';
 import { Board } from 'types/types';
 
 //! Get Boards by list of boardId

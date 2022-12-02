@@ -1,4 +1,4 @@
-import { URL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from '../../constants/constants';
 import { BodyForColumn, ColumnType } from 'types/types';
 
 //! Create Column in board
