@@ -1,4 +1,4 @@
-import { URL_COLUMNS_SET } from 'constants/constants';
+import { URL_COLUMNS_SET } from '../../constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Get Columns by UserID, where user is owner or one of invited

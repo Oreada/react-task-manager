@@ -6,7 +6,7 @@ export const Cicleron = <AccountCircleIcon sx={{ color: 'action.active', mr: 1, 
 export const Mail = <MailOutlineIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />;
 export const Lock = <LockOpenIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />;
 
-export const URL_BASE = 'https://rs-ap.herokuapp.com';
+export const URL_BASE = 'https://backrss-react-production.up.railway.app';
 export const URL_SINGUP = `${URL_BASE}/auth/signup`;
 export const URL_SINGIN = `${URL_BASE}/auth/signin`;
 export const URL_USERS = `${URL_BASE}/users`;

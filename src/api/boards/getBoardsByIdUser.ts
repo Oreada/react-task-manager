@@ -1,4 +1,4 @@
-import { URL_BOARDS_SET } from 'constants/constants';
+import { URL_BOARDS_SET } from '../../constants/constants';
 import { Board } from 'types/types';
 
 //! Get Boards where user is owner or one of invited

@@ -72,8 +72,10 @@ export function FormTaskUpdate(props: FormTaskProps) {
           name="title"
           inputRef={titleTask}
           autoFocus={true}
+          multiline={true}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         <TextField
           variant="outlined"
@@ -84,6 +86,7 @@ export function FormTaskUpdate(props: FormTaskProps) {
           minRows={5}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         {!!ownerLogin && (
           <Typography>

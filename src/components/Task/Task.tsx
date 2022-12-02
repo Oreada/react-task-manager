@@ -1,9 +1,8 @@
 import { TaskPropsType } from './model';
-import { DraggableProvided } from 'react-beautiful-dnd';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
-import { CSSProperties, FormEvent, useState } from 'react';
+import { AppDispatch, IRootState } from 'store/model';
+import { FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
 import { IconButton, Typography } from '@mui/material';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
@@ -13,6 +12,9 @@ import { updateTask } from 'api/tasks/updateTask';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useDispatch } from 'react-redux';
+import { setTasksByColumn } from 'store/boardSlice';
 
 const Task = ({
   idColumn,
@@ -25,46 +27,56 @@ const Task = ({
     users: usersOfTask,
   },
   delTask,
+  isDragging,
   provider,
-  style,
 }: TaskPropsType) => {
+  const matches = useMediaQuery('(pointer: coarse)');
+
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
+  const { taskByColumns } = useSelector((state: IRootState) => state.board);
   const [isHovering, setIsHovering] = useState(false);
-
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const getStyle = (style: CSSProperties) => ({
-    ...provider?.draggableProps.style,
-    ...style,
-  });
+  const editTask = (taskNew: TaskType): void => {
+    taskByColumns &&
+      dispatch(
+        setTasksByColumn({
+          taskByColumns: {
+            ...taskByColumns,
+            [taskNew.columnId]: taskByColumns[taskNew.columnId].map((taskOld) => {
+              if (taskOld._id === taskNew._id) {
+                return taskNew;
+              }
 
-  const handleClickOpenUpdate = (): void => {
-    setOpenUpdate(true);
+              return taskOld;
+            }),
+          },
+        })
+      );
   };
+
+  const handleClickOpenUpdate = (): void => setOpenUpdate(true);
 
   const handlePointerOver = (): void => setIsHovering(true);
 
   const handlePointerOut = (): void => setIsHovering(false);
 
-  const handleClickOpenDialog = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    setOpenDialog(true);
-  };
+  const handleClickOpenDialog = (): void => setOpenDialog(true);
 
   const handleClickDeleteButton = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): Promise<TaskType | void> => {
+  ): Promise<void> => {
     event.preventDefault();
 
     if (token) {
       const deletedTask = await deleteTask(token, idBoard, idColumn, idTask);
-
       delTask(deletedTask);
-      return deletedTask;
     }
   };
 
@@ -83,35 +95,41 @@ const Task = ({
         description: description,
       });
 
+      editTask(taskUpdated);
+
       setTaskUpdated(taskUpdated);
       return taskUpdated;
     }
   };
-
   return (
     <div
       {...provider?.draggableProps}
       {...provider?.dragHandleProps}
+      style={{
+        backgroundColor: isDragging ? '#d4d4d4' : 'transparent',
+        ...provider?.draggableProps.style,
+      }}
       ref={provider?.innerRef}
-      style={getStyle(style)}
       onMouseOver={handlePointerOver}
-      onMouseOut={handlePointerOut}
+      onMouseLeave={handlePointerOut}
       className={styles.task}
     >
       <Typography
         variant="body1"
         sx={{
           flex: 'auto',
+          width: '90%',
           fontFamily: '"Noto Sans", sans-serif',
           fontWeight: 400,
           fontSize: '16px',
           textAlign: 'left',
+          wordBreak: 'break-word',
         }}
         onClick={handleClickOpenUpdate}
       >
         {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
-      {isHovering && (
+      {(isHovering || matches) && (
         <IconButton
           onClick={handleClickOpenDialog}
           aria-label="delete"
@@ -126,29 +144,32 @@ const Task = ({
           <RemoveCircleOutlineOutlinedIcon fontSize="small" />
         </IconButton>
       )}
+      {openUpdate && (
+        <BasicModal
+          title={t('boards.formTaskUpdate')}
+          openModal={openUpdate}
+          setOpenModal={setOpenUpdate}
+        >
+          <FormTaskUpdate
+            title={taskUpdated ? taskUpdated.title : titleTask}
+            description={taskUpdated ? taskUpdated.description : descriptionTask}
+            userId={ownerTask}
+            users={usersOfTask}
+            handleClickEditButton={handleClickEditButton}
+            openUpdate={openUpdate}
+            setOpenUpdate={setOpenUpdate}
+          />
+        </BasicModal>
+      )}
 
-      <BasicModal
-        title={t('boards.formTaskUpdate')}
-        openModal={openUpdate}
-        setOpenModal={setOpenUpdate}
-      >
-        <FormTaskUpdate
-          title={taskUpdated ? taskUpdated.title : titleTask}
-          description={taskUpdated ? taskUpdated.description : descriptionTask}
-          userId={ownerTask}
-          users={usersOfTask}
-          handleClickEditButton={handleClickEditButton}
-          openUpdate={openUpdate}
-          setOpenUpdate={setOpenUpdate}
+      {openDialog && (
+        <DialogDelete
+          title={t('boards.dialogTask')}
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          func={handleClickDeleteButton}
         />
-      </BasicModal>
-
-      <DialogDelete
-        title={t('boards.dialogTask')}
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        func={handleClickDeleteButton}
-      />
+      )}
     </div>
   );
 };

@@ -67,9 +67,11 @@ export function FormTask(props: FormTaskProps) {
           name="title"
           value={values.title}
           onChange={handleInputChange}
+          multiline={true}
           autoFocus={true}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         <TextField
           variant="outlined"
@@ -81,6 +83,7 @@ export function FormTask(props: FormTaskProps) {
           minRows={5}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         <Button type="submit" variant="outlined" size="large" color="success">
           {t('boards.addButton')}

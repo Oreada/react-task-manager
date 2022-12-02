@@ -1,4 +1,4 @@
-import { URL_TASKS_SET } from 'constants/constants';
+import { URL_TASKS_SET } from '../../constants/constants';
 import { TaskType } from 'types/types';
 
 //! Get Tasks in selected Board

@@ -158,6 +158,7 @@ const MainPage = () => {
                     textTransform: 'uppercase',
                     textAlign: 'left',
                     cursor: 'pointer',
+                    wordBreak: 'break-word',
                   }}
                   onClick={handleClickGoTo(`${_id}`, title)}
                 >
@@ -171,6 +172,7 @@ const MainPage = () => {
                     fontWeight: 400,
                     fontSize: '20px',
                     textAlign: 'left',
+                    wordBreak: 'break-word',
                   }}
                 >
                   {description ? description : NO_DESCRIPTION}
@@ -206,25 +208,29 @@ const MainPage = () => {
             </Grid>
           ))}
 
-          <BasicModal
-            title={t('boards.formBoardUpdate')}
-            openModal={openUpdate}
-            setOpenModal={setOpenUpdate}
-          >
-            <FormBoardUpdate
-              bodyForUpdate={bodyForUpdate}
-              handleClickEditButton={handleClickEditButton(idBoardUpdate)}
-              openUpdate={openUpdate}
-              setOpenUpdate={setOpenUpdate}
-            />
-          </BasicModal>
+          {openUpdate && (
+            <BasicModal
+              title={t('boards.formBoardUpdate')}
+              openModal={openUpdate}
+              setOpenModal={setOpenUpdate}
+            >
+              <FormBoardUpdate
+                bodyForUpdate={bodyForUpdate}
+                handleClickEditButton={handleClickEditButton(idBoardUpdate)}
+                openUpdate={openUpdate}
+                setOpenUpdate={setOpenUpdate}
+              />
+            </BasicModal>
+          )}
 
-          <DialogDelete
-            title={t('boards.dialogBoard')}
-            openDialog={openDialog}
-            setOpenDialog={setOpenDialog}
-            func={handleClickDelButton(idBoardDelete)}
-          />
+          {openDialog && (
+            <DialogDelete
+              title={t('boards.dialogBoard')}
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              func={handleClickDelButton(idBoardDelete)}
+            />
+          )}
 
           <Grid item xs>
             <div className={styles.card + ' ' + styles.create} onClick={handleClickOpenModal}>
@@ -232,13 +238,15 @@ const MainPage = () => {
             </div>
           </Grid>
 
-          <BasicModal
-            title={t('boards.formBoardCreate')}
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          >
-            <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
-          </BasicModal>
+          {openModal && (
+            <BasicModal
+              title={t('boards.formBoardCreate')}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            >
+              <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
+            </BasicModal>
+          )}
         </Grid>
       )}
       <Back className={styles.back} />

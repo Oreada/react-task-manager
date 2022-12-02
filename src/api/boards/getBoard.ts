@@ -1,4 +1,4 @@
-import { URL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from '../../constants/constants';
 import { Board } from 'types/types';
 
 //! Find Board

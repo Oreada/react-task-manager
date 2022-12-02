@@ -47,13 +47,7 @@ const SearchPage = () => {
 
   const FoundedTaskComponent = foundedTasks.length ? (
     foundedTasks.map((item) => (
-      <Task
-        key={item._id}
-        idColumn={item.columnId}
-        task={item}
-        delTask={delTaskMemo}
-        style={{ position: 'relative', margin: 0, width: 200 }}
-      />
+      <Task key={item._id} idColumn={item.columnId} task={item} delTask={delTaskMemo} />
     ))
   ) : (
     <span>{t('boards.nothingFounded')}</span>

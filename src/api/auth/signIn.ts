@@ -1,4 +1,4 @@
-import { URL_SINGIN } from 'constants/constants';
+import { URL_SINGIN } from '../../constants/constants';
 import { BodyForSignIn, SignInResult } from 'types/types';
 
 //! Get token

@@ -1,4 +1,4 @@
-import { URL_TASKS_SET } from 'constants/constants';
+import { URL_TASKS_SET } from '../../constants/constants';
 import { TaskType } from 'types/types';
 
 //! Get Tasks by UserID, where user is owner or one of invited

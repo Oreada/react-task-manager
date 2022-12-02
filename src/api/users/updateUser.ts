@@ -1,4 +1,4 @@
-import { URL_USERS } from 'constants/constants';
+import { URL_USERS } from '../../constants/constants';
 import { BodyForSignUp, UserInfo } from 'types/types';
 
 //! Update User

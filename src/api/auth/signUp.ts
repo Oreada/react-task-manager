@@ -1,4 +1,4 @@
-import { URL_SINGUP } from 'constants/constants';
+import { URL_SINGUP } from '../../constants/constants';
 import { BodyForSignUp, UserInfo } from 'types/types';
 
 //! Create new User

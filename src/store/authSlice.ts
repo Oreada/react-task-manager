@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getUser } from 'api/users/getUser';
-import { LOCAL_STORAGE_KEY } from 'constants/constants';
+import { LOCAL_STORAGE_KEY } from '../constants/constants';
 import { checkLifeTimeToken, readFromLocal, removeLocal } from 'helpers';
 import { UserInfo } from 'types/types';
 import { INITIAL_AUTH_STATE, ReducerNameActionTypes, SLICE_NAMES } from './constants';

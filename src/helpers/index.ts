@@ -1,4 +1,4 @@
-import { TIME_LIFE_TOKEN } from 'constants/constants';
+import { TIME_LIFE_TOKEN } from '../constants/constants';
 
 export const readFromLocal = <Type>(key: string): Type => {
   const local = localStorage.getItem(key);
