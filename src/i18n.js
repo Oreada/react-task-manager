@@ -61,6 +61,7 @@ i18n
             nameKatya: 'Katya',
             nameSergey: 'Sergey',
             nameOlya: 'Olya',
+            year: ' ',
           },
 
           profile: {
@@ -160,6 +161,7 @@ i18n
             nameKatya: 'Катя',
             nameOlya: 'Оля',
             nameSergey: 'Сергей',
+            year: ' ',
           },
 
           profile: {
