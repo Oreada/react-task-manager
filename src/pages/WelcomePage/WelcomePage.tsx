@@ -2,9 +2,9 @@ import { Box, Container, Stack, Typography } from '@mui/material';
 import Card from 'components/Card/Card';
 import FlatCard from 'components/FlatCard/FlatCard';
 import { useTranslation } from 'react-i18next';
+import Puzzle from './assets/puzzles-green.svg';
 import { CARD_CONTENT, DEVELOPER_CONTENT, ICardContent } from './constants';
 import styles from './WelcomePage.module.scss';
-
 const WelcomePage = () => {
   const { t } = useTranslation();
 
@@ -18,7 +18,7 @@ const WelcomePage = () => {
           <Stack
             direction="column"
             justifyContent="start"
-            maxWidth={{ xs: '90%', tablet: '40%' }}
+            maxWidth={{ xs: '100%', tablet: '40%' }}
             sx={{ gap: 5 }}
           >
             <Typography variant="h2" component="h2" sx={{ fontWeight: 800 }}>
@@ -28,7 +28,16 @@ const WelcomePage = () => {
               {t('main.heroText')}
             </Typography>
           </Stack>
-          <Box className={styles.hero__picture} />
+          <Box
+            sx={{
+              width: { xs: '100%', tablet: '60%' },
+              height: { xs: 300, tablet: 500 },
+              backgroundImage: `url(${Puzzle})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: { xs: '50% 0%', tablet: '0% 20%' },
+              backgroundSize: 'contain',
+            }}
+          />
         </Container>
       </Stack>
 

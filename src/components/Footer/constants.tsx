@@ -12,13 +12,6 @@ interface IDeveloperContent {
 
 export const FOOTER_CONTENT: IDeveloperContent[] = [
   {
-    name: 'year',
-    link: 'https://rs.school/react',
-    imgSrc: LogoRSS,
-    imgAlt: 'Logo RSSchool',
-    imgWidth: '80px',
-  },
-  {
     name: 'nameKatya',
     link: 'https://github.com/KateBlazhko',
     imgSrc: GitHubLogo,
@@ -38,5 +31,12 @@ export const FOOTER_CONTENT: IDeveloperContent[] = [
     imgSrc: GitHubLogo,
     imgAlt: 'Logo GitHub',
     imgWidth: '30px',
+  },
+  {
+    name: 'year',
+    link: 'https://rs.school/react',
+    imgSrc: LogoRSS,
+    imgAlt: 'Logo RSSchool',
+    imgWidth: '80px',
   },
 ];

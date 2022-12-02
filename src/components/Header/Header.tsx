@@ -111,6 +111,18 @@ const Header = () => {
 
   const linksForAuthUser = (
     <>
+      <Button
+        onClick={handleClickOpenModal}
+        sx={{
+          padding: 0,
+          color: 'inherit',
+          fontSize: 'inherit',
+          fontWeight: 'inherit',
+          letterSpacing: 0,
+        }}
+      >
+        {t('boards.formBoardCreate')}
+      </Button>
       <NavLink to={BOARDS_PATH} className={styles.navigation__item}>
         {t('header.linkBoards')}
       </NavLink>
@@ -124,11 +136,7 @@ const Header = () => {
           color: 'inherit',
           fontSize: 'inherit',
           fontWeight: 'inherit',
-          textTransform: 'none',
-          whiteSpace: 'nowrap',
           letterSpacing: 0,
-          lineHeight: 'normal',
-          fontFamily: `"Noto Sans", sans- serif;"`,
         }}
       >
         {t('header.sighOut')}
@@ -163,6 +171,7 @@ const Header = () => {
             p: { mobile: 1, tablet: 2 },
             display: 'flex',
             justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
           <Box
@@ -172,7 +181,7 @@ const Header = () => {
               width: { mobile: 150, tablet: 208 },
             }}
           >
-            <NavLink to={ROOT_PATH} end>
+            <NavLink to={ROOT_PATH} className={styles.navigation__item} end>
               <Typography
                 sx={{
                   fontWeight: 600,
@@ -191,7 +200,7 @@ const Header = () => {
                 display: { mobile: 'none', tablet: 'flex' },
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                gap: 5,
+                gap: 3.5,
               }}
             >
               {id ? linksForAuthUser : linksForUserWithoutAuth}
@@ -245,6 +254,7 @@ const Header = () => {
               onChange={changeLang}
               checked={lang === Lang.ru}
             />
+
             <IconButton
               size="large"
               color="substitute"
@@ -256,6 +266,7 @@ const Header = () => {
               <MenuIcon fontSize="large" />
             </IconButton>
           </Box>
+
           <BasicModal
             title={t('boards.formBoardCreate')}
             openModal={openModal}

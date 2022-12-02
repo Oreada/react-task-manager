@@ -58,6 +58,10 @@
 
 .navigation__item {
   color: inherit;
+  text-decoration: none;
+  outline-color: #fff;
+  outline-width: 1px;
   white-space: nowrap;
   cursor: pointer;
+
 }

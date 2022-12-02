@@ -24,14 +24,23 @@ const FlatCard: FC<IFlatCard> = ({ name, link, text, icon }) => {
       }}
     >
       <Stack
-        direction="row"
-        alignItems="start"
+        direction={{ mobile: 'column', sm: 'row' }}
+        justifyContent="center"
+        alignItems="center"
         sx={{
-          gap: 6.25,
+          gap: { mobile: 3, sm: 6 },
         }}
       >
         <a href={link} target="_blank" rel="noreferrer">
-          <Avatar alt={name} src={icon} sx={{ width: 100, height: 100, cursor: 'pointer' }} />
+          <Avatar
+            alt={name}
+            src={icon}
+            sx={{
+              width: { mobile: 125, sm: 100 },
+              height: { mobile: 125, sm: 100 },
+              cursor: 'pointer',
+            }}
+          />
         </a>
         <Typography variant="h6" component="p">
           {text}

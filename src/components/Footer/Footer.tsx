@@ -21,7 +21,6 @@ const FooterLink: FC<IFooterLink> = ({ name, link, imgSrc, imgAlt, imgWidth }) =
     rel="noreferrer"
     sx={{
       display: 'flex',
-      flexDirection: { xs: 'column', sm: 'row' },
       justifyContent: 'center',
       alignItems: 'center',
       gap: 1.25,
@@ -58,7 +57,8 @@ const Footer = () => {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          spacing={{ xs: 2, sm: 3.75 }}
+          flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
+          gap={4}
         >
           {FOOTER_CONTENT.map((content) => (
             <FooterLink
