@@ -17,6 +17,9 @@ export let theme = createTheme({
     blond: {
       main: '#f8f8f8',
     },
+    shadow: {
+      main: '#d4d4d4',
+    },
   },
   breakpoints: {
     values: {
@@ -37,6 +40,36 @@ export let theme = createTheme({
       textTransform: 'none',
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          scrollbarColor: '#f8f8f8 #f8f8f8',
+          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+            width: '10px',
+            backgroundColor: '#f8f8f8',
+          },
+          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+            borderRadius: 8,
+            backgroundColor: '#d4d4d4',
+            minHeight: 24,
+          },
+          '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
+            backgroundColor: '#F3B848',
+          },
+          '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
+            backgroundColor: '#F3B848',
+          },
+          '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#F3B848',
+          },
+          '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+            backgroundColor: '#f8f8f8',
+          },
+        },
+      },
+    },
+  },
 });
 
 theme = responsiveFontSizes(theme);
@@ -48,6 +81,7 @@ declare module '@mui/material/styles' {
     colorful: Palette['primary'];
     neutral: Palette['primary'];
     blond: Palette['primary'];
+    shadow: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
@@ -57,6 +91,7 @@ declare module '@mui/material/styles' {
     colorful?: PaletteOptions['primary'];
     neutral?: PaletteOptions['primary'];
     blond?: PaletteOptions['primary'];
+    shadow?: PaletteOptions['primary'];
   }
 }
 
@@ -68,6 +103,18 @@ declare module '@mui/material/Button' {
     colorful: true;
     neutral: true;
     blond: true;
+    shadow: true;
+  }
+}
+
+declare module '@mui/icons-material/AddCircleRounded' {
+  interface AddCircleRoundedPropsColorOverrides {
+    basic: true;
+    substitute: true;
+    colorful: true;
+    neutral: true;
+    blond: true;
+    shadow: true;
   }
 }
 

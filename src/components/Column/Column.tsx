@@ -5,7 +5,7 @@ import { deleteTask } from 'api/tasks/deleteTask';
 import { FormTask } from 'components/FormTask/FormTask';
 import { BasicModal } from 'components/Modal/BasicModal';
 import Task from 'components/Task/Task';
-import { CSSProperties, FormEvent, memo, useEffect, useRef, useState } from 'react';
+import { CSSProperties, FormEvent, memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Draggable,
   DraggableProvided,
@@ -22,7 +22,7 @@ import {
 } from 'react-window';
 import { IRootState } from 'store/model';
 import { BodyForTask, ColumnType, TaskType } from 'types/types';
-import { BUTTON_INNER, DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
+import { DROPPABLE_TYPE_COLUMN, INITIAL_BODY_FOR_TASK } from './constants';
 import { ColumnPropsType, RenderTaskFuncType } from './model';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Button, IconButton, Typography } from '@mui/material';
@@ -31,34 +31,43 @@ import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormColumnUpdate } from 'components/FormColumnUpdate/FormColumnUpdate';
 import { updateColumn } from 'api/columns/updateColumn';
 import { useTranslation } from 'react-i18next';
+import { createSelector } from '@reduxjs/toolkit';
+import { useParams } from 'react-router-dom';
+import styles from './Column.module.scss';
 
-const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: ColumnPropsType) => {
+const makeTasksSelector = () =>
+  createSelector(
+    [(state: IRootState) => state.board.taskByColumns, (_, id: string) => id],
+    (a, id) => (a ? a[id] : [])
+  );
+
+const tokenSelector = createSelector([(state: IRootState) => state.auth], (a) => a.token);
+const columnsSelector = createSelector([(state: IRootState) => state.board], (a) => a.columns);
+
+const Column = memo(({ id, title, index, order, addTask, delColumn, delTask }: ColumnPropsType) => {
   const { t } = useTranslation();
-
+  const { id: idBoard } = useParams();
   const listRef = useRef<List>(null);
 
   const [scroll, setScroll] = useState<number>(0);
-  const { idBoard, columns } = useSelector((state: IRootState) => state.board);
-  const { token } = useSelector((state: IRootState) => state.auth);
-
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const handleClickOpenModal = () => {
+  const token = useSelector((state: IRootState) => tokenSelector(state));
+  const columns = useSelector((state: IRootState) => columnsSelector(state));
+
+  const tasksSelector = useMemo(makeTasksSelector, []);
+  const tasks = useSelector((state: IRootState) => tasksSelector(state, id));
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [isInput, setIsInput] = useState<boolean>(false);
+
+  const handleClickOpenModal = (): void => {
     setOpenModal(true);
   };
 
-  const [bodyForTask, setBodyForTask] = useState<BodyForTask>({
-    order: tasks.length,
-    ...INITIAL_BODY_FOR_TASK,
-  });
-
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-
-  const handleClickOpenDialog = () => {
+  const handleClickOpenDialog = (): void => {
     setOpenDialog(true);
   };
-
-  const [isInput, setIsInput] = useState<boolean>(false);
 
   const handleClickOpenInput = () => {
     setIsInput(true);
@@ -73,13 +82,24 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
     // eslint-disable-next-line
   }, [columns]);
 
-  const handleClickCreateButton = async (
-    event: FormEvent<HTMLFormElement>
+  const handleClickCreateTask = async (
+    event: FormEvent<HTMLFormElement>,
+    title: string,
+    description: string,
+    idUser: string
   ): Promise<TaskType | void> => {
     event.preventDefault();
 
-    if (token) {
-      const newTask = await createTask(token, idBoard, id, bodyForTask);
+    if (token && idBoard) {
+      const bodyTask = {
+        order: tasks.length,
+        userId: idUser,
+        users: [idUser],
+        title: title,
+        description: description,
+      };
+
+      const newTask = await createTask(token, idBoard, id, bodyTask);
 
       addTask(newTask);
       return newTask;
@@ -91,7 +111,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
   ): Promise<void> => {
     event.preventDefault();
 
-    if (token) {
+    if (token && idBoard) {
       delColumn(id);
 
       Promise.all(tasks.map(async ({ _id }) => await deleteTask(token, idBoard, id, _id)));
@@ -103,7 +123,7 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
     title: string
   ): Promise<ColumnType | void> => {
-    if (token) {
+    if (token && idBoard) {
       const columnUpdated = await updateColumn(token, idBoard, id, { title: title, order: order });
       setColumnUpdated(columnUpdated);
       return columnUpdated;
@@ -124,12 +144,6 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
         <Task
           idColumn={id}
           task={tasks[rubric.source.index]}
-          // idTask={tasks[rubric.source.index]._id}
-          // titleTask={tasks[rubric.source.index].title}
-          // descriptionTask={tasks[rubric.source.index].description}
-          // orderTask={tasks[rubric.source.index].order}
-          // ownerTask={tasks[rubric.source.index].userId}
-          // usersOfTask={tasks[rubric.source.index].users}
           delTask={delTask}
           provider={provider}
           isDragging={snapshot.isDragging}
@@ -156,97 +170,110 @@ const Column = memo(({ id, title, order, addTask, delColumn, delTask, tasks }: C
   }, areEqual);
 
   return (
-    <>
-      {isInput ? (
-        <FormColumnUpdate
-          titleColumn={columnUpdated ? columnUpdated.title : title}
-          setIsInput={setIsInput}
-          handleClickEdit={handleClickEdit}
-        />
-      ) : (
-        <Typography
-          variant="h6"
-          sx={{
-            width: '100%',
-            fontFamily: '"Noto Sans", sans-serif',
-            letterSpacing: '0.0625rem',
-            fontWeight: 600,
-            fontSize: '18px',
-            color: '#1c4931',
-            textTransform: 'uppercase',
-            textAlign: 'left',
-          }}
-          onClick={handleClickOpenInput}
+    <Draggable draggableId={id} index={index}>
+      {(provider) => (
+        <div
+          {...provider.draggableProps}
+          {...provider.dragHandleProps}
+          ref={provider.innerRef}
+          className={styles.column}
         >
-          {columnUpdated ? columnUpdated.title : title}
-        </Typography>
-      )}
-
-      <Droppable
-        droppableId={id}
-        type={DROPPABLE_TYPE_COLUMN}
-        mode="virtual"
-        renderClone={getRenderTask({ margin: 0, width: 200 })}
-      >
-        {(provider, snapshot) => {
-          const itemCount: number = snapshot.isUsingPlaceholder ? tasks.length + 1 : tasks.length;
-          return (
-            <List
-              height={itemCount > 0 ? 200 : 10}
-              itemCount={itemCount}
-              itemSize={() => 40}
-              width={200}
-              ref={listRef}
-              outerRef={provider.innerRef}
-              itemData={tasks}
-              style={{
-                transition: 'background-color 0.2s ease',
-                paddingBottom: '10px',
-                touchAction: 'none',
+          {isInput ? (
+            <FormColumnUpdate
+              titleColumn={columnUpdated ? columnUpdated.title : title}
+              setIsInput={setIsInput}
+              handleClickEdit={handleClickEdit}
+            />
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                width: '100%',
+                fontFamily: '"Noto Sans", sans-serif',
+                letterSpacing: '0.0625rem',
+                fontWeight: 600,
+                fontSize: '18px',
+                color: '#1c4931',
+                textTransform: 'uppercase',
+                textAlign: 'left',
               }}
-              overscanCount={10}
-              onItemsRendered={handleRender}
+              onClick={handleClickOpenInput}
             >
-              {Row}
-            </List>
-          );
-        }}
-      </Droppable>
+              {columnUpdated ? columnUpdated.title : title}
+            </Typography>
+          )}
 
-      <Button
-        variant="outlined"
-        endIcon={<AddCircleRoundedIcon />}
-        color="success"
-        onClick={handleClickOpenModal}
-      >
-        {t('boards.formTaskCreate')}
-      </Button>
+          <Droppable
+            droppableId={id}
+            type={DROPPABLE_TYPE_COLUMN}
+            mode="virtual"
+            renderClone={getRenderTask({ margin: 0, width: 200 })}
+          >
+            {(provider, snapshot) => {
+              const itemCount: number = snapshot.isUsingPlaceholder
+                ? tasks.length + 1
+                : tasks.length;
+              return (
+                <List
+                  height={200}
+                  itemCount={itemCount}
+                  itemSize={() => 40}
+                  width={200}
+                  ref={listRef}
+                  outerRef={provider.innerRef}
+                  itemData={tasks}
+                  style={{
+                    transition: 'background-color 0.2s ease',
+                    paddingBottom: '10px',
+                    touchAction: 'none',
+                  }}
+                  overscanCount={10}
+                  onItemsRendered={handleRender}
+                >
+                  {Row}
+                </List>
+              );
+            }}
+          </Droppable>
 
-      <BasicModal title={t('boards.formTaskCreate')} openModal={openModal} setOpenModal={setOpenModal}>
-        <FormTask
-          bodyForTask={bodyForTask}
-          setBodyForTask={setBodyForTask}
-          func={handleClickCreateButton}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
-      </BasicModal>
+          <Button
+            variant="outlined"
+            endIcon={<AddCircleRoundedIcon />}
+            color="success"
+            onClick={handleClickOpenModal}
+          >
+            {t('boards.formTaskCreate')}
+          </Button>
 
-      <IconButton
-        onClick={handleClickOpenDialog}
-        aria-label="delete"
-        sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
-      >
-        <DeleteOutlineOutlinedIcon />
-      </IconButton>
+          <BasicModal
+            title={t('boards.formTaskCreate')}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          >
+            <FormTask
+              handleClickCreateTask={handleClickCreateTask}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          </BasicModal>
 
-      <DialogDelete
-        title={t('boards.dialogColumn')}
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        func={handleClickDeleteButton}
-      />
-    </>
+          <IconButton
+            onClick={handleClickOpenDialog}
+            aria-label="delete"
+            sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+          >
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
+
+          <DialogDelete
+            title={t('boards.dialogColumn')}
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            func={handleClickDeleteButton}
+          />
+        </div>
+      )}
+    </Draggable>
   );
 });
 

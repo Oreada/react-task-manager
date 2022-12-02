@@ -1,14 +1,9 @@
 import { Box, TextField, Button } from '@mui/material';
-import { FormEvent, useEffect, useState } from 'react';
+import { useHandleClickCreateBoard } from 'hooks/useHandleClickCreateBoard';
+import { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
-import { BodyForBoard } from 'types/types';
 
 interface FormBoardProps {
-  bodyForBoard: BodyForBoard;
-  setBodyForBoard: (arg: BodyForBoard) => void;
-  func: (event: FormEvent<HTMLFormElement>) => void;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
 }
@@ -30,9 +25,9 @@ const initialValues = {
 export function FormBoard(props: FormBoardProps) {
   const { t } = useTranslation();
 
-  const [values, setValues] = useState(initialValues);
+  const createBord = useHandleClickCreateBoard();
 
-  const { id } = useSelector((state: IRootState) => state.auth);
+  const [values, setValues] = useState(initialValues);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -43,39 +38,13 @@ export function FormBoard(props: FormBoardProps) {
     });
   };
 
-  const handleSubmitTitle = () => {
-    props.setBodyForBoard({
-      ...props.bodyForBoard,
-      title: values.title,
-      owner: id ? id : '',
-      users: [id ? id : ''],
-    });
-  };
-
-  const handleSubmitDescription = () => {
-    props.setBodyForBoard({
-      ...props.bodyForBoard,
-      description: values.description,
-      owner: id ? id : '',
-      users: [id ? id : ''],
-    });
-  };
-
-  useEffect(() => {
-    handleSubmitTitle();
-  }, [values.title]);
-
-  useEffect(() => {
-    handleSubmitDescription();
-  }, [values.description]);
-
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    props.func(event);
+  const HandleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    createBord(event, values.title, values.description);
     props.setOpenModal(false);
   };
 
   return (
-    <form style={{ width: '100%' }} onSubmit={handleFormSubmit}>
+    <form style={{ width: '100%' }} onSubmit={HandleFormSubmit}>
       <Box sx={style}>
         <TextField
           variant="outlined"
@@ -83,7 +52,6 @@ export function FormBoard(props: FormBoardProps) {
           name="title"
           value={values.title}
           onChange={handleInputChange}
-          onSubmit={handleSubmitTitle}
           autoFocus={true}
           fullWidth
           required
@@ -94,7 +62,6 @@ export function FormBoard(props: FormBoardProps) {
           name="description"
           value={values.description}
           onChange={handleInputChange}
-          onSubmit={handleSubmitDescription}
           multiline={true}
           minRows={5}
           fullWidth

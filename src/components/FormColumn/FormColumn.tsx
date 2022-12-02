@@ -1,11 +1,9 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface FormColumnProps {
-  titleForColumn: string;
-  setTitleForColumn: (arg: string) => void;
-  func: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleClickCreateColumn: (event: FormEvent<HTMLFormElement>, title: string) => Promise<void>;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
 }
@@ -29,16 +27,8 @@ export function FormColumn(props: FormColumnProps) {
     setValueInput(title);
   };
 
-  const handleSubmit = () => {
-    props.setTitleForColumn(valueInput);
-  };
-
-  useEffect(() => {
-    handleSubmit();
-  }, [valueInput]);
-
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    props.func(event);
+    props.handleClickCreateColumn(event, valueInput);
     props.setOpenModal(false);
   };
 
@@ -51,7 +41,6 @@ export function FormColumn(props: FormColumnProps) {
           name="title"
           value={valueInput}
           onChange={handleInputChange}
-          onSubmit={handleSubmit}
           autoFocus={true}
           fullWidth
           required

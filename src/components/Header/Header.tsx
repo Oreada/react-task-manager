@@ -10,6 +10,8 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
+import { FormBoard } from 'components/FormBoard/FormBoard';
+import { BasicModal } from 'components/Modal/BasicModal';
 import { LOCAL_STORAGE_KEY } from 'constants/constants';
 import { removeLocal } from 'helpers';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
@@ -59,6 +61,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const Header = () => {
   const { t, i18n } = useTranslation();
   const InitialLanguage = i18n.resolvedLanguage === Lang.en ? Lang.en : Lang.ru;
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
 
   const [scroll, setScroll] = useState(false);
   const [lang, setLang] = useState<Lang>(InitialLanguage);
@@ -248,6 +256,13 @@ const Header = () => {
               <MenuIcon fontSize="large" />
             </IconButton>
           </Box>
+          <BasicModal
+            title={t('boards.formBoardCreate')}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          >
+            <FormBoard openModal={openModal} setOpenModal={setOpenModal} />
+          </BasicModal>
         </Container>
       </header>
     </>

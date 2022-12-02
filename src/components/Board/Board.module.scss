@@ -1,19 +1,21 @@
 @import '../../styles/variables.scss';
 
 .wrap {
+  flex: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  // justify-content: space-between;
   width: 100%;
-  padding: rem(24);
+  padding: rem(24) rem(24) 0 rem(24);
 }
 
 .board {
   overflow-x: auto;
-
+  flex-grow: 1;
   display: flex;
   width: 100vw;
-  height: calc((100vh - 123px - 90px) - 20px - 47px);
+  height: calc((100vh - 123px - 90px) - 24px - 48px - 37px - 20px);
   padding: rem(20);
 }
 
@@ -29,7 +31,6 @@
   min-width: rem(250);
   max-height: rem(330);
   padding: 0;
-  margin-left: 1rem;
   border: 2px dashed $color-button;
   border-radius: 10px;
   background-color: $color-instructions-text;
@@ -39,19 +40,4 @@
     background-color: white;
     cursor: pointer;
   }
-}
-
-.column {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: rem(10);
-  width: rem(250);
-  max-height: rem(330);
-  padding: rem(20) rem(30) rem(20) rem(20);
-  margin-left: 1rem;
-  box-shadow: 0 0 20px $color-box-shadow;
-  border-radius: 10px;
-  background-color: white;
 }
