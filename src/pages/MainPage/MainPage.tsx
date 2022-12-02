@@ -158,6 +158,7 @@ const MainPage = () => {
                     textTransform: 'uppercase',
                     textAlign: 'left',
                     cursor: 'pointer',
+                    wordBreak: 'break-word',
                   }}
                   onClick={handleClickGoTo(`${_id}`, title)}
                 >
@@ -171,6 +172,7 @@ const MainPage = () => {
                     fontWeight: 400,
                     fontSize: '20px',
                     textAlign: 'left',
+                    wordBreak: 'break-word',
                   }}
                 >
                   {description ? description : NO_DESCRIPTION}

@@ -42,8 +42,10 @@ export function FormColumn(props: FormColumnProps) {
           value={valueInput}
           onChange={handleInputChange}
           autoFocus={true}
+          multiline={true}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         <Button type="submit" variant="outlined" size="large" color="success">
           {t('boards.addButton')}

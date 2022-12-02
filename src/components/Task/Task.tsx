@@ -99,10 +99,12 @@ const Task = ({
         variant="body1"
         sx={{
           flex: 'auto',
+          width: '90%',
           fontFamily: '"Noto Sans", sans-serif',
           fontWeight: 400,
           fontSize: '16px',
           textAlign: 'left',
+          wordBreak: 'break-word',
         }}
         onClick={handleClickOpenUpdate}
       >

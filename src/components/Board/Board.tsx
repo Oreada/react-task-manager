@@ -207,6 +207,7 @@ const Board = () => {
           fontSize: '40px',
           fontWeight: 800,
           textAlign: 'center',
+          wordBreak: 'break-word',
         }}
       >
         {titleBoard}

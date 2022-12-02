@@ -56,8 +56,10 @@ export function FormBoardUpdate(props: FormBoardProps) {
           name="title"
           inputRef={titleBoard}
           autoFocus={true}
+          multiline={true}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         <TextField
           variant="outlined"
@@ -68,6 +70,7 @@ export function FormBoardUpdate(props: FormBoardProps) {
           minRows={5}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
         <Button type="submit" variant="outlined" size="large" color="success">
           {t('boards.updateButton')}

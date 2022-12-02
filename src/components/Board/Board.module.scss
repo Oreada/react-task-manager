@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  // justify-content: space-between;
   width: 100%;
   padding: rem(24) rem(24) 0 rem(24);
 }
@@ -28,8 +27,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: rem(250);
-  max-height: rem(330);
+  min-width: rem(300);
   padding: 0;
   border: 2px dashed $color-button;
   border-radius: 10px;

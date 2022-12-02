@@ -127,6 +127,7 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
                 color: '#1c4931',
                 textTransform: 'uppercase',
                 textAlign: 'left',
+                wordBreak: 'break-word',
               }}
               onClick={handleClickOpenInput}
             >
@@ -171,7 +172,7 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
           <IconButton
             onClick={handleClickOpenDialog}
             aria-label="delete"
-            sx={{ position: 'absolute', top: 0, right: 0, zIndex: 2 }}
+            sx={{ position: 'absolute', top: '1%', right: '1%', zIndex: 2 }}
           >
             <DeleteOutlineOutlinedIcon />
           </IconButton>
