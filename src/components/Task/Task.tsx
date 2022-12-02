@@ -12,6 +12,7 @@ import { updateTask } from 'api/tasks/updateTask';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Task = ({
   idColumn,
@@ -27,6 +28,8 @@ const Task = ({
   isDragging,
   provider,
 }: TaskPropsType) => {
+  const matches = useMediaQuery('(pointer: coarse)');
+
   const { t } = useTranslation();
 
   const { idBoard } = useSelector((state: IRootState) => state.board);
@@ -79,7 +82,6 @@ const Task = ({
       return taskUpdated;
     }
   };
-  console.log(isDragging);
   return (
     <div
       {...provider?.draggableProps}
@@ -90,7 +92,7 @@ const Task = ({
       }}
       ref={provider?.innerRef}
       onMouseOver={handlePointerOver}
-      onMouseOut={handlePointerOut}
+      onMouseLeave={handlePointerOut}
       className={styles.task}
     >
       <Typography
@@ -106,7 +108,7 @@ const Task = ({
       >
         {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
-      {isHovering && (
+      {(isHovering || matches) && (
         <IconButton
           onClick={handleClickOpenDialog}
           aria-label="delete"
@@ -121,7 +123,6 @@ const Task = ({
           <RemoveCircleOutlineOutlinedIcon fontSize="small" />
         </IconButton>
       )}
-
       {openUpdate && (
         <BasicModal
           title={t('boards.formTaskUpdate')}
