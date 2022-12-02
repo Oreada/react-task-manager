@@ -12,11 +12,11 @@ const Card: FC<ICard> = ({ title, text, icon }) => {
     <Stack
       direction="column"
       alignItems="center"
+      maxWidth={400}
       sx={{
         position: 'relative',
-        flex: '0 0 33%',
         gap: 2.5,
-        padding: 6,
+        padding: 5,
         boxShadow: 10,
         borderRadius: 8.125,
         transition: 'all 0.3s ease 0s',
@@ -24,8 +24,8 @@ const Card: FC<ICard> = ({ title, text, icon }) => {
     >
       <Box
         sx={{
-          width: 150,
-          height: 150,
+          width: { xs: 120, laptop: 150 },
+          height: { xs: 120, laptop: 150 },
           position: 'absolute',
           top: -50,
           left: '50%',
@@ -42,7 +42,7 @@ const Card: FC<ICard> = ({ title, text, icon }) => {
           fontWeight: 600,
           letterSpacing: 1,
           textTransform: 'uppercase',
-          paddingTop: '30%',
+          paddingTop: '60px',
         }}
       >
         {title}

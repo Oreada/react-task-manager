@@ -11,26 +11,29 @@ const WelcomePage = () => {
   return (
     <>
       <Stack component="article" className={styles.hero}>
-        <Container sx={{ display: 'flex', gap: 3.75 }}>
-          <Stack direction="column" justifyContent="start" sx={{ gap: 5 }}>
-            <Typography
-              variant="h2"
-              component="h2"
-              sx={{ fontWeight: 800 }}
-              className={styles.article__title}
-            >
+        <Container
+          maxWidth="lg"
+          sx={{ display: 'flex', flexDirection: { xs: 'column', tablet: 'row' }, gap: 3.75 }}
+        >
+          <Stack
+            direction="column"
+            justifyContent="start"
+            maxWidth={{ xs: '90%', tablet: '40%' }}
+            sx={{ gap: 5 }}
+          >
+            <Typography variant="h2" component="h2" sx={{ fontWeight: 800 }}>
               {t('main.heroTitle')}
             </Typography>
             <Typography variant="h6" component="p">
               {t('main.heroText')}
             </Typography>
           </Stack>
-          <Box className={styles.hero__picture}></Box>
+          <Box className={styles.hero__picture} />
         </Container>
       </Stack>
 
       <Stack component="article" className={styles.advantages}>
-        <Container sx={{ display: 'flex', gap: 3.75 }}>
+        <Container maxWidth="lg" sx={{ display: 'flex', gap: 3.75 }}>
           <Stack
             direction="column"
             alignItems="center"
@@ -46,7 +49,13 @@ const WelcomePage = () => {
               </Typography>
             </div>
 
-            <Stack sx={{ display: 'flex', flexDirection: 'row', gap: 3.5 }}>
+            <Stack
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="stretch"
+              flexWrap={{ xs: 'wrap', laptop: 'nowrap' }}
+              sx={{ gap: 3.5 }}
+            >
               {CARD_CONTENT.map((item: ICardContent) => (
                 <Card
                   key={item.title}
@@ -64,8 +73,21 @@ const WelcomePage = () => {
         component="article"
         sx={{ width: '100%', bgcolor: 'substitute.main', color: 'blond.main', mt: 20, py: 7.5 }}
       >
-        <Container sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-          <Stack direction="column" alignItems="flex-start" spacing={2.5}>
+        <Container
+          maxWidth="lg"
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', tablet: 'row' },
+            alignItems: 'center',
+            gap: 5,
+          }}
+        >
+          <Stack
+            maxWidth={{ xs: '90%', tablet: '38%' }}
+            direction="column"
+            alignItems="flex-start"
+            spacing={2.5}
+          >
             <Typography variant="h3" component="h5" sx={{ fontWeight: 800 }}>
               {t('main.videoTitle')}
             </Typography>
@@ -73,10 +95,24 @@ const WelcomePage = () => {
               {t('main.videoSubtitle')}
             </Typography>
           </Stack>
-          <Box>
+          <Box
+            sx={{
+              position: 'relative',
+              width: '100%',
+              height: 0,
+              paddingTop: { xs: '56%', tablet: '32%' },
+            }}
+          >
             <iframe
-              width="560"
-              height="315"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                borderWidth: 0,
+                outlineWidth: 0,
+              }}
               src={t('main.videoSrc')}
               title="How to use the app"
               frameBorder="0"
@@ -88,7 +124,10 @@ const WelcomePage = () => {
       </Stack>
 
       <Stack component="article" className={styles.team}>
-        <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+        <Container
+          maxWidth="lg"
+          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}
+        >
           <Stack direction="column" alignItems="start" sx={{ gap: 5 }}>
             <Typography variant="h3" component="h5" sx={{ fontWeight: 800 }}>
               {t('main.teamTitle')}
