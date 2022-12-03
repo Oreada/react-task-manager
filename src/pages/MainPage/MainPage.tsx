@@ -37,17 +37,13 @@ const MainPage = () => {
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpenDialog = (): void => {
-    setOpenDialog(true);
-  };
+  const handleClickOpenDialog = (): void => setOpenDialog(true);
 
   const [idBoardDelete, setIdBoardDelete] = useState<string>('');
 
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
 
-  const handleClickOpenUpdate = () => {
-    setOpenUpdate(true);
-  };
+  const handleClickOpenUpdate = () => setOpenUpdate(true);
 
   const [idBoardUpdate, setIdBoardUpdate] = useState<string>('');
 

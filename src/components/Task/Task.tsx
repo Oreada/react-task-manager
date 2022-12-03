@@ -1,7 +1,7 @@
 import { TaskPropsType } from './model';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from 'store/model';
+import { IRootState } from 'store/model';
 import { FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
 import { IconButton, Typography } from '@mui/material';
@@ -13,6 +13,7 @@ import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useParams } from 'react-router-dom';
 
 const Task = ({
   idColumn,
@@ -32,8 +33,8 @@ const Task = ({
   const matches = useMediaQuery('(pointer: coarse)');
 
   const { t } = useTranslation();
+  const { id: idBoard } = useParams();
 
-  const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
   const [isHovering, setIsHovering] = useState(false);
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
@@ -57,7 +58,7 @@ const Task = ({
   ): Promise<void> => {
     event.preventDefault();
 
-    if (token) {
+    if (token && idBoard) {
       const deletedTask = await deleteTask(token, idBoard, idColumn, idTask);
       delTask(deletedTask);
     }
@@ -68,7 +69,7 @@ const Task = ({
     title: string,
     description: string
   ): Promise<void> => {
-    if (token) {
+    if (token && idBoard) {
       const editedTask = await updateTask(token, idBoard, idColumn, idTask, {
         order: orderTask,
         columnId: idColumn,
@@ -78,7 +79,7 @@ const Task = ({
         description: description,
       });
 
-      editTask && editTask(editedTask);
+      editTask(editedTask);
       setTaskUpdated(taskUpdated);
     }
   };

@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { SEARCH_PATH } from 'router/constants';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from 'store/boardSlice';
-import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
 import { useTranslation } from 'react-i18next';
 
 const Search = () => {
@@ -16,7 +14,6 @@ const Search = () => {
   const [value, setValue] = useState<string>('');
 
   const dispatch = useDispatch();
-  const { token } = useSelector((state: IRootState) => state.auth);
 
   const handlerChange = (e: ChangeEvent<HTMLInputElement>): void => setValue(e.target.value);
 
