@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useTranslation } from 'react-i18next';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
