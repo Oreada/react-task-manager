@@ -31,7 +31,16 @@ const makeTasksSelector = () =>
 
 const tokenSelector = createSelector([(state: IRootState) => state.auth], (a) => a.token);
 
-const Column = ({ id, title, index, order, addTask, delColumn, delTask }: ColumnPropsType) => {
+const Column = ({
+  id,
+  title,
+  index,
+  order,
+  addTask,
+  delColumn,
+  delTask,
+  editTask,
+}: ColumnPropsType) => {
   const { t } = useTranslation();
   const { id: idBoard } = useParams();
 
@@ -139,7 +148,7 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
             {(provider) => {
               return (
                 <div className={styles.list} ref={provider.innerRef} {...provider.droppableProps}>
-                  <TaskList tasks={tasks} delTask={delTask} idColumn={id} />
+                  <TaskList tasks={tasks} delTask={delTask} idColumn={id} editTask={editTask} />
                   {provider.placeholder}
                 </div>
               );
