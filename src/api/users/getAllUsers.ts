@@ -21,6 +21,6 @@ export async function getAllUsers(token: string): Promise<Array<UserInfo>> {
     return usersList;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

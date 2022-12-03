@@ -21,6 +21,6 @@ export async function deleteUser(token: string, idUser: string): Promise<UserInf
     return user;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

@@ -28,6 +28,6 @@ export async function updateTask(
     return taskUpdated;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

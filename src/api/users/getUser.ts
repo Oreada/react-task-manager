@@ -21,6 +21,6 @@ export async function getUser(token: string, idUser: string): Promise<UserInfo> 
     return user;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

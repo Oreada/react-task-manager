@@ -25,6 +25,6 @@ export async function deleteColumn(
     return column;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

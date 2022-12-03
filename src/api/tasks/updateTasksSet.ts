@@ -25,6 +25,6 @@ export async function updateTasksSet(
     return tasksUpdatedList;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

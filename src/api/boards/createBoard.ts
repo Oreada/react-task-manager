@@ -22,6 +22,6 @@ export async function createBoard(token: string, obj: BodyForBoard): Promise<Boa
     return board;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

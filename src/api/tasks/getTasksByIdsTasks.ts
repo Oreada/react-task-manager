@@ -27,6 +27,6 @@ export async function getTasksByIdsTasks(
     return tasksList;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

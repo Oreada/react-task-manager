@@ -24,6 +24,6 @@ export async function updateColumnsSet(
     return columnsUpdatedList;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

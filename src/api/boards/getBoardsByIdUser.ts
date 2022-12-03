@@ -21,6 +21,6 @@ export async function getBoardsByIdUser(token: string, idUser: string): Promise<
     return boardsList;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }

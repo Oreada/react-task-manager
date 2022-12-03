@@ -21,6 +21,6 @@ export async function getBoard(token: string, idBoard: string): Promise<Board> {
     return board;
   } catch (e: unknown) {
     const err = e as Error;
-    throw new Error(err.message);
+    throw err;
   }
 }
