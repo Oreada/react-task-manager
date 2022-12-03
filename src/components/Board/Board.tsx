@@ -88,8 +88,7 @@ const Board = () => {
 
       delColumn(idColumn);
     },
-    // eslint-disable-next-line
-    [taskByColumns, dispatch]
+    [taskByColumns, dispatch, columns]
   );
 
   const delTaskMemo = useCallback(

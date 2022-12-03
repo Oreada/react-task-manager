@@ -23,12 +23,12 @@ const SearchPage = () => {
   useEffect(() => {
     if (token) {
       if (!searchValue) {
-        goBoards();
+        navigate(BOARDS_PATH);
       }
 
       dispatch(getSearchingTasks({ token, searchValue }));
     }
-  }, [searchValue, token, dispatch]);
+  }, [searchValue, token, dispatch, navigate]);
 
   const delTaskMemo = useCallback(
     (deletedTask: TaskType): void => {
