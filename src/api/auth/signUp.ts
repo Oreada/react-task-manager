@@ -21,11 +21,9 @@ export async function signUp(obj: BodyForSignUp): Promise<UserInfo> {
     }
 
     const newUser: UserInfo = await response.json();
-    console.log('Created user =', newUser);
     return newUser;
   } catch (e: unknown) {
     const err = e as Error;
-    console.log('Catched error =', err.message);
     throw err;
   }
 }

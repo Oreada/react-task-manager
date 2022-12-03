@@ -25,7 +25,6 @@ export async function getColumn(
     return column;
   } catch (e: unknown) {
     const err = e as Error;
-    console.log('Catched error =', err.message);
     throw new Error(err.message);
   }
 }

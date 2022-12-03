@@ -21,7 +21,6 @@ export async function getTasksByIdBoard(token: string, idBoard: string): Promise
     return tasksList;
   } catch (e: unknown) {
     const err = e as Error;
-    console.log('Catched error =', err.message);
     throw new Error(err.message);
   }
 }

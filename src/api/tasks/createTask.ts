@@ -27,7 +27,6 @@ export async function createTask(
     return task;
   } catch (e: unknown) {
     const err = e as Error;
-    console.log('Catched error =', err.message);
     throw new Error(err.message);
   }
 }
