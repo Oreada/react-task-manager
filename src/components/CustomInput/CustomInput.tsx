@@ -8,7 +8,7 @@ type IProps = TextFieldProps & iconType & widthType;
 
 const CustomInput: FC<IProps> = memo(({ icon, width, ...atr }) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'flex-end', width: { width } }}>
+    <Box sx={{ display: 'flex', alignItems: 'flex-end', minHeight: 70, width: { width } }}>
       {icon}
       <TextField {...atr} sx={{ width: { width } }} />
     </Box>
