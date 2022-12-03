@@ -13,7 +13,6 @@ import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useParams } from 'react-router-dom';
 
 const Task = ({
   idColumn,
@@ -24,6 +23,7 @@ const Task = ({
     order: orderTask,
     userId: ownerTask,
     users: usersOfTask,
+    boardId: idBoard,
   },
   delTask,
   editTask,
@@ -33,7 +33,6 @@ const Task = ({
   const matches = useMediaQuery('(pointer: coarse)');
 
   const { t } = useTranslation();
-  const { id: idBoard } = useParams();
 
   const { token } = useSelector((state: IRootState) => state.auth);
   const [isHovering, setIsHovering] = useState(false);
@@ -58,7 +57,7 @@ const Task = ({
   ): Promise<void> => {
     event.preventDefault();
 
-    if (token && idBoard) {
+    if (token) {
       const deletedTask = await deleteTask(token, idBoard, idColumn, idTask);
       delTask(deletedTask);
     }
@@ -69,7 +68,7 @@ const Task = ({
     title: string,
     description: string
   ): Promise<void> => {
-    if (token && idBoard) {
+    if (token) {
       const editedTask = await updateTask(token, idBoard, idColumn, idTask, {
         order: orderTask,
         columnId: idColumn,

@@ -12,7 +12,7 @@ import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch, IRootState } from 'store/model';
-import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
+import { getBoardData, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { ColumnType, TaskType } from 'types/types';
 import { Button, Typography } from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
@@ -23,11 +23,11 @@ import { useTranslation } from 'react-i18next';
 
 const Board = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { id: idBoard } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
+  const { titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
   );
   const { token } = useSelector((state: IRootState) => state.auth);
@@ -35,16 +35,14 @@ const Board = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   useEffect(() => {
-    if (id && token) {
+    if (idBoard && token) {
       const getResult = async (): Promise<void> => {
-        dispatch(getBoardData({ token, idBoard: id }));
+        dispatch(getBoardData({ token, idBoard }));
       };
 
       getResult();
-
-      dispatch(setBoardId({ idBoard: id }));
     }
-  }, [id, token, dispatch]);
+  }, [idBoard, token, dispatch]);
 
   useEffect(() => {
     if (columns.length && token) {
@@ -196,7 +194,7 @@ const Board = () => {
     title: string
   ): Promise<void> => {
     event.preventDefault();
-    if (token) {
+    if (token && idBoard) {
       const newColumn = await createColumn(token, idBoard, {
         title: title,
         order: columns.length,
