@@ -1,6 +1,6 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
 
 i18n
   // detect user language
@@ -46,6 +46,7 @@ i18n
             videoTitle: 'How to use the app',
             videoSubtitle:
               'Watch this short video and it will make using our application even easier and clearer',
+            videoSrc: 'https://www.youtube.com/embed/LlY90lG_Fuw',
             teamTitle: 'Our team',
             teamSubtitles: 'Meet the developers',
             teamKatya:
@@ -60,6 +61,7 @@ i18n
             nameKatya: 'Katya',
             nameSergey: 'Sergey',
             nameOlya: 'Olya',
+            year: ' ',
           },
 
           profile: {
@@ -145,6 +147,7 @@ i18n
             videoTitle: 'Как пользоваться приложением',
             videoSubtitle:
               'Посмотрите этот небольшой видеоролик, и использование нашего приложения станет ещё более простым и понятным',
+            videoSrc: 'https://www.youtube.com/embed/vQeQqJrOjkY',
             teamTitle: 'Наша команда',
             teamSubtitles: 'Знакомьтесь с разработчиками',
             teamKatya:
@@ -159,6 +162,7 @@ i18n
             nameKatya: 'Катя',
             nameOlya: 'Оля',
             nameSergey: 'Сергей',
+            year: ' ',
           },
 
           profile: {

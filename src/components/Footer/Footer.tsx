@@ -1,70 +1,78 @@
+import { Container, Link, Stack } from '@mui/material';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './Footer.module.scss';
-import GitHubLogo from './git-hub-logo.svg';
-import LogoRSS from './rs_school_js.svg';
+import { FOOTER_CONTENT } from './constants';
+
+interface IFooterLink {
+  name: string;
+  link: string;
+  imgSrc: string;
+  imgAlt: string;
+  imgWidth: string;
+}
+
+const FooterLink: FC<IFooterLink> = ({ name, link, imgSrc, imgAlt, imgWidth }) => (
+  <Link
+    underline="none"
+    href={link}
+    variant="h6"
+    color="#000"
+    target="_blank"
+    rel="noreferrer"
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 1.25,
+    }}
+  >
+    <img src={imgSrc} alt={imgAlt} width={imgWidth} />
+    {name}
+  </Link>
+);
 
 const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.footer__container}>
-        <div className={styles.footer__box}>
-          <div className={styles.footer__repos}>
-            <p className={styles.footer__git}>
-              <a
-                className={styles.footer__link}
-                href="https://github.com/KateBlazhko"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={GitHubLogo} alt="Logo GitHub" width="30px" />
-                <span className={styles.footer__name}>{t('footer.nameKatya')}</span>
-              </a>
-            </p>
-
-            <p className={styles.footer__git}>
-              <a
-                className={styles.footer__link}
-                href="https://github.com/ps0m"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={GitHubLogo} alt="Logo GitHub" width="30px" />
-                <span className={styles.footer__name}>{t('footer.nameSergey')}</span>
-              </a>
-            </p>
-
-            <p className={styles.footer__git}>
-              <a
-                className={styles.footer__link}
-                href="https://github.com/Oreada"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={GitHubLogo} alt="Logo GitHub" width="30px" />
-                <span className={styles.footer__name}>{t('footer.nameOlya')}</span>
-              </a>
-            </p>
-          </div>
-
-          <div className={styles.footer__adds}>
-            <p className={styles.footer__rss}>
-              <a
-                className={styles.footer__link}
-                href="https://rs.school/react"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={LogoRSS} alt="Logo RSSchool" width="80px" />
-              </a>
-            </p>
-
-            <p className={styles.footer__year}>&apos;22</p>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <Stack
+      component="footer"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        backgroundColor: 'neutral.main',
+        py: 3.75,
+      }}
+    >
+      <Container
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 3.75,
+        }}
+      >
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
+          gap={4}
+        >
+          {FOOTER_CONTENT.map((content) => (
+            <FooterLink
+              key={content.name}
+              name={t(`footer.${content.name}`)}
+              link={content.link}
+              imgSrc={content.imgSrc}
+              imgAlt={content.imgAlt}
+              imgWidth={content.imgWidth}
+            />
+          ))}
+        </Stack>
+      </Container>
+    </Stack>
   );
 };
 

@@ -1,11 +1,30 @@
 @import '../../styles/variables.scss';
 
-.hero {
-  background-image: url(./hero-back-orange.svg);
-  background-repeat: no-repeat;
-  background-position: center rem(-600);
+// .hero {
+//   width: 100%;
+//   // #F3B848
+//   // background-image: url(./assets/hero-back-orange.svg);
+//   // background-repeat: no-repeat;
+//   // background-position: center rem(-600);
+//   padding-top: rem(60);
+// }
 
+.hero {
+  position: relative;
+  width: 100%;
+  // #F3B848
+  background: url(./assets/hero-back-orange.svg) 50% 110% no-repeat;
   padding-top: rem(60);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: rem(-180);
+  width: 100%;
+  height: 100%;
+  background-color: #F3B848;
+  z-index: -1;
 }
 
 .hero__container {
@@ -47,19 +66,19 @@
 }
 
 .hero__picture {
-  min-width: rem(700);
-  min-height: rem(500);
+  width: 60%;
+  height: rem(500);
 
-  background-image: url(./puzzles-green.svg);
+  background-image: url(./assets/puzzles-green.svg);
   background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background-position: 0% 20%;
+  background-size: contain;
 }
 
 /* ------------------------ */
 
 .advantages {
-  padding-top: rem(160);
+  padding-top: rem(80);
 }
 
 .advantages__container {
@@ -129,21 +148,21 @@
 }
 
 .item__picture_first {
-  background-image: url(./aim-rust.svg);
+  background-image: url(./assets/aim-rust.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
 .item__picture_second {
-  background-image: url(./clock-rust.svg);
+  background-image: url(./assets/clock-rust.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
 .item__picture_third {
-  background-image: url(./global-rust.svg);
+  background-image: url(./assets/global-rust.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -216,7 +235,7 @@
 .instructions__watch-icon {
   width: rem(400);
   height: rem(200);
-  background-image: url(./youtube-music-2-rust.svg);
+  background-image: url(./assets/youtube-music-2-rust.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
@@ -225,11 +244,11 @@
 /* ------------------------------------------------------------ */
 
 .team {
-  margin-top: rem(160);
+  margin-top: rem(80);
   padding-bottom: rem(60);
   margin-bottom: rem(60);
 
-  background-image: url(./team-back-circles-2.svg);
+  background-image: url(./assets/team-back-circles-2.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

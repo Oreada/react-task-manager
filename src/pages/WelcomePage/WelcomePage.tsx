@@ -1,131 +1,163 @@
+import { Box, Container, Stack, Typography } from '@mui/material';
+import Card from 'components/Card/Card';
+import FlatCard from 'components/FlatCard/FlatCard';
 import { useTranslation } from 'react-i18next';
-import PhotoKatya from './photo_katya.jpeg';
-import PhotoOlya from './photo_olya.jpg';
-import PhotoSergey from './photo_sergey.png';
+import Puzzle from './assets/puzzles-green.svg';
+import { CARD_CONTENT, DEVELOPER_CONTENT, ICardContent } from './constants';
 import styles from './WelcomePage.module.scss';
-
 const WelcomePage = () => {
   const { t } = useTranslation();
 
   return (
     <>
-      <article className={styles.hero}>
-        <div className={styles.hero__container}>
-          <div className={styles.hero__body}>
-            <div className={styles.hero__article}>
-              <h2 className={styles.article__title}>{t('main.heroTitle')}</h2>
-              <div className={styles.article__text}>{t('main.heroText')}</div>
-              {/* <button className={styles.article__button}>Get started</button> */}
-            </div>
-            <div className={styles.hero__picture}></div>
-          </div>
-        </div>
-      </article>
+      <Stack component="article" className={styles.hero}>
+        <Container
+          maxWidth="lg"
+          sx={{ display: 'flex', flexDirection: { xs: 'column', tablet: 'row' }, gap: 3.75 }}
+        >
+          <Stack
+            direction="column"
+            justifyContent="start"
+            maxWidth={{ xs: '100%', tablet: '40%' }}
+            sx={{ gap: 5 }}
+          >
+            <Typography variant="h2" component="h2" sx={{ fontWeight: 800 }}>
+              {t('main.heroTitle')}
+            </Typography>
+            <Typography variant="h6" component="p">
+              {t('main.heroText')}
+            </Typography>
+          </Stack>
+          <Box
+            sx={{
+              width: { xs: '100%', tablet: '60%' },
+              height: { xs: 300, tablet: 500 },
+              backgroundImage: `url(${Puzzle})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: { xs: '50% 0%', tablet: '0% 20%' },
+              backgroundSize: 'contain',
+            }}
+          />
+        </Container>
+      </Stack>
 
-      <article className={styles.advantages}>
-        <div className={styles.advantages__container}>
-          <div className={styles.advantages__body}>
+      <Stack component="article" className={styles.advantages}>
+        <Container maxWidth="lg" sx={{ display: 'flex', gap: 3.75 }}>
+          <Stack
+            direction="column"
+            alignItems="center"
+            sx={{ gap: 7.5 }}
+            className={styles.advantages__body}
+          >
             <div className={styles['advantages__title-wrapper']}>
-              <h3 className={styles.advantages__title}>{t('main.advantagesTitle')}</h3>
-              <h4 className={styles.advantages__subtitle}>{t('main.advantagesSubtitle')}</h4>
+              <Typography variant="h3" component="h3" sx={{ fontWeight: 800 }}>
+                {t('main.advantagesTitle')}
+              </Typography>
+              <Typography variant="h6" component="h4">
+                {t('main.advantagesSubtitle')}
+              </Typography>
             </div>
-            <div className={styles.advantages__box}>
-              <div className={styles.advantages__item}>
-                <div className={styles.item__picture_first}></div>
-                <h5 className={styles.item__title}>{t('main.advAimTitle')}</h5>
-                <div className={styles.item__text}>{t('main.advAimText')}</div>
-              </div>
-              <div className={styles.advantages__item}>
-                <div className={styles.item__picture_second}></div>
-                <h5 className={styles.item__title}>{t('main.advClockTitle')}</h5>
-                <div className={styles.item__text}>{t('main.advClockText')}</div>
-              </div>
-              <div className={styles.advantages__item}>
-                <div className={styles.item__picture_third}></div>
-                <h5 className={styles.item__title}>{t('main.advGlobeTitle')}</h5>
-                <div className={styles.item__text}>{t('main.advGlobeText')}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
 
-      <article className={styles.instructions}>
-        <div className={styles.instructions__container}>
-          <div className={styles.instructions__box}>
-            <div className={styles.instructions__note}>
-              <h5 className={styles.instructions__title}>{t('main.videoTitle')}</h5>
-              <div className={styles.instructions__text}>{t('main.videoSubtitle')}</div>
-            </div>
-            <div className={styles.instructions__video}>
-              <div className={styles.instructions__screensaver}>
-                <div className={styles['instructions__watch-icon']}></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+            <Stack
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="stretch"
+              flexWrap={{ xs: 'wrap', laptop: 'nowrap' }}
+              sx={{ gap: 3.5 }}
+            >
+              {CARD_CONTENT.map((item: ICardContent) => (
+                <Card
+                  key={item.title}
+                  title={t(`main.${item.title}`)}
+                  text={t(`main.${item.text}`)}
+                  icon={item.icon}
+                />
+              ))}
+            </Stack>
+          </Stack>
+        </Container>
+      </Stack>
 
-      <article className={styles.team}>
-        <div className={styles.team__container}>
-          <div className={styles.team__body}>
-            <div className={styles['team__title-wrapper']}>
-              <h3 className={styles.team__title}>{t('main.teamTitle')}</h3>
-              <h4 className={styles.team__subtitle}>{t('main.teamSubtitles')}</h4>
-            </div>
-            <div className={styles.team__box}>
-              <div className={styles.team__item}>
-                <div className={styles.developer}>
-                  <div className={styles.developer__photo}>
-                    <a href="https://github.com/KateBlazhko" target="_blank" rel="noreferrer">
-                      <img
-                        className={styles.developer_image}
-                        src={PhotoKatya}
-                        width="100px"
-                        height="100px"
-                        alt="Developer photo"
-                      />
-                    </a>
-                  </div>
-                  <div className={styles.developer__description}>{t('main.teamKatya')}</div>
-                </div>
-              </div>
-              <div className={styles.team__item}>
-                <div className={styles.developer}>
-                  <div className={styles.developer__photo}>
-                    <a href="https://github.com/ps0m" target="_blank" rel="noreferrer">
-                      <img
-                        className={styles.developer_image}
-                        src={PhotoSergey}
-                        width="100px"
-                        height="100px"
-                        alt="Developer photo"
-                      />
-                    </a>
-                  </div>
-                  <div className={styles.developer__description}>{t('main.teamSergey')}</div>
-                </div>
-              </div>
-              <div className={styles.team__item}>
-                <div className={styles.developer}>
-                  <div className={styles.developer__photo}>
-                    <a href="https://github.com/Oreada" target="_blank" rel="noreferrer">
-                      <img
-                        className={styles.developer_image}
-                        src={PhotoOlya}
-                        width="100px"
-                        height="100px"
-                        alt="Developer photo"
-                      />
-                    </a>
-                  </div>
-                  <div className={styles.developer__description}>{t('main.teamOlya')}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+      <Stack
+        component="article"
+        sx={{ width: '100%', bgcolor: 'substitute.main', color: 'blond.main', mt: 20, py: 7.5 }}
+      >
+        <Container
+          maxWidth="lg"
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', tablet: 'row' },
+            alignItems: 'center',
+            gap: 5,
+          }}
+        >
+          <Stack
+            maxWidth={{ xs: '90%', tablet: '38%' }}
+            direction="column"
+            alignItems="flex-start"
+            spacing={2.5}
+          >
+            <Typography variant="h3" component="h5" sx={{ fontWeight: 800 }}>
+              {t('main.videoTitle')}
+            </Typography>
+            <Typography variant="h6" component="p">
+              {t('main.videoSubtitle')}
+            </Typography>
+          </Stack>
+          <Box
+            sx={{
+              position: 'relative',
+              width: '100%',
+              height: 0,
+              paddingTop: { xs: '56%', tablet: '32%' },
+            }}
+          >
+            <iframe
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                borderWidth: 0,
+                outlineWidth: 0,
+              }}
+              src={t('main.videoSrc')}
+              title="How to use the app"
+              frameBorder="0"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </Box>
+        </Container>
+      </Stack>
+
+      <Stack component="article" className={styles.team}>
+        <Container
+          maxWidth="lg"
+          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}
+        >
+          <Stack direction="column" alignItems="start" sx={{ gap: 5 }}>
+            <Typography variant="h3" component="h5" sx={{ fontWeight: 800 }}>
+              {t('main.teamTitle')}
+            </Typography>
+            <Typography variant="h6" component="p">
+              {t('main.teamSubtitles')}
+            </Typography>
+          </Stack>
+          <Stack direction="column" spacing={2.75}>
+            {DEVELOPER_CONTENT.map((developer) => (
+              <FlatCard
+                key={developer.name}
+                name={developer.name}
+                link={developer.link}
+                icon={developer.icon}
+                text={t(`main.${developer.text}`)}
+              />
+            ))}
+          </Stack>
+        </Container>
+      </Stack>
     </>
   );
 };
