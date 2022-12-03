@@ -11,6 +11,7 @@ export function DialogDelete(props: DialogProps) {
   const { t } = useTranslation();
 
   const handleClose = () => {
+    props.setIsHovering && props.setIsHovering(false);
     props.setOpenDialog(false);
   };
 

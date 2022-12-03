@@ -61,7 +61,11 @@ const Task = ({
       );
   };
 
-  const handleClickOpenUpdate = (): void => setOpenUpdate(true);
+  const handleClickOpenUpdate = (): void => {
+    setIsHovering(false);
+
+    setOpenUpdate(true);
+  };
 
   const handlePointerOver = (): void => setIsHovering(true);
 
@@ -110,7 +114,7 @@ const Task = ({
         ...provider?.draggableProps.style,
       }}
       ref={provider?.innerRef}
-      onMouseOver={handlePointerOver}
+      onMouseEnter={handlePointerOver}
       onMouseLeave={handlePointerOut}
       className={styles.task}
     >
@@ -161,12 +165,12 @@ const Task = ({
           />
         </BasicModal>
       )}
-
       {openDialog && (
         <DialogDelete
           title={t('boards.dialogTask')}
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
+          setIsHovering={setIsHovering}
           func={handleClickDeleteButton}
         />
       )}
