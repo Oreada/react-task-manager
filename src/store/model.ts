@@ -6,7 +6,6 @@ export type BoardStateType = {
   columns: ColumnType[];
   tasks: TaskType[];
   taskByColumns: TasksByColumnsType | null;
-  idBoard: string;
   titleBoard: string;
   isLoading: boolean;
   searchValue: string;
