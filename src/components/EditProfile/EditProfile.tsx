@@ -52,7 +52,6 @@ const EditProfile = () => {
       name.setValue(user.name);
       login.setValue(user.login);
     }
-    // eslint-disable-next-line
   }, [user]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {

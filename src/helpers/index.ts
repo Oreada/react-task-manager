@@ -15,7 +15,6 @@ export const removeLocal = (key: string): void => {
 
 export const checkLifeTimeToken = (date: number): boolean => {
   const res = (Date.now() - date) / 1000 < TIME_LIFE_TOKEN;
-  console.log(res, Date.now() - date, TIME_LIFE_TOKEN);
 
   return res;
 };

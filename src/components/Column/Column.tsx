@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { deleteColumn } from 'api/columns/deleteColumn';
 import { createTask } from 'api/tasks/createTask';
 import { deleteTask } from 'api/tasks/deleteTask';

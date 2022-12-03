@@ -88,7 +88,6 @@ const Board = () => {
 
       delColumn(idColumn);
     },
-    // eslint-disable-next-line
     [taskByColumns, dispatch]
   );
 
