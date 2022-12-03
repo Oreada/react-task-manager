@@ -38,12 +38,17 @@ const BasicMenu = ({ handleClickOpenDialog, handleClickOpenUpdate }: BasicMenuPr
       </IconButton>
       {openMenu && (
         <Menu
-          id="basic-menu"
           anchorEl={anchorEl}
           open={openMenu}
           onClose={handleClose}
           MenuListProps={{
             'aria-labelledby': 'basic-button',
+          }}
+          sx={{
+            '& .MuiPaper-root': {
+              borderRadius: '10px',
+              boxShadow: '0 0 20px #d4d4d4',
+            },
           }}
         >
           <MenuItem>

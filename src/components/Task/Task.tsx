@@ -106,7 +106,7 @@ const Task = ({
           textAlign: 'left',
           wordBreak: 'break-word',
         }}
-        // onClick={handleClickOpenUpdate}
+        onClick={handleClickOpenUpdate}
       >
         {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
