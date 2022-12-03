@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/project-management-app/static/css/main.7a5b322b.css",
-    "main.js": "/project-management-app/static/js/main.61bfed0f.js",
+    "main.css": "/project-management-app/static/css/main.5b0909d5.css",
+    "main.js": "/project-management-app/static/js/main.fc39ce90.js",
     "static/media/photo_sergey.png": "/project-management-app/static/media/photo_sergey.18f39040cdf906e9b6d2.png",
     "static/media/Hello.svg": "/project-management-app/static/media/Hello.8e38f9af113917ee04ac7a4988ae9f04.svg",
     "static/media/Group.svg": "/project-management-app/static/media/Group.dda92694f185918033816b25df8c935a.svg",
@@ -29,15 +29,15 @@
     "static/media/noto-sans-v27-latin_cyrillic-900.woff2": "/project-management-app/static/media/noto-sans-v27-latin_cyrillic-900.89326b73293a114138a8.woff2",
     "static/media/noto-sans-v27-latin_cyrillic-regular.woff2": "/project-management-app/static/media/noto-sans-v27-latin_cyrillic-regular.4f212fcfbdbc2767696b.woff2",
     "static/media/noto-sans-v27-latin_cyrillic-700.woff2": "/project-management-app/static/media/noto-sans-v27-latin_cyrillic-700.203420a6cf36375292ab.woff2",
+    "static/media/clock-rust.svg": "/project-management-app/static/media/clock-rust.a3f0decf5bdbbdea970b044f0e232f30.svg",
     "static/media/back-for-error.svg": "/project-management-app/static/media/back-for-error.342009657432333275363af2741202d0.svg",
-    "static/media/clock-rust.svg": "/project-management-app/static/media/clock-rust.0f4837a22dec01f35af8.svg",
-    "static/media/puzzles-green.svg": "/project-management-app/static/media/puzzles-green.4fa60f5071711e3feda9.svg",
-    "static/media/global-rust.svg": "/project-management-app/static/media/global-rust.dde620a80b53437505bd.svg",
-    "static/media/rs_school_js.svg": "/project-management-app/static/media/rs_school_js.ad178c0df28bc133be34b982d62f431d.svg",
+    "static/media/rs_school_js.svg": "/project-management-app/static/media/rs_school_js.f238e9f0a115ed71dec18930bab6c783.svg",
+    "static/media/global-rust.svg": "/project-management-app/static/media/global-rust.d3a56ed91090343a0ce2475fd11ec732.svg",
+    "static/media/puzzles-green.svg": "/project-management-app/static/media/puzzles-green.4fa60f5071711e3feda9ad3e47cd6538.svg",
     "static/media/not-found-404-1-rust.svg": "/project-management-app/static/media/not-found-404-1-rust.f2fe746b7aaf376df5826e865b13f536.svg",
     "static/media/Edit.svg": "/project-management-app/static/media/Edit.41630627ce40f763350d2fb9fdbf6cee.svg",
     "static/media/youtube-music-2-rust.svg": "/project-management-app/static/media/youtube-music-2-rust.2381f3a307681a3f68e3.svg",
-    "static/media/aim-rust.svg": "/project-management-app/static/media/aim-rust.441f83c9ce4a2d497c64.svg",
+    "static/media/aim-rust.svg": "/project-management-app/static/media/aim-rust.70267fc001305fd0ac1bc823fb07617c.svg",
     "static/media/git-hub-logo.svg": "/project-management-app/static/media/git-hub-logo.5d79a812313b50cf1ce639bfbaabad76.svg",
     "static/media/logo-green.svg": "/project-management-app/static/media/logo-green.42ac7c53df3be892f063.svg",
     "index.html": "/project-management-app/index.html",
@@ -45,12 +45,14 @@
     "static/media/Back.svg": "/project-management-app/static/media/Back.5290d1e4899b02d43c7aecb9ec94ccac.svg",
     "static/media/team-back-circles-2.svg": "/project-management-app/static/media/team-back-circles-2.5290d1e4899b02d43c7a.svg",
     "static/media/Blob_2.svg": "/project-management-app/static/media/Blob_2.2276e354ce433ae735142ea730d1d9e8.svg",
+    "static/media/en.svg": "/project-management-app/static/media/en.aace85cd0aa44b4da5c968c39967a469.svg",
+    "static/media/ru.svg": "/project-management-app/static/media/ru.b62ab20c93356ca6c76103108d131c18.svg",
     "static/media/hero-back-orange.svg": "/project-management-app/static/media/hero-back-orange.c16aee8a485e6e178d9d.svg",
-    "main.7a5b322b.css.map": "/project-management-app/static/css/main.7a5b322b.css.map",
-    "main.61bfed0f.js.map": "/project-management-app/static/js/main.61bfed0f.js.map"
+    "main.5b0909d5.css.map": "/project-management-app/static/css/main.5b0909d5.css.map",
+    "main.fc39ce90.js.map": "/project-management-app/static/js/main.fc39ce90.js.map"
   },
   "entrypoints": [
-    "static/css/main.7a5b322b.css",
-    "static/js/main.61bfed0f.js"
+    "static/css/main.5b0909d5.css",
+    "static/js/main.fc39ce90.js"
   ]
 }
