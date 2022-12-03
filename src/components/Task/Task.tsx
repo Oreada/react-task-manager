@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { IRootState } from 'store/model';
 import { FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
-import { IconButton, Typography } from '@mui/material';
-import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import { Typography } from '@mui/material';
 import styles from './Task.module.scss';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { updateTask } from 'api/tasks/updateTask';
@@ -13,6 +12,7 @@ import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import BasicMenu from 'components/Menu/BasicMenu';
 
 const Task = ({
   idColumn,
@@ -106,24 +106,15 @@ const Task = ({
           textAlign: 'left',
           wordBreak: 'break-word',
         }}
-        onClick={handleClickOpenUpdate}
+        // onClick={handleClickOpenUpdate}
       >
         {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
       {(isHovering || matches) && (
-        <IconButton
-          onClick={handleClickOpenDialog}
-          aria-label="delete"
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            right: 0,
-            zIndex: 2,
-            transform: 'translateY(-50%)',
-          }}
-        >
-          <RemoveCircleOutlineOutlinedIcon fontSize="small" />
-        </IconButton>
+        <BasicMenu
+          handleClickOpenUpdate={handleClickOpenUpdate}
+          handleClickOpenDialog={handleClickOpenDialog}
+        />
       )}
       {openUpdate && (
         <BasicModal
