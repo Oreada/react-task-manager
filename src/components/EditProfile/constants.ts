@@ -1,4 +1,4 @@
-import { Cicleron, Lock, Mail, VALIDATION_FORM } from 'constants/constants';
+import { Cicleron, Lock, Mail, VALIDATION_FORM } from '../../constants/constants';
 import { TypeField, TypeFormInputsContent } from 'types/types';
 
 export const FORM_TEXT = {

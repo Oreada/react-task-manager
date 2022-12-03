@@ -1,5 +1,5 @@
 import { sortByOrder } from 'components/helpers/sortByOrder';
-import { URL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from '../../constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Get Columns in board

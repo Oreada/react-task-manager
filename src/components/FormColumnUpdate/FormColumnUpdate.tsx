@@ -51,9 +51,11 @@ export function FormColumnUpdate(props: FormColumnProps) {
           name="title"
           inputRef={titleColumn}
           autoFocus={true}
+          multiline={true}
           onBlur={handleSubmit}
           fullWidth
           required
+          sx={{ wordBreak: 'break-word' }}
         />
       </Box>
     </form>

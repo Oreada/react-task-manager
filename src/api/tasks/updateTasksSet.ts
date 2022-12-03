@@ -1,4 +1,4 @@
-import { URL_TASKS_SET } from 'constants/constants';
+import { URL_TASKS_SET } from '../../constants/constants';
 import { TaskType, BodyForTasksSetOrder } from 'types/types';
 
 //! Change order of list of tasks

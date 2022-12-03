@@ -41,9 +41,8 @@
 .hero__article {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   gap: rem(40);
-
   font-family: 'Nunito Sans';
 }
 

@@ -1,4 +1,4 @@
-import { URL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from '../../constants/constants';
 import { TaskType, BodyForTask } from 'types/types';
 
 //! Create Task in column

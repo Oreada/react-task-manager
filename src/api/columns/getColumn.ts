@@ -1,4 +1,4 @@
-import { URL_BOARDS } from 'constants/constants';
+import { URL_BOARDS } from '../../constants/constants';
 import { ColumnType } from 'types/types';
 
 //! Find Column
