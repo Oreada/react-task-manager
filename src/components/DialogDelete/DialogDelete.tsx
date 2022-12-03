@@ -12,13 +12,6 @@ import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
 import { useTranslation } from 'react-i18next';
 import { DialogProps } from './model';
 
-const styleBox = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
 const style = {
   width: '100%',
   display: 'flex',
@@ -41,7 +34,7 @@ export function DialogDelete(props: DialogProps) {
   };
 
   return (
-    <Box sx={styleBox}>
+    <Box>
       <Dialog
         open={props.openDialog}
         onClose={handleClose}
