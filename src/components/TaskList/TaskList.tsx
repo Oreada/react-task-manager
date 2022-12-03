@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { TaskListPropsType } from './model';
 
-const TaskList = ({ tasks, idColumn, delTask }: TaskListPropsType) => (
+const TaskList = ({ tasks, idColumn, delTask, editTask }: TaskListPropsType) => (
   <>
     {tasks.map((task, index) => (
       <Draggable key={task._id} draggableId={task._id} index={index}>
@@ -12,6 +12,7 @@ const TaskList = ({ tasks, idColumn, delTask }: TaskListPropsType) => (
             idColumn={idColumn}
             task={task}
             delTask={delTask}
+            editTask={editTask}
             provider={provider}
             isDragging={snapshot.isDragging}
           />

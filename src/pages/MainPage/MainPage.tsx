@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -38,17 +37,13 @@ const MainPage = () => {
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpenDialog = (): void => {
-    setOpenDialog(true);
-  };
+  const handleClickOpenDialog = (): void => setOpenDialog(true);
 
   const [idBoardDelete, setIdBoardDelete] = useState<string>('');
 
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
 
-  const handleClickOpenUpdate = () => {
-    setOpenUpdate(true);
-  };
+  const handleClickOpenUpdate = () => setOpenUpdate(true);
 
   const [idBoardUpdate, setIdBoardUpdate] = useState<string>('');
 
@@ -140,7 +135,7 @@ const MainPage = () => {
       >
         {t('boards.title')}
       </Typography>
-      
+
       {isLoading ? (
         <Loader />
       ) : (

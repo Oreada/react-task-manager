@@ -53,7 +53,6 @@ const EditProfile = () => {
       name.setValue(user.name);
       login.setValue(user.login);
     }
-    // eslint-disable-next-line
   }, [user]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -105,9 +104,9 @@ const EditProfile = () => {
     setError('');
   };
 
-  const handleClickOpenDialog = () => setOpenDialog(true);
+  const handleClickOpenDialog = (): void => setOpenDialog(true);
 
-  const handleClickDeleteUser = (event: React.MouseEvent): void => {
+  const handleClickDeleteUser = (): void => {
     if (token && idUser) {
       deleteUser(token, idUser);
       dispatch(setId(INITIAL_AUTH_STATE));

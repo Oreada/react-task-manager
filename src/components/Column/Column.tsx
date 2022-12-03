@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { deleteColumn } from 'api/columns/deleteColumn';
 import { createTask } from 'api/tasks/createTask';
 import { deleteTask } from 'api/tasks/deleteTask';
@@ -31,7 +30,16 @@ const makeTasksSelector = () =>
 
 const tokenSelector = createSelector([(state: IRootState) => state.auth], (a) => a.token);
 
-const Column = ({ id, title, index, order, addTask, delColumn, delTask }: ColumnPropsType) => {
+const Column = ({
+  id,
+  title,
+  index,
+  order,
+  addTask,
+  delColumn,
+  delTask,
+  editTask,
+}: ColumnPropsType) => {
   const { t } = useTranslation();
   const { id: idBoard } = useParams();
 
@@ -90,7 +98,7 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
   };
 
   const handleClickEdit = async (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
+    event: FormEvent<HTMLFormElement>,
     title: string
   ): Promise<ColumnType | void> => {
     if (token && idBoard) {
@@ -128,6 +136,8 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
                 textTransform: 'uppercase',
                 textAlign: 'left',
                 wordBreak: 'break-word',
+                paddingRight: 3,
+                cursor: 'pointer',
               }}
               onClick={handleClickOpenInput}
             >
@@ -139,7 +149,7 @@ const Column = ({ id, title, index, order, addTask, delColumn, delTask }: Column
             {(provider) => {
               return (
                 <div className={styles.list} ref={provider.innerRef} {...provider.droppableProps}>
-                  <TaskList tasks={tasks} delTask={delTask} idColumn={id} />
+                  <TaskList tasks={tasks} delTask={delTask} idColumn={id} editTask={editTask} />
                   {provider.placeholder}
                 </div>
               );

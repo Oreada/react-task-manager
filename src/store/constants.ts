@@ -9,7 +9,6 @@ export const INITIAL_BOARD_STATE: BoardStateType = {
   columns: [],
   tasks: [],
   taskByColumns: null,
-  idBoard: '',
   titleBoard: '',
   isLoading: false,
   searchValue: '',

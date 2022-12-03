@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARDS_PATH } from 'router/constants';
-import { getBoardData, setBoardId, setColumns, setTasksByColumn } from 'store/boardSlice';
+import { getBoardData, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { ColumnType, TaskType } from 'types/types';
 import styles from './Board.module.scss';
@@ -24,11 +24,11 @@ import { TasksByColumnsType } from './model';
 
 const Board = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { id: idBoard } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { idBoard, titleBoard, columns, taskByColumns, isLoading } = useSelector(
+  const { titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
   );
   const { token } = useSelector((state: IRootState) => state.auth);
@@ -36,16 +36,14 @@ const Board = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   useEffect(() => {
-    if (id && token) {
+    if (idBoard && token) {
       const getResult = async (): Promise<void> => {
-        dispatch(getBoardData({ token, idBoard: id }));
+        dispatch(getBoardData({ token, idBoard }));
       };
 
       getResult();
-
-      dispatch(setBoardId({ idBoard: id }));
     }
-  }, [id, token, dispatch]);
+  }, [idBoard, token, dispatch]);
 
   useEffect(() => {
     if (columns.length && token) {
@@ -89,8 +87,7 @@ const Board = () => {
 
       delColumn(idColumn);
     },
-    // eslint-disable-next-line
-    [taskByColumns, dispatch]
+    [taskByColumns, dispatch, columns]
   );
 
   const delTaskMemo = useCallback(
@@ -108,6 +105,30 @@ const Board = () => {
       };
 
       delTask(deletedTask);
+    },
+    [taskByColumns, dispatch]
+  );
+
+  const editTaskMemo = useCallback(
+    (editedTask: TaskType): void => {
+      const editTask = (taskNew: TaskType): void => {
+        taskByColumns &&
+          dispatch(
+            setTasksByColumn({
+              taskByColumns: {
+                ...taskByColumns,
+                [taskNew.columnId]: taskByColumns[taskNew.columnId].map((taskOld) => {
+                  if (taskOld._id === taskNew._id) {
+                    return taskNew;
+                  }
+
+                  return taskOld;
+                }),
+              },
+            })
+          );
+      };
+      editTask(editedTask);
     },
     [taskByColumns, dispatch]
   );
@@ -174,7 +195,7 @@ const Board = () => {
     title: string
   ): Promise<void> => {
     event.preventDefault();
-    if (token) {
+    if (token && idBoard) {
       const newColumn = await createColumn(token, idBoard, {
         title: title,
         order: columns.length,
@@ -233,6 +254,7 @@ const Board = () => {
                     order={order}
                     addTask={addTaskMemo}
                     delColumn={delColumnMemo}
+                    editTask={editTaskMemo}
                     delTask={delTaskMemo}
                   />
                 ))}

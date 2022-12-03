@@ -1,4 +1,5 @@
 import { Button, Container, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import Loader from 'components/Loader/Loader';
 import Task from 'components/Task/Task';
 import { useCallback, useEffect } from 'react';
@@ -16,13 +17,18 @@ const SearchPage = () => {
   const { t } = useTranslation();
 
   const { searchValue, foundedTasks, isLoading } = useSelector((state: IRootState) => state.board);
+
   const { token } = useSelector((state: IRootState) => state.auth);
 
   useEffect(() => {
     if (token) {
+      if (!searchValue) {
+        navigate(BOARDS_PATH);
+      }
+
       dispatch(getSearchingTasks({ token, searchValue }));
     }
-  }, [searchValue, token, dispatch]);
+  }, [searchValue, token, dispatch, navigate]);
 
   const delTaskMemo = useCallback(
     (deletedTask: TaskType): void => {
@@ -39,6 +45,27 @@ const SearchPage = () => {
     [foundedTasks, dispatch]
   );
 
+  const editTaskMemo = useCallback(
+    (editedTask: TaskType): void => {
+      const editTask = (taskNew: TaskType): void => {
+        dispatch(
+          setFoundedTasks({
+            foundedTasks: foundedTasks.map((taskOld) => {
+              if (taskOld._id === taskNew._id) {
+                return taskNew;
+              }
+
+              return taskOld;
+            }),
+          })
+        );
+      };
+
+      editTask(editedTask);
+    },
+    [foundedTasks, dispatch]
+  );
+
   const goBoards = () => navigate(BOARDS_PATH);
 
   const handleClickBack = () => {
@@ -46,9 +73,17 @@ const SearchPage = () => {
   };
 
   const FoundedTaskComponent = foundedTasks.length ? (
-    foundedTasks.map((item) => (
-      <Task key={item._id} idColumn={item.columnId} task={item} delTask={delTaskMemo} />
-    ))
+    <Box>
+      {foundedTasks.map((item) => (
+        <Task
+          key={item._id}
+          idColumn={item.columnId}
+          task={item}
+          delTask={delTaskMemo}
+          editTask={editTaskMemo}
+        />
+      ))}
+    </Box>
   ) : (
     <span>{t('boards.nothingFounded')}</span>
   );

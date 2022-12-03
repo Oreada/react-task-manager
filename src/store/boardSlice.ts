@@ -52,9 +52,6 @@ const boardSlice = createSlice({
     setTasks(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.tasks>>) {
       state.tasks = action.payload.tasks;
     },
-    setBoardId(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.idBoard>>) {
-      state.idBoard = action.payload.idBoard;
-    },
     setBoardTitle(state, action: PayloadAction<Pick<BoardStateType, BoardStateKeys.titleBoard>>) {
       state.titleBoard = action.payload.titleBoard;
     },
@@ -100,7 +97,6 @@ const boardSlice = createSlice({
 
 export const {
   setColumns,
-  setBoardId,
   setTasks,
   setBoardTitle,
   setTasksByColumn,

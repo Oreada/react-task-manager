@@ -1,11 +1,10 @@
 import { TaskPropsType } from './model';
 import { deleteTask } from 'api/tasks/deleteTask';
 import { useSelector } from 'react-redux';
-import { AppDispatch, IRootState } from 'store/model';
+import { IRootState } from 'store/model';
 import { FormEvent, useState } from 'react';
 import { TaskType } from 'types/types';
-import { IconButton, Typography } from '@mui/material';
-import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import { Typography } from '@mui/material';
 import styles from './Task.module.scss';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { updateTask } from 'api/tasks/updateTask';
@@ -13,8 +12,7 @@ import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useDispatch } from 'react-redux';
-import { setTasksByColumn } from 'store/boardSlice';
+import BasicMenu from 'components/Menu/BasicMenu';
 
 const Task = ({
   idColumn,
@@ -25,43 +23,28 @@ const Task = ({
     order: orderTask,
     userId: ownerTask,
     users: usersOfTask,
+    boardId: idBoard,
   },
   delTask,
+  editTask,
   isDragging,
   provider,
 }: TaskPropsType) => {
   const matches = useMediaQuery('(pointer: coarse)');
 
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
 
-  const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
-  const { taskByColumns } = useSelector((state: IRootState) => state.board);
   const [isHovering, setIsHovering] = useState(false);
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const editTask = (taskNew: TaskType): void => {
-    taskByColumns &&
-      dispatch(
-        setTasksByColumn({
-          taskByColumns: {
-            ...taskByColumns,
-            [taskNew.columnId]: taskByColumns[taskNew.columnId].map((taskOld) => {
-              if (taskOld._id === taskNew._id) {
-                return taskNew;
-              }
+  const handleClickOpenUpdate = (): void => {
+    setIsHovering(false);
 
-              return taskOld;
-            }),
-          },
-        })
-      );
+    setOpenUpdate(true);
   };
-
-  const handleClickOpenUpdate = (): void => setOpenUpdate(true);
 
   const handlePointerOver = (): void => setIsHovering(true);
 
@@ -84,9 +67,9 @@ const Task = ({
     event: FormEvent<HTMLFormElement>,
     title: string,
     description: string
-  ): Promise<TaskType | void> => {
+  ): Promise<void> => {
     if (token) {
-      const taskUpdated = await updateTask(token, idBoard, idColumn, idTask, {
+      const editedTask = await updateTask(token, idBoard, idColumn, idTask, {
         order: orderTask,
         columnId: idColumn,
         userId: ownerTask,
@@ -95,10 +78,8 @@ const Task = ({
         description: description,
       });
 
-      editTask(taskUpdated);
-
+      editTask(editedTask);
       setTaskUpdated(taskUpdated);
-      return taskUpdated;
     }
   };
   return (
@@ -110,7 +91,7 @@ const Task = ({
         ...provider?.draggableProps.style,
       }}
       ref={provider?.innerRef}
-      onMouseOver={handlePointerOver}
+      onMouseEnter={handlePointerOver}
       onMouseLeave={handlePointerOut}
       className={styles.task}
     >
@@ -130,19 +111,10 @@ const Task = ({
         {taskUpdated ? taskUpdated.title : titleTask}
       </Typography>
       {(isHovering || matches) && (
-        <IconButton
-          onClick={handleClickOpenDialog}
-          aria-label="delete"
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            right: 0,
-            zIndex: 2,
-            transform: 'translateY(-50%)',
-          }}
-        >
-          <RemoveCircleOutlineOutlinedIcon fontSize="small" />
-        </IconButton>
+        <BasicMenu
+          handleClickOpenUpdate={handleClickOpenUpdate}
+          handleClickOpenDialog={handleClickOpenDialog}
+        />
       )}
       {openUpdate && (
         <BasicModal
@@ -161,12 +133,12 @@ const Task = ({
           />
         </BasicModal>
       )}
-
       {openDialog && (
         <DialogDelete
           title={t('boards.dialogTask')}
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
+          setIsHovering={setIsHovering}
           func={handleClickDeleteButton}
         />
       )}

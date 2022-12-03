@@ -1,16 +1,30 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+} from '@mui/material';
+import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
+import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
 import { useTranslation } from 'react-i18next';
 import { DialogProps } from './model';
+
+const style = {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 1,
+};
 
 export function DialogDelete(props: DialogProps) {
   const { t } = useTranslation();
 
   const handleClose = () => {
+    props.setIsHovering && props.setIsHovering(false);
     props.setOpenDialog(false);
   };
 
@@ -20,7 +34,7 @@ export function DialogDelete(props: DialogProps) {
   };
 
   return (
-    <div>
+    <Box>
       <Dialog
         open={props.openDialog}
         onClose={handleClose}
@@ -34,12 +48,16 @@ export function DialogDelete(props: DialogProps) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{t('boards.dialogNo')}</Button>
-          <Button onClick={handleAgree} autoFocus>
-            {t('boards.dialogYes')}
-          </Button>
+          <Box sx={style}>
+            <IconButton onClick={handleAgree} color="success">
+              <TaskAltRoundedIcon />
+            </IconButton>
+            <IconButton onClick={handleClose} color="colorful">
+              <BlockRoundedIcon />
+            </IconButton>
+          </Box>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 }
