@@ -99,7 +99,7 @@ const Column = ({
   };
 
   const handleClickEdit = async (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
+    event: FormEvent<HTMLFormElement>,
     title: string
   ): Promise<ColumnType | void> => {
     if (token && idBoard) {
@@ -137,6 +137,8 @@ const Column = ({
                 textTransform: 'uppercase',
                 textAlign: 'left',
                 wordBreak: 'break-word',
+                paddingRight: 3,
+                cursor: 'pointer',
               }}
               onClick={handleClickOpenInput}
             >
