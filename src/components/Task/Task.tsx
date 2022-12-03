@@ -13,8 +13,6 @@ import { BasicModal } from 'components/Modal/BasicModal';
 import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useDispatch } from 'react-redux';
-import { setTasksByColumn } from 'store/boardSlice';
 
 const Task = ({
   idColumn,
@@ -27,39 +25,20 @@ const Task = ({
     users: usersOfTask,
   },
   delTask,
+  editTask,
   isDragging,
   provider,
 }: TaskPropsType) => {
   const matches = useMediaQuery('(pointer: coarse)');
 
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
 
   const { idBoard } = useSelector((state: IRootState) => state.board);
   const { token } = useSelector((state: IRootState) => state.auth);
-  const { taskByColumns } = useSelector((state: IRootState) => state.board);
   const [isHovering, setIsHovering] = useState(false);
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-
-  const editTask = (taskNew: TaskType): void => {
-    taskByColumns &&
-      dispatch(
-        setTasksByColumn({
-          taskByColumns: {
-            ...taskByColumns,
-            [taskNew.columnId]: taskByColumns[taskNew.columnId].map((taskOld) => {
-              if (taskOld._id === taskNew._id) {
-                return taskNew;
-              }
-
-              return taskOld;
-            }),
-          },
-        })
-      );
-  };
 
   const handleClickOpenUpdate = (): void => {
     setIsHovering(false);
@@ -88,9 +67,9 @@ const Task = ({
     event: FormEvent<HTMLFormElement>,
     title: string,
     description: string
-  ): Promise<TaskType | void> => {
+  ): Promise<void> => {
     if (token) {
-      const taskUpdated = await updateTask(token, idBoard, idColumn, idTask, {
+      const editedTask = await updateTask(token, idBoard, idColumn, idTask, {
         order: orderTask,
         columnId: idColumn,
         userId: ownerTask,
@@ -99,10 +78,8 @@ const Task = ({
         description: description,
       });
 
-      editTask(taskUpdated);
-
+      editTask && editTask(editedTask);
       setTaskUpdated(taskUpdated);
-      return taskUpdated;
     }
   };
   return (

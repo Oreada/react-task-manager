@@ -111,6 +111,30 @@ const Board = () => {
     [taskByColumns, dispatch]
   );
 
+  const editTaskMemo = useCallback(
+    (editedTask: TaskType): void => {
+      const editTask = (taskNew: TaskType): void => {
+        taskByColumns &&
+          dispatch(
+            setTasksByColumn({
+              taskByColumns: {
+                ...taskByColumns,
+                [taskNew.columnId]: taskByColumns[taskNew.columnId].map((taskOld) => {
+                  if (taskOld._id === taskNew._id) {
+                    return taskNew;
+                  }
+
+                  return taskOld;
+                }),
+              },
+            })
+          );
+      };
+      editTask(editedTask);
+    },
+    [taskByColumns, dispatch]
+  );
+
   const handleClickOpenModal = (): void => setOpenModal(true);
 
   const handleDragEnd = ({
@@ -232,6 +256,7 @@ const Board = () => {
                     order={order}
                     addTask={addTaskMemo}
                     delColumn={delColumnMemo}
+                    editTask={editTaskMemo}
                     delTask={delTaskMemo}
                   />
                 ))}
