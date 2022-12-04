@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createColumn } from 'api/columns/createColumn';
 import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
 import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
 import { getTasksByIdUser } from 'api/tasks/getTasksByIdUser';
@@ -12,12 +11,7 @@ import {
   ReducerNameActionTypes,
   SLICE_NAMES,
 } from './constants';
-import {
-  BoardStateType,
-  GetBoardDataArgsType,
-  GetSearchingTasksArgsType,
-  SetColumnsDataArgsType,
-} from './model';
+import { BoardStateType, GetBoardDataArgsType, GetSearchingTasksArgsType } from './model';
 
 export const getBoardData = createAsyncThunk<[ColumnType[], TaskType[]], GetBoardDataArgsType>(
   ReducerNameActionTypes.getBoardData,
