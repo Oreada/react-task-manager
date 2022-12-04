@@ -41,7 +41,6 @@ export function DialogDelete(props: DialogProps) {
         aria-describedby="alert-dialog-description"
         sx={{
           '& .MuiPaper-root': {
-            boxShadow: '0 0 20px #d4d4d4',
             borderRadius: 2.5,
           },
         }}

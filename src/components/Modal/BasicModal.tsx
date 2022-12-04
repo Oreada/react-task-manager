@@ -26,7 +26,6 @@ const style = {
   gap: 5,
 
   bgcolor: 'background.paper',
-  boxShadow: '0 0 20px #d4d4d4',
   borderRadius: 2.5,
   p: 5,
 };
