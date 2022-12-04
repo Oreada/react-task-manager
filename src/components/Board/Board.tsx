@@ -1,6 +1,5 @@
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { Button, Typography } from '@mui/material';
-import { createColumn } from 'api/columns/createColumn';
 import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
 import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
@@ -15,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARDS_PATH } from 'router/constants';
-import { getBoardData, setColumns, setTasksByColumn } from 'store/boardSlice';
+import { getBoardData, setColumns, setColumnsData, setTasksByColumn } from 'store/boardSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { ColumnType, TaskType } from 'types/types';
 import styles from './Board.module.scss';
@@ -28,7 +27,7 @@ const Board = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { titleBoard, columns, taskByColumns, isLoading } = useSelector(
+  const { titleBoard, columns, taskByColumns, isLoading, createdColumn } = useSelector(
     (state: IRootState) => state.board
   );
   const { token } = useSelector((state: IRootState) => state.auth);
@@ -196,19 +195,11 @@ const Board = () => {
   ): Promise<void> => {
     event.preventDefault();
     if (token && idBoard) {
-      const newColumn = await createColumn(token, idBoard, {
-        title: title,
-        order: columns.length,
-      });
-
-      dispatch(setColumns({ columns: [...columns, newColumn] }));
-
-      dispatch(setTasksByColumn({ taskByColumns: { ...taskByColumns, [newColumn._id]: [] } }));
+      dispatch(setColumnsData({ token, idBoard, title, order: columns.length }));
     }
   };
 
-  const goBoards = (): void => navigate(BOARDS_PATH);
-  const handleClickBack = (): void => goBoards();
+  const handleClickBack = (): void => navigate(BOARDS_PATH);
 
   return (
     <div className={styles.wrap}>

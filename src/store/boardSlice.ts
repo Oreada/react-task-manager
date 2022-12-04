@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createColumn } from 'api/columns/createColumn';
 import { getAllColumnsOfBoard } from 'api/columns/getAllColumnsOfBoard';
 import { getTasksByIdBoard } from 'api/tasks/getTasksByIdBoard';
 import { getTasksByIdUser } from 'api/tasks/getTasksByIdUser';
@@ -11,7 +12,12 @@ import {
   ReducerNameActionTypes,
   SLICE_NAMES,
 } from './constants';
-import { BoardStateType, GetBoardDataArgsType, GetSearchingTasksArgsType } from './model';
+import {
+  BoardStateType,
+  GetBoardDataArgsType,
+  GetSearchingTasksArgsType,
+  SetColumnsDataArgsType,
+} from './model';
 
 export const getBoardData = createAsyncThunk<[ColumnType[], TaskType[]], GetBoardDataArgsType>(
   ReducerNameActionTypes.getBoardData,
@@ -22,6 +28,18 @@ export const getBoardData = createAsyncThunk<[ColumnType[], TaskType[]], GetBoar
     ]);
 
     return [columns, tasks];
+  }
+);
+
+export const setColumnsData = createAsyncThunk<ColumnType, SetColumnsDataArgsType>(
+  ReducerNameActionTypes.setColumnsData,
+  async ({ token, idBoard, title, order }: SetColumnsDataArgsType) => {
+    const newColumn = await createColumn(token, idBoard, {
+      title,
+      order,
+    });
+
+    return newColumn;
   }
 );
 
@@ -91,6 +109,16 @@ const boardSlice = createSlice({
       .addCase(getSearchingTasks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.foundedTasks = action.payload;
+      })
+      .addCase(setColumnsData.pending, (state) => {
+        state.isLoading = true;
+        state.createdColumn = null;
+      })
+      .addCase(setColumnsData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.createdColumn = action.payload;
+        state.columns = [...state.columns, action.payload];
+        state.taskByColumns = { ...state.taskByColumns, [action.payload._id]: [] };
       });
   },
 });

@@ -10,6 +10,7 @@ export type BoardStateType = {
   isLoading: boolean;
   searchValue: string;
   foundedTasks: TaskType[];
+  createdColumn: ColumnType | null;
 };
 
 export type MainStateType = {
@@ -24,6 +25,13 @@ export type GetBoardArgsType = {
 export type GetBoardDataArgsType = {
   token: string;
   idBoard: string;
+};
+
+export type SetColumnsDataArgsType = {
+  token: string;
+  idBoard: string;
+  title: string;
+  order: number;
 };
 
 export type GetSearchingTasksArgsType = {

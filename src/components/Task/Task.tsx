@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicMenu from 'components/Menu/BasicMenu';
 import Loader from 'components/Loader/Loader';
+import { rootPortal } from 'index';
+import { createPortal } from 'react-dom';
 
 const Task = ({
   idColumn,
@@ -92,7 +94,7 @@ const Task = ({
   };
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && createPortal(<Loader />, rootPortal)}
       <div
         {...provider?.draggableProps}
         {...provider?.dragHandleProps}
