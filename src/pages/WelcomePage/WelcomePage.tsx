@@ -127,7 +127,7 @@ const WelcomePage = () => {
                 borderWidth: 0,
                 outlineWidth: 0,
               }}
-              src={t('main.videoSrc')}
+              src="https://www.youtube.com/embed/yh-KIhzQ3JY"
               title="How to use the app"
               frameBorder="0"
               allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

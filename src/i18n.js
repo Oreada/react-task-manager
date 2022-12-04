@@ -46,15 +46,14 @@ i18n
             videoTitle: 'How to use the app',
             videoSubtitle:
               'Watch this short video and it will make using our application even easier and clearer',
-            videoSrc: 'https://www.youtube.com/embed/LlY90lG_Fuw',
             teamTitle: 'Our team',
             teamSubtitles: 'Meet the developers',
             teamKatya:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+              'Made a Main page with a list of all available boards, a Board page, as well as a page for editing the profile. On the Board page was implemented drag and drop for columns and individual tasks. Developed global task search functionality',
             teamSergey:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+              'Started the server, made a page with authorization, set up routers, added error handling, optimized the loading of the application. Made adaptive, and also deployed the application',
             teamOlya:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+              'Wrote functions to work with API, developed basic design of the application, made Welcome page, header and footer, modal windows to create and edit board/column/task, dialog windows to remove board/column/task. Implemented application localization',
           },
 
           footer: {
@@ -67,8 +66,8 @@ i18n
           profile: {
             create: 'Create an account',
             already: 'I already have an account',
-            signIn: 'SignIn',
-            signUp: 'SignUp',
+            signIn: 'Sign in',
+            signUp: 'Sign up',
             logIn: 'Log in',
             register: 'Register',
             Name: 'Name',
@@ -148,15 +147,14 @@ i18n
             videoTitle: 'Как пользоваться приложением',
             videoSubtitle:
               'Посмотрите этот небольшой видеоролик, и использование нашего приложения станет ещё более простым и понятным',
-            videoSrc: 'https://www.youtube.com/embed/vQeQqJrOjkY',
             teamTitle: 'Наша команда',
             teamSubtitles: 'Знакомьтесь с разработчиками',
             teamKatya:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+              'Сделала страницу Main co списком всех доступных досок, страницу Board, а также страницу для редактирования профиля. На странице Board реализовала drag and drop для колонок и отдельных задач. Разработала функционал глобального поиска задач',
             teamSergey:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+              'Запустил сервер, сделал страницу с авторизацией, настроил роуты, добавил обработку ошибок, оптимизировал загрузку приложения. Сделал адаптив, а также задеплоил приложение',
             teamOlya:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem eum quibusdam, aspernatur voluptatum id ad iste natus inventore nesciunt. Officiis optio inventore consequuntur vel quae quod ipsa laborum praesentium porro',
+              'Написала функции для работы с API, разработала основной дизайн приложения, сделала стартовую страницу, хедер и футер, модальные окна для создания и редактирования доски/колонки/задачи, диалоговые окна для удаления доски/колонки/задачи. Реализовала локализацию приложения',
           },
 
           footer: {
@@ -202,7 +200,7 @@ i18n
             formTaskUpdate: 'Изменить задачу',
             formTaskTitle: 'Заголовок задачи',
             formTaskDesc: 'Описание задачи',
-            taskOwner: 'Создатель таска',
+            taskOwner: 'Создатель задачи',
             addButton: 'Добавить',
             updateButton: 'Применить',
             cancelButton: 'Отмена',
