@@ -6,7 +6,6 @@ import HeroBack from './assets/hero-back-orange.svg';
 import Puzzle from './assets/puzzles-green.svg';
 import TeamBack from './assets/team-back-circles-2.svg';
 import { CARD_CONTENT, DEVELOPER_CONTENT, ICardContent } from './constants';
-import styles from './WelcomePage.module.scss';
 const WelcomePage = () => {
   const { t } = useTranslation();
 
@@ -51,17 +50,17 @@ const WelcomePage = () => {
         </Container>
       </Stack>
 
-      <Stack component="article" pt={10}>
+      <Stack component="article" pt={{ xs: 7.5, tablet: 3 }}>
         <Container maxWidth="lg" sx={{ display: 'flex', gap: 3.75 }}>
           <Stack direction="column" alignItems="center" sx={{ gap: 7.5 }}>
-            <div className={styles['advantages__title-wrapper']}>
+            <Stack direction="column" justifyContent="center" alignItems="center" sx={{ gap: 3 }}>
               <Typography variant="h3" component="h3" sx={{ fontWeight: 800 }}>
                 {t('main.advantagesTitle')}
               </Typography>
               <Typography variant="h6" component="h4">
                 {t('main.advantagesSubtitle')}
               </Typography>
-            </div>
+            </Stack>
 
             <Stack
               flexDirection="row"
@@ -153,7 +152,7 @@ const WelcomePage = () => {
           maxWidth="lg"
           sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}
         >
-          <Stack direction="column" alignItems="center" sx={{ gap: 5 }}>
+          <Stack direction="column" alignItems="center" sx={{ gap: 3 }}>
             <Typography variant="h3" component="h5" sx={{ fontWeight: 800 }}>
               {t('main.teamTitle')}
             </Typography>
