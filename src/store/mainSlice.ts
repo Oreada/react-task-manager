@@ -61,10 +61,18 @@ const mainSlice = createSlice({
         state.isLoading = false;
         state.boards.push(action.payload);
       })
+      .addCase(deleteBoardThunk.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(deleteBoardThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.boards = state.boards.filter((board) => board._id !== action.payload._id);
       })
+      .addCase(editBoardThunk.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(editBoardThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.boards = state.boards.map((board) => {
           if (board._id === action.payload._id) {
             return {

@@ -9,8 +9,10 @@ import { FormColumn } from 'components/FormColumn/FormColumn';
 import { reorderItems } from 'components/helpers/reorderItems';
 import Loader from 'components/Loader/Loader';
 import { BasicModal } from 'components/Modal/BasicModal';
+import { rootPortal } from 'index';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -34,6 +36,7 @@ const Board = () => {
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [isLoadingColumn, setLoadingColumn] = useState<boolean>(false);
 
   useEffect(() => {
     if (idBoard && token) {
@@ -196,10 +199,15 @@ const Board = () => {
   ): Promise<void> => {
     event.preventDefault();
     if (token && idBoard) {
+      // dispatch(setColumnsData({ token, idBoard, title, order: columns.length }));
+      setLoadingColumn(true);
+
       const newColumn = await createColumn(token, idBoard, {
-        title: title,
+        title,
         order: columns.length,
       });
+
+      setLoadingColumn(false);
 
       dispatch(setColumns({ columns: [...columns, newColumn] }));
 
@@ -238,6 +246,7 @@ const Board = () => {
         <Loader />
       ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
+          {isLoadingColumn && createPortal(<Loader />, rootPortal)}
           <Droppable
             droppableId={DROPPABLE_ID_BOARD}
             type={DROPPABLE_TYPE_BOARD}

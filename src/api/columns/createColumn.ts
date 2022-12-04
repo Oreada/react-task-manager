@@ -21,7 +21,6 @@ export async function createColumn(
     if (!response.ok) {
       throw new Error(`Request failed with status code ${response.status}`);
     }
-
     const column = await response.json();
     return column;
   } catch (e: unknown) {

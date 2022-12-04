@@ -26,6 +26,13 @@ export type GetBoardDataArgsType = {
   idBoard: string;
 };
 
+export type SetColumnsDataArgsType = {
+  token: string;
+  idBoard: string;
+  title: string;
+  order: number;
+};
+
 export type GetSearchingTasksArgsType = {
   token: string;
   searchValue: string;
