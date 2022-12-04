@@ -1,8 +1,8 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 
 interface ModalProps {
   children: React.ReactNode;
@@ -26,7 +26,8 @@ const style = {
   gap: 5,
 
   bgcolor: 'background.paper',
-  boxShadow: 24,
+  boxShadow: '0 0 20px #d4d4d4',
+  borderRadius: 2.5,
   p: 5,
 };
 
