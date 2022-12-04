@@ -1,3 +1,4 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
@@ -132,7 +133,7 @@ const Header = () => {
       <Button
         onClick={outLogin}
         sx={{
-          padding: 0,
+          padding: 'inherit',
           color: 'inherit',
           fontSize: 'inherit',
           fontWeight: 'inherit',
@@ -227,15 +228,17 @@ const Header = () => {
                 <Box
                   onClick={handleDrawerToggle}
                   sx={{
+                    position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
                     fontSize: 30,
                     cursor: 'pointer',
+                    py: 4,
                     '&  *': {
                       width: '100%',
-                      py: 5,
+                      py: 4,
                       textAlign: 'center',
                     },
                     '&  *:hover': {
@@ -243,6 +246,18 @@ const Header = () => {
                     },
                   }}
                 >
+                  <IconButton
+                    aria-label="cancel icon"
+                    sx={{
+                      position: 'absolute',
+                      top: 10,
+                      right: 10,
+                      width: 20,
+                      height: 20,
+                    }}
+                  >
+                    <CancelIcon sx={{ padding: 0 }} />
+                  </IconButton>
                   {id ? linksForAuthUser : linksForUserWithoutAuth}
                 </Box>
               </Drawer>
