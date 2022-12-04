@@ -1,13 +1,15 @@
-import Board from 'components/Board/Board';
-import EditProfile from 'components/EditProfile/EditProfile';
-import RequireAuth from 'components/RequireAuth/RequireAuth';
-import AuthPage from 'pages/AuthPage';
-import BoardList from 'pages/MainPage/MainPage';
-import SearchPage from 'pages/SearchPage/SearchPage';
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Layout from '../components/Layout';
-import NoFoundPage from '../pages/NoFoundPage/NoFoundPage';
-import WelcomePage from '../pages/WelcomePage/WelcomePage';
+const Layout = lazy(() => import('../components/Layout'));
+const Board = lazy(() => import('components/Board/Board'));
+const EditProfile = lazy(() => import('components/EditProfile/EditProfile'));
+const RequireAuth = lazy(() => import('components/RequireAuth/RequireAuth'));
+const AuthPage = lazy(() => import('pages/AuthPage'));
+const BoardList = lazy(() => import('pages/MainPage/MainPage'));
+const SearchPage = lazy(() => import('pages/SearchPage/SearchPage'));
+const NoFoundPage = lazy(() => import('../pages/NoFoundPage/NoFoundPage'));
+const WelcomePage = lazy(() => import('../pages/WelcomePage/WelcomePage'));
+
 import {
   ANYTHING_PATH,
   AUTHENTICATION_PATH,
