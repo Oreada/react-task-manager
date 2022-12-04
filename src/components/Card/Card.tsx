@@ -17,8 +17,8 @@ const Card: FC<ICard> = ({ title, text, icon }) => {
         position: 'relative',
         gap: 2.5,
         padding: 5,
-        boxShadow: 10,
-        borderRadius: 8.125,
+        boxShadow: `0 0 20px #d4d4d4`,
+        borderRadius: 2.5,
         transition: 'all 0.3s ease 0s',
       }}
     >

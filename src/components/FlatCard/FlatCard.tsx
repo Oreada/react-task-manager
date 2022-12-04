@@ -18,7 +18,7 @@ const FlatCard: FC<IFlatCard> = ({ name, link, text, icon }) => {
         lineHeight: 25,
         py: 2.5,
         px: 5,
-        boxShadow: 10,
+        boxShadow: `0 0 20px #d4d4d4`,
         borderRadius: 2,
         transition: 'all 0.3s ease 0s',
       }}

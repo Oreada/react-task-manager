@@ -2,7 +2,9 @@ import { Box, Container, Stack, Typography } from '@mui/material';
 import Card from 'components/Card/Card';
 import FlatCard from 'components/FlatCard/FlatCard';
 import { useTranslation } from 'react-i18next';
+import HeroBack from './assets/hero-back-orange.svg';
 import Puzzle from './assets/puzzles-green.svg';
+import TeamBack from './assets/team-back-circles-2.svg';
 import { CARD_CONTENT, DEVELOPER_CONTENT, ICardContent } from './constants';
 import styles from './WelcomePage.module.scss';
 const WelcomePage = () => {
@@ -10,7 +12,15 @@ const WelcomePage = () => {
 
   return (
     <>
-      <Stack component="article" className={styles.hero}>
+      <Stack
+        component="article"
+        sx={{
+          position: 'relative',
+          width: '100%',
+          background: `url(${HeroBack}) 50% 110% no-repeat`,
+          paddingTop: 7.5,
+        }}
+      >
         <Container
           maxWidth="lg"
           sx={{ display: 'flex', flexDirection: { xs: 'column', tablet: 'row' }, gap: 3.75 }}
@@ -41,14 +51,9 @@ const WelcomePage = () => {
         </Container>
       </Stack>
 
-      <Stack component="article" className={styles.advantages}>
+      <Stack component="article" pt={10}>
         <Container maxWidth="lg" sx={{ display: 'flex', gap: 3.75 }}>
-          <Stack
-            direction="column"
-            alignItems="center"
-            sx={{ gap: 7.5 }}
-            className={styles.advantages__body}
-          >
+          <Stack direction="column" alignItems="center" sx={{ gap: 7.5 }}>
             <div className={styles['advantages__title-wrapper']}>
               <Typography variant="h3" component="h3" sx={{ fontWeight: 800 }}>
                 {t('main.advantagesTitle')}
@@ -63,7 +68,7 @@ const WelcomePage = () => {
               justifyContent="center"
               alignItems="stretch"
               flexWrap={{ xs: 'wrap', laptop: 'nowrap' }}
-              sx={{ gap: 3.5 }}
+              sx={{ gap: 5 }}
             >
               {CARD_CONTENT.map((item: ICardContent) => (
                 <Card
@@ -80,7 +85,7 @@ const WelcomePage = () => {
 
       <Stack
         component="article"
-        sx={{ width: '100%', bgcolor: 'substitute.main', color: 'blond.main', mt: 20, py: 7.5 }}
+        sx={{ width: '100%', bgcolor: 'substitute.main', color: 'blond.main', mt: 10, py: 7.5 }}
       >
         <Container
           maxWidth="lg"
@@ -132,12 +137,23 @@ const WelcomePage = () => {
         </Container>
       </Stack>
 
-      <Stack component="article" className={styles.team}>
+      <Stack
+        component="article"
+        sx={{
+          width: '100%',
+          pt: 10,
+          pb: 10,
+          backgroundImage: `url(${TeamBack})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          backgroundSize: { xs: '130%', md: '140%', xl: '100%' },
+        }}
+      >
         <Container
           maxWidth="lg"
           sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}
         >
-          <Stack direction="column" alignItems="start" sx={{ gap: 5 }}>
+          <Stack direction="column" alignItems="center" sx={{ gap: 5 }}>
             <Typography variant="h3" component="h5" sx={{ fontWeight: 800 }}>
               {t('main.teamTitle')}
             </Typography>
@@ -145,7 +161,7 @@ const WelcomePage = () => {
               {t('main.teamSubtitles')}
             </Typography>
           </Stack>
-          <Stack direction="column" spacing={2.75}>
+          <Stack direction="column" spacing={3.5}>
             {DEVELOPER_CONTENT.map((developer) => (
               <FlatCard
                 key={developer.name}

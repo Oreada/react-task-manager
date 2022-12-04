@@ -1,10 +1,10 @@
 import { Button, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import Loader from 'components/Loader/Loader';
 import Task from 'components/Task/Task';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { BOARDS_PATH } from 'router/constants';
 import { getSearchingTasks, setFoundedTasks } from 'store/boardSlice';
@@ -121,7 +121,7 @@ const SearchPage = () => {
       >
         {t('boards.foundedTasks')}
       </Typography>
-      {isLoading ? <span>Loading....</span> : FoundedTaskComponent}
+      {isLoading ? <Loader /> : FoundedTaskComponent}
     </Container>
   );
 };

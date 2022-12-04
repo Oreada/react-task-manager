@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -6,9 +5,11 @@ import { Container, Divider, Grid, IconButton, Typography } from '@mui/material'
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormBoard } from 'components/FormBoard/FormBoard';
 import { FormBoardUpdate } from 'components/FormBoardUpdate/FormBoardUpdate';
+import Loader from 'components/Loader/Loader';
 import { BasicModal } from 'components/Modal/BasicModal';
 import Search from 'components/Search/Search';
 import { FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { To, useNavigate } from 'react-router-dom';
 import { setBoardTitle } from 'store/boardSlice';
@@ -134,8 +135,9 @@ const MainPage = () => {
       >
         {t('boards.title')}
       </Typography>
+
       {isLoading ? (
-        <span>{t('boards.loading')}</span>
+        <Loader />
       ) : (
         <Grid container spacing={4}>
           {boards.map(({ _id, title, description, owner, users }) => (

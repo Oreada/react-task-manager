@@ -1,12 +1,11 @@
-import { useTranslation } from 'react-i18next';
 import { Alert, Box, Button, Container, Grow, Snackbar, Stack, Typography } from '@mui/material';
 import { deleteUser } from 'api/users/deleteUser';
 import CustomInput from 'components/CustomInput/CustomInput';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
-import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from '../../constants/constants';
 import { removeLocal, saveToLocal } from 'helpers';
 import { useInput } from 'hooks/useInput';
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ROOT_PATH } from 'router/constants';
@@ -15,6 +14,8 @@ import { INITIAL_AUTH_STATE } from 'store/constants';
 import { AppDispatch, AuthReducer, IRootState } from 'store/model';
 import { IInput } from 'types/types';
 import { updateUser } from '../../api/users/updateUser';
+import { LOCAL_STORAGE_KEY, VALIDATION_FORM } from '../../constants/constants';
+import TeamBack from '../../pages/WelcomePage/assets/team-back-circles-2.svg';
 import { ReactComponent as EditSvg } from './assets/Edit.svg';
 import { FORM_INPUTS } from './constants';
 
@@ -116,18 +117,24 @@ const EditProfile = () => {
   };
 
   return (
-    <>
+    <Stack
+      direction="column"
+      component="article"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        flex: '1 1 auto',
+        width: '100%',
+        background: `url(${TeamBack}) center/100% no-repeat`,
+      }}
+    >
       <Container
         maxWidth="lg"
         sx={{
-          position: 'relative',
-          flex: '1 1 auto',
           display: 'flex',
-          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '1rem',
-          overflow: 'hidden',
+          p: 2,
         }}
       >
         <Stack
@@ -221,7 +228,7 @@ const EditProfile = () => {
           func={handleClickDeleteUser}
         />
       )}
-    </>
+    </Stack>
   );
 };
 

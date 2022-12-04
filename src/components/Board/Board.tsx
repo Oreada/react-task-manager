@@ -1,25 +1,26 @@
+import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
+import { Button, Typography } from '@mui/material';
 import { createColumn } from 'api/columns/createColumn';
 import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
 import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
-import styles from './Board.module.scss';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
 import { DROPPABLE_TYPE_COLUMN } from 'components/Column/constants';
 import { FormColumn } from 'components/FormColumn/FormColumn';
+import { reorderItems } from 'components/helpers/reorderItems';
+import Loader from 'components/Loader/Loader';
 import { BasicModal } from 'components/Modal/BasicModal';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AppDispatch, IRootState } from 'store/model';
-import { getBoardData, setColumns, setTasksByColumn } from 'store/boardSlice';
-import { ColumnType, TaskType } from 'types/types';
-import { Button, Typography } from '@mui/material';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
-import { TasksByColumnsType } from './model';
-import { reorderItems } from 'components/helpers/reorderItems';
 import { BOARDS_PATH } from 'router/constants';
-import { useTranslation } from 'react-i18next';
+import { getBoardData, setColumns, setTasksByColumn } from 'store/boardSlice';
+import { AppDispatch, IRootState } from 'store/model';
+import { ColumnType, TaskType } from 'types/types';
+import styles from './Board.module.scss';
+import { DROPPABLE_DIRECTION_BOARD, DROPPABLE_ID_BOARD, DROPPABLE_TYPE_BOARD } from './constants';
+import { TasksByColumnsType } from './model';
 
 const Board = () => {
   const { t } = useTranslation();
@@ -234,7 +235,7 @@ const Board = () => {
         {titleBoard}
       </Typography>
       {isLoading ? (
-        <span>Loading....</span>
+        <Loader />
       ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable
