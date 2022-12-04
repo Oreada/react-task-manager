@@ -40,11 +40,7 @@ const Task = ({
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const handleClickOpenUpdate = (): void => {
-    setIsHovering(false);
-
-    setOpenUpdate(true);
-  };
+  const handleClickOpenUpdate = (): void => setOpenUpdate(true);
 
   const handlePointerOver = (): void => setIsHovering(true);
 
@@ -114,6 +110,7 @@ const Task = ({
         <BasicMenu
           handleClickOpenUpdate={handleClickOpenUpdate}
           handleClickOpenDialog={handleClickOpenDialog}
+          setIsHovering={setIsHovering}
         />
       )}
       {openUpdate && (
@@ -121,6 +118,7 @@ const Task = ({
           title={t('boards.formTaskUpdate')}
           openModal={openUpdate}
           setOpenModal={setOpenUpdate}
+          setIsHovering={setIsHovering}
         >
           <FormTaskUpdate
             title={taskUpdated ? taskUpdated.title : titleTask}
