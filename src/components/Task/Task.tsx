@@ -13,6 +13,7 @@ import { FormTaskUpdate } from 'components/FormTaskUpdate/FormTaskUpdate';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicMenu from 'components/Menu/BasicMenu';
+import Loader from 'components/Loader/Loader';
 
 const Task = ({
   idColumn,
@@ -39,6 +40,7 @@ const Task = ({
   const [taskUpdated, setTaskUpdated] = useState<TaskType | null>(null); //! для видоизменения тайтла сразу после апдейта
   const [openUpdate, setOpenUpdate] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const handleClickOpenUpdate = (): void => setOpenUpdate(true);
 
@@ -54,7 +56,12 @@ const Task = ({
     event.preventDefault();
 
     if (token) {
+      setLoading(true);
+
       const deletedTask = await deleteTask(token, idBoard, idColumn, idTask);
+
+      setLoading(false);
+
       delTask(deletedTask);
     }
   };
@@ -65,6 +72,8 @@ const Task = ({
     description: string
   ): Promise<void> => {
     if (token) {
+      setLoading(true);
+
       const editedTask = await updateTask(token, idBoard, idColumn, idTask, {
         order: orderTask,
         columnId: idColumn,
@@ -74,73 +83,77 @@ const Task = ({
         description: description,
       });
 
+      setLoading(false);
+
       editTask(editedTask);
+
       setTaskUpdated(taskUpdated);
     }
   };
   return (
-    <div
-      {...provider?.draggableProps}
-      {...provider?.dragHandleProps}
-      style={{
-        backgroundColor: isDragging ? '#d4d4d4' : 'transparent',
-        ...provider?.draggableProps.style,
-      }}
-      ref={provider?.innerRef}
-      onMouseEnter={handlePointerOver}
-      onMouseLeave={handlePointerOut}
-      className={styles.task}
-    >
-      <Typography
-        variant="body1"
-        sx={{
-          flex: 'auto',
-          width: '90%',
-          fontFamily: '"Noto Sans", sans-serif',
-          fontWeight: 400,
-          fontSize: '16px',
-          textAlign: 'left',
-          wordBreak: 'break-word',
+    <>
+      {isLoading && <Loader />}
+      <div
+        {...provider?.draggableProps}
+        {...provider?.dragHandleProps}
+        style={{
+          backgroundColor: isDragging ? '#d4d4d4' : 'transparent',
+          ...provider?.draggableProps.style,
         }}
-        onClick={handleClickOpenUpdate}
+        ref={provider?.innerRef}
+        onMouseEnter={handlePointerOver}
+        onMouseLeave={handlePointerOut}
+        className={styles.task}
       >
-        {taskUpdated ? taskUpdated.title : titleTask}
-      </Typography>
-      {(isHovering || matches) && (
-        <BasicMenu
-          handleClickOpenUpdate={handleClickOpenUpdate}
-          handleClickOpenDialog={handleClickOpenDialog}
-          setIsHovering={setIsHovering}
-        />
-      )}
-      {openUpdate && (
-        <BasicModal
-          title={t('boards.formTaskUpdate')}
-          openModal={openUpdate}
-          setOpenModal={setOpenUpdate}
-          setIsHovering={setIsHovering}
+        <Typography
+          variant="body1"
+          sx={{
+            flex: 'auto',
+            width: '90%',
+            fontFamily: '"Noto Sans", sans-serif',
+            fontWeight: 400,
+            fontSize: '16px',
+            textAlign: 'left',
+            wordBreak: 'break-word',
+          }}
+          onClick={handleClickOpenUpdate}
         >
-          <FormTaskUpdate
-            title={taskUpdated ? taskUpdated.title : titleTask}
-            description={taskUpdated ? taskUpdated.description : descriptionTask}
-            userId={ownerTask}
-            users={usersOfTask}
-            handleClickEditButton={handleClickEditButton}
-            openUpdate={openUpdate}
-            setOpenUpdate={setOpenUpdate}
+          {taskUpdated ? taskUpdated.title : titleTask}
+        </Typography>
+        {(isHovering || matches) && (
+          <BasicMenu
+            handleClickOpenUpdate={handleClickOpenUpdate}
+            handleClickOpenDialog={handleClickOpenDialog}
+            setIsHovering={setIsHovering}
           />
-        </BasicModal>
-      )}
-      {openDialog && (
-        <DialogDelete
-          title={t('boards.dialogTask')}
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
-          setIsHovering={setIsHovering}
-          func={handleClickDeleteButton}
-        />
-      )}
-    </div>
+        )}
+        {openUpdate && (
+          <BasicModal
+            title={t('boards.formTaskUpdate')}
+            openModal={openUpdate}
+            setOpenModal={setOpenUpdate}
+          >
+            <FormTaskUpdate
+              title={taskUpdated ? taskUpdated.title : titleTask}
+              description={taskUpdated ? taskUpdated.description : descriptionTask}
+              userId={ownerTask}
+              users={usersOfTask}
+              handleClickEditButton={handleClickEditButton}
+              openUpdate={openUpdate}
+              setOpenUpdate={setOpenUpdate}
+            />
+          </BasicModal>
+        )}
+        {openDialog && (
+          <DialogDelete
+            title={t('boards.dialogTask')}
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            func={handleClickDeleteButton}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

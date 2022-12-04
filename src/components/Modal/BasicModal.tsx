@@ -9,7 +9,6 @@ interface ModalProps {
   title: string;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
-  setIsHovering?: (arg: boolean) => void;
 }
 
 const style = {
@@ -43,7 +42,6 @@ const theme = createTheme({
 export function BasicModal(props: ModalProps) {
   const handleClickCloseModal = () => {
     props.setOpenModal(false);
-    props.setIsHovering && props.setIsHovering(false);
   };
 
   return (

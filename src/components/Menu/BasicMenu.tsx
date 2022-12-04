@@ -27,6 +27,16 @@ const BasicMenu = ({
     setAnchorEl(event.currentTarget);
   };
 
+  const handleUpdate = () => {
+    handleClickOpenUpdate();
+    handleClose();
+  };
+
+  const handleDelete = () => {
+    handleClickOpenDialog();
+    handleClose();
+  };
+
   return (
     <>
       <IconButton
@@ -59,12 +69,12 @@ const BasicMenu = ({
           }}
         >
           <MenuItem>
-            <IconButton onClick={handleClickOpenUpdate} aria-label="edit">
+            <IconButton onClick={handleUpdate} aria-label="edit">
               <EditOutlinedIcon fontSize="small" />
             </IconButton>
           </MenuItem>
           <MenuItem>
-            <IconButton onClick={handleClickOpenDialog} aria-label="delete">
+            <IconButton onClick={handleDelete} aria-label="delete">
               <DeleteOutlineOutlinedIcon fontSize="small" />
             </IconButton>
           </MenuItem>
