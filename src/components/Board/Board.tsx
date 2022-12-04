@@ -235,7 +235,7 @@ const Board = () => {
         sx={{
           fontFamily: '"Nunito Sans", sans-serif',
           fontSize: '40px',
-          fontWeight: 800,
+          fontWeight: 700,
           textAlign: 'center',
           wordBreak: 'break-word',
         }}

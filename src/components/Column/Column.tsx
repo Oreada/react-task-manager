@@ -1,29 +1,29 @@
-import { deleteColumn } from 'api/columns/deleteColumn';
-import { createTask } from 'api/tasks/createTask';
-import { deleteTask } from 'api/tasks/deleteTask';
-import { FormTask } from 'components/FormTask/FormTask';
-import { BasicModal } from 'components/Modal/BasicModal';
-import { FormEvent, memo, useMemo, useState } from 'react';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { useSelector } from 'react-redux';
-import { IRootState } from 'store/model';
-import { ColumnType, TaskType } from 'types/types';
-import { DROPPABLE_TYPE_COLUMN } from './constants';
-import { ColumnPropsType } from './model';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Button, IconButton, Typography } from '@mui/material';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { createSelector } from '@reduxjs/toolkit';
+import { deleteColumn } from 'api/columns/deleteColumn';
+import { updateColumn } from 'api/columns/updateColumn';
+import { createTask } from 'api/tasks/createTask';
+import { deleteTask } from 'api/tasks/deleteTask';
 import { DialogDelete } from 'components/DialogDelete/DialogDelete';
 import { FormColumnUpdate } from 'components/FormColumnUpdate/FormColumnUpdate';
-import { updateColumn } from 'api/columns/updateColumn';
-import { useTranslation } from 'react-i18next';
-import { createSelector } from '@reduxjs/toolkit';
-import { useParams } from 'react-router-dom';
-import styles from './Column.module.scss';
-import TaskList from 'components/TaskList/TaskList';
+import { FormTask } from 'components/FormTask/FormTask';
 import Loader from 'components/Loader/Loader';
+import { BasicModal } from 'components/Modal/BasicModal';
+import TaskList from 'components/TaskList/TaskList';
 import { rootPortal } from 'index';
+import { FormEvent, memo, useMemo, useState } from 'react';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { IRootState } from 'store/model';
+import { ColumnType, TaskType } from 'types/types';
+import styles from './Column.module.scss';
+import { DROPPABLE_TYPE_COLUMN } from './constants';
+import { ColumnPropsType } from './model';
 
 const makeTasksSelector = () =>
   createSelector(
@@ -148,7 +148,7 @@ const Column = ({
                   width: '100%',
                   fontFamily: '"Noto Sans", sans-serif',
                   letterSpacing: '0.0625rem',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: '18px',
                   color: '#1c4931',
                   textTransform: 'uppercase',
