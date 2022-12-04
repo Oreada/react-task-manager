@@ -5,7 +5,7 @@ import styles from './Loader.module.scss';
 const Loader = () => {
   const { t } = useTranslation();
   return (
-    <Backdrop sx={{ color: '#fff' }} open={true}>
+    <Backdrop sx={{ backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 9 }} open={true}>
       <div className={styles['loader-wrapper']}>
         <div className={styles['loader']}></div>
         <p>{t('boards.loading')}</p>
