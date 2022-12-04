@@ -13,7 +13,6 @@ export const INITIAL_BOARD_STATE: BoardStateType = {
   isLoading: false,
   searchValue: '',
   foundedTasks: [],
-  createdColumn: null,
 };
 
 export enum BoardStateKeys {
@@ -48,7 +47,6 @@ export enum ReducerNameActionTypes {
   setBoardTitle = 'setBoardTitle',
   getUserName = 'getUserName',
   getSearchingTasks = 'getSearchingTasks',
-  setColumnsData = 'setColumnsData',
 }
 
 export const INITIAL_AUTH_STATE: AuthReducer = {

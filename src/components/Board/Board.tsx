@@ -1,5 +1,6 @@
 import AddBoxOutlinedIcon from '@mui/icons-material/AddCircleRounded';
 import { Button, Typography } from '@mui/material';
+import { createColumn } from 'api/columns/createColumn';
 import { reoderColumnsApi } from 'api/helpers/reoderColumnsApi';
 import { reoderTasksApi } from 'api/helpers/reoderTasksApi';
 import Column from 'components/Column/Column';
@@ -8,13 +9,15 @@ import { FormColumn } from 'components/FormColumn/FormColumn';
 import { reorderItems } from 'components/helpers/reorderItems';
 import Loader from 'components/Loader/Loader';
 import { BasicModal } from 'components/Modal/BasicModal';
+import { rootPortal } from 'index';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARDS_PATH } from 'router/constants';
-import { getBoardData, setColumns, setColumnsData, setTasksByColumn } from 'store/boardSlice';
+import { getBoardData, setColumns, setTasksByColumn } from 'store/boardSlice';
 import { AppDispatch, IRootState } from 'store/model';
 import { ColumnType, TaskType } from 'types/types';
 import styles from './Board.module.scss';
@@ -27,12 +30,13 @@ const Board = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { titleBoard, columns, taskByColumns, isLoading, createdColumn } = useSelector(
+  const { titleBoard, columns, taskByColumns, isLoading } = useSelector(
     (state: IRootState) => state.board
   );
   const { token } = useSelector((state: IRootState) => state.auth);
 
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [isLoadingColumn, setLoadingColumn] = useState<boolean>(false);
 
   useEffect(() => {
     if (idBoard && token) {
@@ -195,11 +199,24 @@ const Board = () => {
   ): Promise<void> => {
     event.preventDefault();
     if (token && idBoard) {
-      dispatch(setColumnsData({ token, idBoard, title, order: columns.length }));
+      // dispatch(setColumnsData({ token, idBoard, title, order: columns.length }));
+      setLoadingColumn(true);
+
+      const newColumn = await createColumn(token, idBoard, {
+        title,
+        order: columns.length,
+      });
+
+      setLoadingColumn(false);
+
+      dispatch(setColumns({ columns: [...columns, newColumn] }));
+
+      dispatch(setTasksByColumn({ taskByColumns: { ...taskByColumns, [newColumn._id]: [] } }));
     }
   };
 
-  const handleClickBack = (): void => navigate(BOARDS_PATH);
+  const goBoards = (): void => navigate(BOARDS_PATH);
+  const handleClickBack = (): void => goBoards();
 
   return (
     <div className={styles.wrap}>
@@ -229,6 +246,7 @@ const Board = () => {
         <Loader />
       ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
+          {isLoadingColumn && createPortal(<Loader />, rootPortal)}
           <Droppable
             droppableId={DROPPABLE_ID_BOARD}
             type={DROPPABLE_TYPE_BOARD}

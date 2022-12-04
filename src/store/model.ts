@@ -10,7 +10,6 @@ export type BoardStateType = {
   isLoading: boolean;
   searchValue: string;
   foundedTasks: TaskType[];
-  createdColumn: ColumnType | null;
 };
 
 export type MainStateType = {

@@ -31,18 +31,6 @@ export const getBoardData = createAsyncThunk<[ColumnType[], TaskType[]], GetBoar
   }
 );
 
-export const setColumnsData = createAsyncThunk<ColumnType, SetColumnsDataArgsType>(
-  ReducerNameActionTypes.setColumnsData,
-  async ({ token, idBoard, title, order }: SetColumnsDataArgsType) => {
-    const newColumn = await createColumn(token, idBoard, {
-      title,
-      order,
-    });
-
-    return newColumn;
-  }
-);
-
 export const getSearchingTasks = createAsyncThunk<TaskType[], GetSearchingTasksArgsType>(
   ReducerNameActionTypes.getSearchingTasks,
   async ({ token, searchValue }: GetSearchingTasksArgsType) => {
@@ -109,16 +97,6 @@ const boardSlice = createSlice({
       .addCase(getSearchingTasks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.foundedTasks = action.payload;
-      })
-      .addCase(setColumnsData.pending, (state) => {
-        state.isLoading = true;
-        state.createdColumn = null;
-      })
-      .addCase(setColumnsData.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.createdColumn = action.payload;
-        state.columns = [...state.columns, action.payload];
-        state.taskByColumns = { ...state.taskByColumns, [action.payload._id]: [] };
       });
   },
 });
