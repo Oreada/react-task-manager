@@ -30,7 +30,11 @@ const WelcomePage = () => {
             maxWidth={{ xs: '100%', tablet: '40%' }}
             sx={{ gap: 5 }}
           >
-            <Typography variant="h2" component="h2" sx={{ fontWeight: 700 }}>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{ fontFamily: '"Nunito Sans"', fontWeight: 700 }}
+            >
               {t('main.heroTitle')}
             </Typography>
             <Typography variant="h6" component="p">
@@ -54,10 +58,14 @@ const WelcomePage = () => {
         <Container maxWidth="lg" sx={{ display: 'flex', gap: 3.75 }}>
           <Stack direction="column" alignItems="center" sx={{ gap: 7.5 }}>
             <Stack direction="column" justifyContent="center" alignItems="center" sx={{ gap: 3 }}>
-              <Typography variant="h3" component="h3" sx={{ fontWeight: 700 }}>
+              <Typography
+                variant="h3"
+                component="h3"
+                sx={{ fontFamily: '"Nunito Sans"', fontWeight: 700 }}
+              >
                 {t('main.advantagesTitle')}
               </Typography>
-              <Typography variant="h6" component="h4">
+              <Typography variant="h6" component="h4" sx={{ fontFamily: '"Nunito Sans"' }}>
                 {t('main.advantagesSubtitle')}
               </Typography>
             </Stack>
@@ -101,10 +109,14 @@ const WelcomePage = () => {
             alignItems="flex-start"
             spacing={2.5}
           >
-            <Typography variant="h3" component="h5" sx={{ fontWeight: 700 }}>
+            <Typography
+              variant="h3"
+              component="h5"
+              sx={{ fontFamily: '"Nunito Sans"', fontWeight: 700 }}
+            >
               {t('main.videoTitle')}
             </Typography>
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="p" sx={{ fontFamily: '"Nunito Sans"' }}>
               {t('main.videoSubtitle')}
             </Typography>
           </Stack>
@@ -153,10 +165,14 @@ const WelcomePage = () => {
           sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}
         >
           <Stack direction="column" alignItems="center" sx={{ gap: 3 }}>
-            <Typography variant="h3" component="h5" sx={{ fontWeight: 700 }}>
+            <Typography
+              variant="h3"
+              component="h5"
+              sx={{ fontFamily: '"Nunito Sans"', fontWeight: 700 }}
+            >
               {t('main.teamTitle')}
             </Typography>
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="p" sx={{ fontFamily: '"Nunito Sans"' }}>
               {t('main.teamSubtitles')}
             </Typography>
           </Stack>
