@@ -51,6 +51,12 @@ const Footer = () => {
           justifyContent: 'center',
           alignItems: 'center',
           gap: 3.75,
+          '&  *': {
+            transition: '0.3s',
+          },
+          '&  *:hover': {
+            color: '#1C4931',
+          },
         }}
       >
         <Stack
