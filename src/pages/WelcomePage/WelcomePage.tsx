@@ -16,7 +16,7 @@ const WelcomePage = () => {
         sx={{
           position: 'relative',
           width: '100%',
-          background: `url(${HeroBack}) 50% 110% no-repeat`,
+          background: `url(${HeroBack}) 50% 112% no-repeat`,
           paddingTop: 7.5,
         }}
       >
