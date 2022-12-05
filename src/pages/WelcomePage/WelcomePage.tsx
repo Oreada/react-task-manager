@@ -37,7 +37,7 @@ const WelcomePage = () => {
             >
               {t('main.heroTitle')}
             </Typography>
-            <Typography variant="h6" component="p">
+            <Typography variant="h6" component="p" sx={{ fontFamily: '"Nunito Sans"' }}>
               {t('main.heroText')}
             </Typography>
           </Stack>
