@@ -1,3 +1,5 @@
+import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
+import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
 import {
   Box,
   Dialog,
@@ -7,8 +9,6 @@ import {
   DialogTitle,
   IconButton,
 } from '@mui/material';
-import TaskAltRoundedIcon from '@mui/icons-material/TaskAltRounded';
-import BlockRoundedIcon from '@mui/icons-material/BlockRounded';
 import { useTranslation } from 'react-i18next';
 import { DialogProps } from './model';
 
@@ -24,7 +24,6 @@ export function DialogDelete(props: DialogProps) {
   const { t } = useTranslation();
 
   const handleClose = () => {
-    props.setIsHovering && props.setIsHovering(false);
     props.setOpenDialog(false);
   };
 
@@ -40,6 +39,11 @@ export function DialogDelete(props: DialogProps) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{
+          '& .MuiPaper-root': {
+            borderRadius: 2.5,
+          },
+        }}
       >
         <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
         <DialogContent>

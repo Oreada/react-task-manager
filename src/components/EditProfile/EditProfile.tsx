@@ -147,7 +147,7 @@ const EditProfile = () => {
             padding: { xs: 2, sm: 6 },
             backgroundColor: '#fff',
             boxShadow: '0 0 20px #d4d4d4',
-            borderRadius: '10px',
+            borderRadius: 2.5,
           }}
         >
           <Stack
@@ -191,7 +191,7 @@ const EditProfile = () => {
               <Button
                 component="label"
                 variant="outlined"
-                color="basic"
+                color="colorful"
                 onClick={handleClickOpenDialog}
               >
                 {t('profile.buttonDeleteText')}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width='30' height='30' viewBox="-20 -20 40 40" xmlns="http://www.w3.org/2000/svg">
-  <ellipse style="fill: rgb(28, 73, 49);" rx="20" ry="20"/>
-  <text style="fill: rgb(248, 248, 248); font-family: Noto Sans; font-weight: 700; font-size: 20px; white-space: pre;" x="-14.989" y="7.025">EN</text>
+<svg width='30' height='30' viewBox="0 0  40 40" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <ellipse style="fill: rgb(28, 73, 49);" rx="20" ry="20" cx="20" cy="20"/>
+  <path d="M 17.22 27.28 L 9 27.28 L 9 13 L 17.22 13 L 17.22 15.48 L 12.02 15.48 L 12.02 18.62 L 16.86 18.62 L 16.86 21.1 L 12.02 21.1 L 12.02 24.78 L 17.22 24.78 L 17.22 27.28 Z M 32.859 27.28 L 29.019 27.28 L 22.799 16.48 L 22.719 16.48 C 22.746 17.16 22.776 17.84 22.809 18.52 C 22.842 19.2 22.872 19.88 22.899 20.56 L 22.899 27.28 L 20.199 27.28 L 20.199 13 L 24.019 13 L 30.219 23.7 L 30.279 23.7 C 30.266 23.033 30.246 22.373 30.219 21.72 C 30.192 21.067 30.166 20.413 30.139 19.76 L 30.139 13 L 32.859 13 L 32.859 27.28 Z" style="fill: rgb(248, 248, 248); white-space: pre;"/>
 </svg>

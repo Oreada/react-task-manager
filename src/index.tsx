@@ -8,6 +8,8 @@ import './index.scss';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+export const rootPortal = document.getElementById('portal') as HTMLElement;
+
 root.render(
   <BrowserRouter basename="/project-management-app">
     <ThemeProvider theme={theme}>

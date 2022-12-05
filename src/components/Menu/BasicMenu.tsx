@@ -1,11 +1,15 @@
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { BasicMenuProps } from './model';
-import DragHandleRoundedIcon from '@mui/icons-material/DragHandleRounded';
+import MenuIcon from '@mui/icons-material/Menu';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-const BasicMenu = ({ handleClickOpenDialog, handleClickOpenUpdate }: BasicMenuProps) => {
+const BasicMenu = ({
+  handleClickOpenDialog,
+  handleClickOpenUpdate,
+  setIsHovering,
+}: BasicMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
 
@@ -13,11 +17,24 @@ const BasicMenu = ({ handleClickOpenDialog, handleClickOpenUpdate }: BasicMenuPr
     event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (): void => setAnchorEl(null);
+  const handleClose = (): void => {
+    setIsHovering(false);
+    setAnchorEl(null);
+  };
 
   const handleTouch = (event: React.TouchEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleUpdate = () => {
+    handleClickOpenUpdate();
+    handleClose();
+  };
+
+  const handleDelete = () => {
+    handleClickOpenDialog();
+    handleClose();
   };
 
   return (
@@ -34,7 +51,7 @@ const BasicMenu = ({ handleClickOpenDialog, handleClickOpenUpdate }: BasicMenuPr
           transform: 'translateY(-50%)',
         }}
       >
-        <DragHandleRoundedIcon fontSize="small" />
+        <MenuIcon fontSize="small" />
       </IconButton>
       {openMenu && (
         <Menu
@@ -52,12 +69,12 @@ const BasicMenu = ({ handleClickOpenDialog, handleClickOpenUpdate }: BasicMenuPr
           }}
         >
           <MenuItem>
-            <IconButton onClick={handleClickOpenUpdate} aria-label="edit">
+            <IconButton onClick={handleUpdate} aria-label="edit">
               <EditOutlinedIcon fontSize="small" />
             </IconButton>
           </MenuItem>
           <MenuItem>
-            <IconButton onClick={handleClickOpenDialog} aria-label="delete">
+            <IconButton onClick={handleDelete} aria-label="delete">
               <DeleteOutlineOutlinedIcon fontSize="small" />
             </IconButton>
           </MenuItem>

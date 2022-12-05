@@ -116,7 +116,7 @@ const SearchPage = () => {
         sx={{
           fontFamily: '"Nunito Sans", sans-serif',
           fontSize: '40px',
-          fontWeight: 800,
+          fontWeight: 700,
         }}
       >
         {t('boards.foundedTasks')}

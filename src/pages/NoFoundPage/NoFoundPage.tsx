@@ -1,6 +1,5 @@
 import { PageText } from '../Pages.constants';
 import styles from './NoFoundPage.module.css';
-// import NotFoundImage from './not-found-question-2-rust.svg';
 import NotFoundImage from './not-found-404-1-rust.svg';
 
 const NoFoundPage = () => {

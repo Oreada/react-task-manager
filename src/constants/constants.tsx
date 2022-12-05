@@ -2,9 +2,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
-export const Cicleron = <AccountCircleIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />;
-export const Mail = <MailOutlineIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />;
-export const Lock = <LockOpenIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />;
+export const Cicleron = <AccountCircleIcon sx={{ color: 'basic.main', mr: 1, my: 0.5 }} />;
+export const Mail = <MailOutlineIcon sx={{ color: 'basic.main', mr: 1, my: 0.5 }} />;
+export const Lock = <LockOpenIcon sx={{ color: 'basic.main', mr: 1, my: 0.5 }} />;
 
 export const URL_BASE = 'https://backrss-react-production.up.railway.app';
 export const URL_SINGUP = `${URL_BASE}/auth/signup`;

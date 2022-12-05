@@ -10,7 +10,7 @@ const CustomInput: FC<IProps> = memo(({ icon, width, ...atr }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'flex-end', minHeight: 70, width: { width } }}>
       {icon}
-      <TextField {...atr} sx={{ width: { width } }} />
+      <TextField {...atr} color="basic" sx={{ width: { width } }} />
     </Box>
   );
 });
