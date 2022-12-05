@@ -74,7 +74,7 @@ const WelcomePage = () => {
               flexDirection="row"
               justifyContent="center"
               alignItems="stretch"
-              flexWrap={{ xs: 'wrap', laptop: 'nowrap' }}
+              flexWrap={{ xs: 'wrap', lg: 'nowrap' }}
               sx={{ gap: 5 }}
             >
               {CARD_CONTENT.map((item: ICardContent) => (
