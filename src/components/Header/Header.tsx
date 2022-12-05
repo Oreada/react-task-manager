@@ -185,7 +185,7 @@ const Header = () => {
             <NavLink to={ROOT_PATH} className={styles.navigation__item} end>
               <Typography
                 sx={{
-                  fontWeight: 600,
+                  fontWeight: 700,
                   letterSpacing: 2,
                   color: 'blond.main',
                   textTransform: 'uppercase',

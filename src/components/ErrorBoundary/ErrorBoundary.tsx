@@ -79,14 +79,15 @@ class ErrorBoundaryInner extends Component<IErrorInnerProps, IErrorBoundaryState
         maxWidth="lg"
         spacing={4}
         padding={4}
+        margin="0 auto"
       >
         <Typography variant="h2" component="p" align="center">
           {TITLE}
         </Typography>
         <ErrorSvg
           style={{
-            width: '100%',
-            height: '100%',
+            maxWidth: '100%',
+            maxHeight: '100%',
             fill: '#D85841',
           }}
         />

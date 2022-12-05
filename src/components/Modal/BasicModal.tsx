@@ -17,17 +17,18 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
 
-  width: '50%',
+  maxWidth: 600,
+  width: '90%',
+  gap: 5,
+  p: { xs: 2.5, sm: 5 },
 
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 5,
 
   bgcolor: 'background.paper',
   borderRadius: 2.5,
-  p: 5,
 };
 
 const theme = createTheme({

@@ -141,3 +141,14 @@ declare module '@mui/material/styles' {
     desktop: true;
   }
 }
+
+declare module '@mui/material/TextField' {
+  interface TextFieldPropsColorOverrides {
+    basic: true;
+    substitute: true;
+    colorful: true;
+    neutral: true;
+    blond: true;
+    shadow: true;
+  }
+}

@@ -130,7 +130,7 @@ const MainPage = () => {
         sx={{
           fontFamily: '"Nunito Sans", sans-serif',
           fontSize: '40px',
-          fontWeight: 800,
+          fontWeight: 700,
         }}
       >
         {t('boards.title')}
@@ -149,7 +149,7 @@ const MainPage = () => {
                     width: '100%',
                     fontFamily: '"Noto Sans", sans-serif',
                     letterSpacing: '0.0625rem',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     fontSize: '18px',
                     color: '#1c4931',
                     textTransform: 'uppercase',

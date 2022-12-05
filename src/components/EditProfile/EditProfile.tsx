@@ -191,7 +191,7 @@ const EditProfile = () => {
               <Button
                 component="label"
                 variant="outlined"
-                color="basic"
+                color="colorful"
                 onClick={handleClickOpenDialog}
               >
                 {t('profile.buttonDeleteText')}
