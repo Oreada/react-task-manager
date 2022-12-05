@@ -120,6 +120,9 @@ const Header = () => {
           fontSize: 'inherit',
           fontWeight: 'inherit',
           letterSpacing: 0,
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
         }}
       >
         {t('boards.formBoardCreate')}
@@ -138,6 +141,9 @@ const Header = () => {
           fontSize: 'inherit',
           fontWeight: 'inherit',
           letterSpacing: 0,
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
         }}
       >
         {t('header.sighOut')}
@@ -202,6 +208,12 @@ const Header = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 gap: 3.5,
+                '&  *': {
+                  transition: '0.3s',
+                },
+                '&  *:hover': {
+                  color: '#1C4931',
+                },
               }}
             >
               {id ? linksForAuthUser : linksForUserWithoutAuth}
