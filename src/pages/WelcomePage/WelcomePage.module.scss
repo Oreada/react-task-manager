@@ -1,0 +1,323 @@
+@import '../../styles/variables.scss';
+
+// .hero {
+//   width: 100%;
+//   // #F3B848
+//   // background-image: url(./assets/hero-back-orange.svg);
+//   // background-repeat: no-repeat;
+//   // background-position: center rem(-600);
+//   padding-top: rem(60);
+// }
+
+.hero {
+  position: relative;
+  width: 100%;
+  // #F3B848
+  background: url(./assets/hero-back-orange.svg) 50% 110% no-repeat;
+  padding-top: rem(60);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: rem(-180);
+  width: 100%;
+  height: 100%;
+  background-color: #F3B848;
+  z-index: -1;
+}
+
+.hero__container {
+  max-width: rem(1200);
+  padding-left: rem(20);
+  margin: 0 auto;
+}
+
+.hero__body {
+  display: flex;
+  gap: rem(60);
+}
+
+.hero__article {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: rem(40);
+  font-family: 'Nunito Sans';
+}
+
+.article__title {
+  font-weight: 700;
+  font-size: rem(54);
+}
+
+.article__button {
+  height: rem(60);
+  width: rem(200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: rem(80);
+  font-weight: 700;
+  font-size: rem(24);
+
+  background-color: $color-button;
+  color: $color-green-main;
+}
+
+.hero__picture {
+  width: 60%;
+  height: rem(500);
+
+  background-image: url(./assets/puzzles-green.svg);
+  background-repeat: no-repeat;
+  background-position: 0% 20%;
+  background-size: contain;
+}
+
+/* ------------------------ */
+
+.advantages {
+  padding-top: rem(80);
+}
+
+.advantages__container {
+  max-width: rem(1000);
+  padding-left: rem(20);
+  padding-right: rem(20);
+  margin: 0 auto;
+}
+
+.advantages__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(60);
+}
+
+.advantages__title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(20);
+}
+
+.advantages__title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: rem(40);
+  font-weight: 700;
+}
+
+.advantages__subtitle {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.advantages__box {
+  display: flex;
+  gap: rem(30);
+}
+
+.advantages__item {
+  position: relative;
+  flex: 0 0 33%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(20);
+
+  text-align: center;
+  line-height: rem(25);
+  padding: rem(50);
+  box-shadow: 0 0 rem(20) $color-box-shadow;
+  border-radius: rem(10);
+
+  transition: all 0.3s ease 0s;
+}
+
+.item__picture_first,
+.item__picture_second,
+.item__picture_third {
+  width: rem(150);
+  height: rem(150);
+  position: absolute;
+  bottom: 55%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.item__picture_first {
+  background-image: url(./assets/aim-rust.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.item__picture_second {
+  background-image: url(./assets/clock-rust.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.item__picture_third {
+  background-image: url(./assets/global-rust.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.item__title {
+  position: relative;
+
+  font-weight: 700;
+  letter-spacing: rem(1);
+  color: $color-green-main;
+
+  text-transform: uppercase;
+
+  padding-top: 30%;
+}
+
+/* -------------------------------------------------- */
+
+.instructions {
+  font-family: 'Nunito Sans';
+
+  background-color: $color-green-main;
+  color: $color-instructions-text;
+
+  margin-top: rem(160);
+  padding-top: rem(60);
+  padding-bottom: rem(60);
+}
+
+.instructions__container {
+  max-width: rem(1200);
+  padding-left: rem(20);
+  padding-right: rem(20);
+  margin: 0px auto;
+}
+
+.instructions__box {
+  display: flex;
+  align-items: center;
+  gap: rem(20);
+}
+
+.instructions__note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(20);
+}
+
+.instructions__title {
+  font-size: rem(40);
+  font-weight: 700;
+}
+
+.instructions__screensaver {
+  width: rem(500);
+  height: rem(300);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: rem(10);
+  background-color: $color-instructions-text;
+
+  cursor: pointer;
+}
+
+.instructions__watch-icon {
+  width: rem(400);
+  height: rem(200);
+  background-image: url(./assets/youtube-music-2-rust.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+/* ------------------------------------------------------------ */
+
+.team {
+  margin-top: rem(80);
+  padding-bottom: rem(60);
+  margin-bottom: rem(60);
+
+  background-image: url(./assets/team-back-circles-2.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.team__container {
+  max-width: rem(1200);
+  padding-left: rem(20);
+  padding-right: rem(20);
+  margin: 0px auto;
+}
+
+.team__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(60);
+}
+
+.team__title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(20);
+}
+
+.team__title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: rem(40);
+  font-weight: 700;
+}
+
+.team__subtitle {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.team__box {
+  display: flex;
+  flex-direction: column;
+  gap: rem(30);
+}
+
+.team__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(20);
+
+  line-height: rem(25);
+  padding: rem(20) rem(40);
+  box-shadow: 0 0 rem(20) $color-box-shadow;
+  border-radius: rem(10);
+
+  transition: all 0.3s ease 0s;
+}
+
+.developer {
+  display: flex;
+  align-items: center;
+  gap: rem(50);
+}
+
+.developer__photo {
+  cursor: pointer;
+}
+
+.developer_image {
+  min-width: rem(100);
+  min-height: rem(100);
+
+  border-radius: 50%;
+}

@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+
+.wrap {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: rem(24) rem(24) 0 rem(24);
+}
+
+.board {
+  overflow-x: auto;
+  flex-grow: 1;
+  display: flex;
+  width: 100vw;
+  height: calc((100vh - 123px - 90px) - 24px - 48px - 37px - 20px);
+  padding: rem(20);
+}
+
+.columns {
+  display: flex;
+  height: 100%;
+}
+
+.create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: rem(270);
+  padding: 0;
+  border: 2px dashed $color-button;
+  border-radius: 10px;
+  background-color: $color-instructions-text;
+  box-shadow: 0 0 20px $color-box-shadow;
+
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+}
